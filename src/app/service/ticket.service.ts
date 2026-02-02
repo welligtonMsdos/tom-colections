@@ -1,10 +1,8 @@
-import { Injectable, signal, computed } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { toObservable, toSignal } from '@angular/core/rxjs-interop';
-import { catchError, Observable, switchMap, tap } from 'rxjs';
-import { Result } from '../domain/result.model';
-import { ShowDto } from '../domain/show.model';
-
+import { computed, Injectable, signal } from "@angular/core";
+import { ConcertDto } from "../domain/concert.model";
+import { Result } from "../domain/result.model";
+import { HttpClient } from "@angular/common/http";
+import { tap } from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -12,51 +10,60 @@ import { ShowDto } from '../domain/show.model';
 export class TicketService {
 
   private apiUrl = 'http://localhost:5012/api/';
+
   private filterSignal = signal<'upcoming' | 'past'>('upcoming');
 
   public loading = signal<boolean>(false);
-  public currentFilter = this.filterSignal.asReadonly();
 
-  // Defina o valor inicial fora para facilitar a leitura e tipagem
-  private readonly initialResult: Result<ShowDto[]> = {
+  private cache = new Map<string, Result<ConcertDto[]>>();
+
+  private ticketsState = signal<Result<ConcertDto[]>>({
     data: [],
     success: true,
     message: '',
     errors: {}
-  };
+  });
 
-  public tickets = toSignal(
-    toObservable(this.filterSignal).pipe(
-      switchMap(filter => this.fetchTicketsFromApi(filter))
-    ),
-    { initialValue: this.initialResult }
-  );
+  public currentFilter = this.filterSignal.asReadonly();
 
-  constructor(private http: HttpClient) {}
+  public ticketList = computed(() => this.ticketsState().data);
+
+  constructor(private http: HttpClient) {
+    this.loadTickets();
+  }
 
   updateFilter(filter: 'upcoming' | 'past') {
     this.filterSignal.set(filter);
+    this.loadTickets();
   }
 
-  public ticketList = computed(() => this.tickets().data);
+  loadTickets() {
+    const status = this.filterSignal();
 
-  private fetchTicketsFromApi(status: string): Observable<Result<ShowDto[]>> {
+    if (this.cache.has(status)) {
+      this.ticketsState.set(this.cache.get(status)!);
+      return;
+    }
+
     this.loading.set(true);
-    const endpoint = status === 'past' ? 'GetAllShowsPast' : 'GetAllShowsUpcoming';
 
-    return this.http.get<Result<ShowDto[]>>(`${this.apiUrl}Show/${endpoint}`).pipe(
-      tap(() => this.loading.set(false)),
-      catchError((err) => {
+    const endpoint = status === 'past' ? 'GetAllConcertsPast' : 'GetAllConcertsUpcoming';
+
+    this.http.get<Result<ConcertDto[]>>(`${this.apiUrl}Concert/${endpoint}`).pipe(
+      tap((result) => {
+        if (result.success) {
+          this.cache.set(status, result);
+          this.ticketsState.set(result);
+        }
         this.loading.set(false);
-        // CORREÇÃO: Retorne um Observable do objeto, não um array dentro de um array
-        return [ {
-          ...this.initialResult,
-          success: false,
-          message: 'Não foi possível carregar os shows.',
-          errors: err
-        } ];
       })
-    );
+    ).subscribe();
   }
 
+  addShowLocally(newShow: ConcertDto) {
+    this.ticketsState.update(state => ({
+      ...state,
+      data: [newShow, ...state.data]
+    }));
+  }
 }

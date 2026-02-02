@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { VinilDto } from '../../../domain/vinil.model';
+import { VinylService } from './../../../service/vinyl.service';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
-import { CollectionService } from '../../../service/collection.service';
 @Component({
   selector: 'app-list-vinil',
   imports: [CurrencyPipe],
@@ -10,21 +9,14 @@ import { CollectionService } from '../../../service/collection.service';
 })
 export class ListVinil implements OnInit{
 
-  vinis: VinilDto[] = [];
-  isLoading = true;
+ isLoading = signal(true);
 
-  constructor(private collectionService: CollectionService) {}
+ protected vinylService = inject(VinylService);
 
-  ngOnInit(): void {
-    this.collectionService.getAllVinil().subscribe({
-      next: (response) => {
-
-        if (response.success) {
-          this.vinis = response.data;
-        }
-        this.isLoading = false;
-      },
-      error: () => this.isLoading = false
+ ngOnInit(): void {
+    this.vinylService.getAllVinyls().subscribe({
+      next: () => this.isLoading.set(false),
+      error: () => this.isLoading.set(false)
     });
   }
 

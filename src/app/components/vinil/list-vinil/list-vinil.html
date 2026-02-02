@@ -24,30 +24,30 @@
         </thead>
         <tbody class="divide-y divide-gray-100 dark:divide-gray-700 border-t border-gray-100 dark:border-gray-700">
 
-  @for (v of vinis; track v.id) {
+  @for (vinyl of vinylService.vinyls(); track vinyl.id) {
     <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
 
       <td class="flex gap-3 px-6 py-2 font-normal text-gray-900 dark:text-white">
         <div class="relative h-10 w-10">
-          <img class="h-full w-full rounded-full object-cover shadow" [src]="v.photo" [alt]="v.album" />
+          <img class="h-full w-full rounded-full object-cover shadow" [src]="vinyl.photo" [alt]="vinyl.album" />
         </div>
         <div class="text-sm">
-          <div class="font-medium py-2 text-gray-700 dark:text-gray-200">{{ v.album }}</div>
+          <div class="font-medium py-2 text-gray-700 dark:text-gray-200">{{ vinyl.album }}</div>
         </div>
       </td>
 
       <td class="px-6 py-4 underline decoration-indigo-500/30 underline-offset-4 text-gray-700 dark:text-gray-300">
-        {{ v.artist }}
+        {{ vinyl.artist }}
       </td>
 
       <td class="px-6 py-2 text-center">
         <span class="inline-flex items-center gap-1 rounded-full bg-blue-50 dark:bg-blue-900/30 px-2 py-1 text-xs font-semibold text-blue-600 dark:text-blue-300">
-          {{ v.year }}
+          {{ vinyl.year }}
         </span>
       </td>
 
       <td class="px-6 py-2 text-right font-mono text-gray-700 dark:text-gray-300">
-        {{ v.price | currency:'BRL' }}
+        {{ vinyl.price | currency:'BRL' }}
       </td>
 
       <td class="px-6 py-2">
@@ -67,7 +67,7 @@
 
     </tr> }
 
-  @if(vinis.length === 0 && !isLoading) {
+  @if(vinylService.totalQuantity() === 0 && !isLoading()) {
     <tr>
       <td colspan="5" class="px-6 py-10 text-center text-gray-400 italic">
         Nenhum vinil encontrado na coleção.

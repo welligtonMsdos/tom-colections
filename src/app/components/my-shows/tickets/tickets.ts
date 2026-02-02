@@ -1,12 +1,9 @@
-import { Component } from '@angular/core';
-import { ITicket } from '../../../domain/ticket.model';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
-import { ShowDto } from '../../../domain/show.model';
-import { CollectionService } from '../../../service/collection.service';
 import { TicketService } from '../../../service/ticket.service';
-
+import { ConcertsService } from '../../../service/concerts.service';
 @Component({
   selector: 'app-tickets',
   imports: [CommonModule, MatCardModule, MatIconModule],
@@ -15,9 +12,15 @@ import { TicketService } from '../../../service/ticket.service';
 })
 export class Tickets {
 
-  tickets: ShowDto[] = [];
-    isLoading = true;
+ protected ticketService = inject(TicketService);
 
-    constructor(public ticketService: TicketService) {}
+//  protected concertsService = inject(ConcertsService);
+
+//  ngOnInit(): void {
+//     this.concertsService.getAllConcerts().subscribe({
+//       next: () => this.isLoading.set(false),
+//       error: () => this.isLoading.set(false)
+//     });
+//   }
 
 }

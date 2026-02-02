@@ -1,4 +1,4 @@
-export interface VinilDto{
+export interface VinylDto{
   id: number;
   artist: string;
   album: string;

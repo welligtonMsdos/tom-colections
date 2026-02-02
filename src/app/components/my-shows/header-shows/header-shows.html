@@ -10,34 +10,29 @@
 
     <nav class="flex bg-slate-100 dark:bg-slate-800 p-1 rounded-lg">
       <button
-        type="button"
-        class="cursor-pointer transition-all px-4 py-2 text-sm font-medium rounded-md"
-        (click)="setTab('upcoming')"
-        [ngClass]="ticketService.currentFilter() === 'upcoming'
-        ? 'shadow-sm bg-white dark:bg-slate-700 text-blue-600 dark:text-blue-400'
-        : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200'"
-      >
-        Em Breve
-      </button>
+    (click)="changeFilter('upcoming')"
+    [class]="ticketService.currentFilter() === 'upcoming'
+      ? 'bg-indigo-600 text-white'
+      : 'bg-transparent text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700'"
+    class="px-4 py-2 rounded-lg text-sm font-semibold transition-all cursor-pointer">
+    <i class="pi pi-calendar-plus mr-2"></i> Próximos Shows
+  </button>
 
       <button
-        type="button"
-        class="cursor-pointer transition-all px-4 py-2 text-sm font-medium rounded-md"
-        (click)="setTab('past')"
-        [ngClass]="ticketService.currentFilter() === 'past'
-        ? 'shadow-sm bg-white dark:bg-slate-700 text-blue-600 dark:text-blue-400'
-        : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-200'"
-      >
-        Encerrados
-      </button>
+    (click)="changeFilter('past')"
+    [class]="ticketService.currentFilter() === 'past'
+      ? 'bg-indigo-600 text-white'
+      : 'bg-transparent text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700'"
+    class="px-4 py-2 rounded-lg text-sm font-semibold transition-all cursor-pointer">
+    <i class="pi pi-history mr-2"></i> Histórico
+  </button>
     </nav>
 
   </div>
 
   <button class="cursor-pointer rounded-lg bg-indigo-600 px-6 py-2 text-sm font-semibold text-white
                      transition-colors hover:bg-indigo-700 active:scale-95"
-          type="button"
-          (click)="create()">
+          type="button">
           <i class="pi pi-plus mr-2"></i> Novo Show
   </button>
 

@@ -1,4 +1,4 @@
-export interface ShowDto{
+export interface ConcertDto{
   guid: string;
   artist: string;
   venue: string;
