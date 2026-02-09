@@ -7,13 +7,13 @@ export const routes: Routes = [
     loadComponent: () => import('./components/home/home').then(m => m.Home)
   },
   {
-    path: 'shows',
+    path: 'concerts',
     loadComponent: () => import('./components/my-shows/my-shows').then(m => m.MyShows),
     canActivate: [authGuard]
   },
   {
-    path: 'vinil',
-    loadComponent: () => import('./components/vinil/vinil').then(m => m.Vinil),
+    path: 'vinyl',
+    loadComponent: () => import('./components/vinyl/vinyl').then(m => m.Vinyl),
     canActivate: [authGuard]
   },
   {

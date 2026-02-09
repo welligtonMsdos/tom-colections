@@ -11,18 +11,16 @@ import { UserUpdateDto } from '../domain/userUpdate.mode';
 })
 export class UserService {
 
-  private apiUrl = 'http://localhost:5011/api/';
+  private apiUrl = 'http://localhost:5011/api/Users/';
 
-  // 1. Criamos o Signal privado que guardará a lista de usuários em memória
   private usersSignal = signal<UserDto[]>([]);
 
-  // 2. Expomos uma versão apenas de leitura para os componentes
   readonly users = computed(() => this.usersSignal());
 
   constructor(private http: HttpClient) {}
 
   getAllUsers(): Observable<Result<UserDto[]>> {
-    return this.http.get<Result<UserDto[]>>(this.apiUrl + 'User/GetAllUsers').pipe(
+    return this.http.get<Result<UserDto[]>>(this.apiUrl).pipe(
       tap(result => {
         if (result.success && result.data) {
           this.usersSignal.set(result.data);
@@ -32,11 +30,11 @@ export class UserService {
   }
 
   getUserById(id: string): Observable<Result<UserDto>> {
-    return this.http.get<Result<UserDto>>(this.apiUrl + `User/GetUserById/${id}`);
+    return this.http.get<Result<UserDto>>(this.apiUrl + `${id}`);
   }
 
   deleteUser(id: string): Observable<Result<void>> {
-    return this.http.delete<Result<void>>(this.apiUrl + `User/DeleteUser/${id}`).pipe(
+    return this.http.delete<Result<void>>(this.apiUrl + `${id}`).pipe(
       tap(result => {
         if (result.success) {
           this.usersSignal.update(users => users.filter(u => u._id !== id));
@@ -46,7 +44,7 @@ export class UserService {
   }
 
   addNewUser(user: UserCreateDto): Observable<Result<UserDto>> {
-    return this.http.post<Result<UserDto>>(this.apiUrl + 'User/AddUser', user).pipe(
+    return this.http.post<Result<UserDto>>(this.apiUrl, user).pipe(
       tap(result => {
         if (result.success && result.data) {
           this.usersSignal.update(users => [...users, result.data!]);
@@ -55,11 +53,11 @@ export class UserService {
     );
   }
 
-  updateUser(id: string, user: Partial<UserUpdateDto>): Observable<Result<UserDto>> {
-    return this.http.put<Result<UserDto>>(this.apiUrl + `User/UpdateUser/${id}`, user).pipe(
+  updateUser(user: Partial<UserUpdateDto>): Observable<Result<UserDto>> {
+    return this.http.put<Result<UserDto>>(this.apiUrl, user).pipe(
       tap(result => {
         if (result.success && result.data) {
-          this.usersSignal.update(users => users.map(u => u._id === id ? result.data! : u));
+          this.usersSignal.update(users => users.map(u => u._id === user._id ? result.data! : u));
         }
       })
     );

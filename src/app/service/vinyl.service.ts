@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { Result } from '../domain/result.model';
 import { VinylDto } from '../domain/vinyl.model';
+import { VinylCreateDto } from '../domain/vinylCreate.model';
 
 @Injectable({
   providedIn: 'root'
@@ -23,8 +24,8 @@ export class VinylService {
 
   constructor(private http: HttpClient) {}
 
-  getAllVinyls(): Observable<Result<VinylDto[]>> {
-    return this.http.get<Result<VinylDto[]>>(this.apiUrl + 'Vinyl/GetAllVinyls').pipe(
+  getAll(): Observable<Result<VinylDto[]>> {
+    return this.http.get<Result<VinylDto[]>>(this.apiUrl + 'Vinyls').pipe(
       tap(result => {
         if (result.success && result.data) {
           this.vinylsSignal.set(result.data);
@@ -32,5 +33,14 @@ export class VinylService {
       })
     );
   }
+
+  post(vinyl: VinylCreateDto): Observable<Result<VinylDto>> {
+    return this.http.post<Result<VinylDto>>(this.apiUrl + 'Vinyls', vinyl).pipe(
+      tap(result => {
+        if (result.success && result.data) {
+          this.vinylsSignal.update(vinyls => [...vinyls, result.data!]);
+        }
+      })
+    )};
 
 }

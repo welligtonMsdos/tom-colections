@@ -1,18 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HeaderVinyl } from './header-vinyl';
 
-import { HeaderVinil } from './header-vinil';
-
-describe('HeaderVinil', () => {
-  let component: HeaderVinil;
-  let fixture: ComponentFixture<HeaderVinil>;
+describe('HeaderVinyl', () => {
+  let component: HeaderVinyl;
+  let fixture: ComponentFixture<HeaderVinyl>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HeaderVinil]
+      imports: [HeaderVinyl]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(HeaderVinil);
+    fixture = TestBed.createComponent(HeaderVinyl);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

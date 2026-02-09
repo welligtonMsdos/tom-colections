@@ -17,7 +17,7 @@ interface UserPayload {
 
 export class LoginService {
 
-   private readonly apiUrl = 'http://localhost:5011/api/User/';
+   private readonly apiUrl = 'http://localhost:5011/api/Users/';
 
    private userSignal = signal<UserPayload | null>(null);
 

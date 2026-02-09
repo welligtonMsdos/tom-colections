@@ -27,35 +27,34 @@ export class ListUser implements OnInit {
   idSelecionado = signal('');
 
   filteredUsers = computed(() => {
-  const term = this.searchTerm().toLowerCase().trim(); // Adicionei o trim()
-  const allUsers = this.userService.users() || []; // Garante que não é null
+  const term = this.searchTerm().toLowerCase().trim();
+  const allUsers = this.userService.users() || [];
 
   if (!term) return allUsers;
 
   return allUsers.filter(user =>
-      // Use o operador ?. para evitar erros se name ou email vierem nulos
       user.name?.toLowerCase().includes(term) ||
       user.email?.toLowerCase().includes(term)
     );
   });
 
   editarUsuario(id: string) {
-  this.isLoading.set(true);
+    this.isLoading.set(true);
 
-  this.userService.getUserById(id).subscribe({
-    next: (response) => {
-      if (response.success && response.data) {
-        this.usuarioSelecionado.set(response.data);
-        this.exibirModalUpdate.set(true);
-      }
-      this.isLoading.set(false);
-    },
-    error: () => {
-      this.alert.showError('Erro ao carregar dados do usuário.');
-      this.isLoading.set(false);
-      }
-    });
-  }
+    this.userService.getUserById(id).subscribe({
+      next: (response) => {
+        if (response.success && response.data) {
+          this.usuarioSelecionado.set(response.data);
+          this.exibirModalUpdate.set(true);
+        }
+        this.isLoading.set(false);
+      },
+      error: () => {
+        this.alert.showError('Error loading user data');
+        this.isLoading.set(false);
+        }
+      });
+    }
 
   paginatedUsers = computed(() => {
     const startIndex = (this.currentPage() - 1) * this.itemsPerPage();
@@ -64,7 +63,7 @@ export class ListUser implements OnInit {
 
   totalPages = computed(() => {
     const total = Math.ceil(this.filteredUsers().length / this.itemsPerPage());
-    return total > 0 ? total : 1; // Garante que pelo menos a página 1 exista
+    return total > 0 ? total : 1;
   });
 
   pageNumbers = computed(() => {
@@ -75,7 +74,7 @@ export class ListUser implements OnInit {
   onSearch(event: Event) {
     const value = (event.target as HTMLInputElement).value;
     this.searchTerm.set(value);
-    this.currentPage.set(1); // Volta para a página 1 ao pesquisar
+    this.currentPage.set(1);
   }
 
   ngOnInit(): void {
@@ -103,7 +102,7 @@ export class ListUser implements OnInit {
     this.userService.deleteUser(id).subscribe({
       next: (response) => {
         if (response.success) {
-          this.alert.showSuccess('Usuário excluído com sucesso.');
+          this.alert.showSuccess(response.message);
         }
         this.finalizarAcao();
       },

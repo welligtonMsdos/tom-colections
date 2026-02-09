@@ -49,7 +49,7 @@ export class Auth {
         .then(data =>{
           if (data.success) {
 
-            this.alert.showSuccess('Bem Vindo ' + this.loginService.currentUser()?.name);
+            this.alert.showSuccess('Welcome ' + this.loginService.currentUser()?.name);
 
             this.router.navigate(['/home']);
           }

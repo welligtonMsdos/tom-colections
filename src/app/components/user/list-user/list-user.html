@@ -1,4 +1,4 @@
-<div class="p-6 bg-gray-50 dark:bg-gray-900">
+<div class="p-1 bg-gray-50 dark:bg-gray-900">
   <div class="max-w-5xl mx-auto">
 
     <div class="mb-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
@@ -9,13 +9,13 @@
         <input
           type="text"
           (input)="onSearch($event)"
-          placeholder="Buscar por nome ou email..."
+          placeholder="search by name or email..."
           class="block w-full rounded-lg border border-gray-300 bg-white py-2 pl-10 pr-3 text-sm placeholder-gray-500 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:placeholder-gray-400"
         />
       </div>
 
       <span class="text-sm text-gray-500 dark:text-gray-400">
-        {{ filteredUsers().length }} usuários encontrados
+        {{ filteredUsers().length }} Found users
       </span>
     </div>
 
@@ -23,9 +23,9 @@
       <table class="w-full border-collapse bg-white dark:bg-gray-800 text-left text-sm text-gray-500 dark:text-gray-400">
         <thead class="bg-gray-50 dark:bg-gray-800/50">
           <tr>
-            <th class="px-6 py-4 font-semibold text-gray-900 dark:text-white">Nome</th>
+            <th class="px-6 py-4 font-semibold text-gray-900 dark:text-white">Name</th>
             <th class="px-6 py-4 font-semibold text-gray-900 dark:text-white">Email</th>
-            <th class="px-6 py-4 font-semibold text-gray-900 dark:text-white text-right">Ações</th>
+            <th class="px-6 py-4 font-semibold text-gray-900 dark:text-white text-right"></th>
           </tr>
         </thead>
 
@@ -56,9 +56,9 @@
                 <td colspan="3" class="px-6 py-10 text-center text-gray-400 italic">
                   <i class="pi pi-inbox block text-2xl mb-2"></i>
                   @if (searchTerm()) {
-                    Nenhum resultado para "{{ searchTerm() }}"
+                    no results for "{{ searchTerm() }}"
                   } @else {
-                    Nenhum usuário cadastrado.
+                    no users found
                   }
                 </td>
               </tr>
@@ -69,7 +69,7 @@
             <tr>
               <td colspan="3" class="px-6 py-10 text-center">
                 <i class="pi pi-spin pi-spinner text-indigo-600 text-2xl"></i>
-                <p class="mt-2 text-sm text-gray-500">Carregando...</p>
+                <p class="mt-2 text-sm text-gray-500">loading...</p>
               </td>
             </tr>
           }
@@ -80,9 +80,9 @@
         <div class="flex items-center justify-between border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-6 py-4">
           <div class="hidden sm:block">
             <p class="text-sm text-gray-700 dark:text-gray-400">
-              Mostrando <span class="font-bold text-gray-900 dark:text-white">{{ (currentPage() - 1) * itemsPerPage() + 1 }}</span> a
-              <span class="font-bold text-gray-900 dark:text-white">{{ Math.min(currentPage() * itemsPerPage(), filteredUsers().length) }}</span> de
-              <span class="font-bold text-gray-900 dark:text-white">{{ filteredUsers().length }}</span> resultados
+              showing <span class="font-bold text-gray-900 dark:text-white">{{ (currentPage() - 1) * itemsPerPage() + 1 }}</span> of
+              <span class="font-bold text-gray-900 dark:text-white">{{ Math.min(currentPage() * itemsPerPage(), filteredUsers().length) }}</span> a
+              <span class="font-bold text-gray-900 dark:text-white">{{ filteredUsers().length }}</span> results
             </p>
           </div>
 

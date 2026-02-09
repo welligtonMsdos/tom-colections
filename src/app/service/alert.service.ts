@@ -15,24 +15,16 @@ export class AlertService {
   };
 
   showSuccess(message: string): void {
-    this.snackBar.open(message, 'Fechar', {
+    this.snackBar.open(message, 'Close', {
       ...this.defaultConfig,
       panelClass: ['success-snake']
     });
   }
 
   showError(message: string): void {
-    this.snackBar.open(message, 'Entendido', {
+    this.snackBar.open(message, 'Close', {
       ...this.defaultConfig,
       panelClass: ['error-snake']
     });
   }
-
-  // showInfo(message: string): void {
-  //   this.snackBar.open(message, 'Ok', {
-  //     ...this.defaultConfig,
-  //     panelClass: ['info-snackbar']
-  //   });
-  // }
-
 }

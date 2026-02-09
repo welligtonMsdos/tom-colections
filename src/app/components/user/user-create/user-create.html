@@ -10,7 +10,7 @@
 
       <header>
         <h2 class="text-xl mb-4 mt-4 font-bold text-slate-800 dark:text-white">
-          <i class="pi pi-user mr-3 text-blue-500"></i>Cadastro de usuário
+          <i class="pi pi-user mr-3 text-blue-500"></i>Register user
         </h2>
       </header>
 
@@ -18,7 +18,7 @@
         <div class="mb-4 flex flex-col p-3 text-red-800 rounded-lg bg-red-50 dark:bg-red-900/30 dark:text-red-300 border border-red-200 dark:border-red-800" role="alert">
           <div class="flex items-center">
             <i class="pi pi-exclamation-circle mr-2 font-bold"></i>
-            <span class="text-xs font-bold uppercase">Erro ao atualizar</span>
+            <span class="text-xs font-bold uppercase">Failed to register user</span>
             <button (click)="errorMessage.set(null)" class="ml-auto text-red-500 hover:text-red-700">
               <i class="pi pi-times"></i>
             </button>
@@ -33,11 +33,11 @@
 
             <div>
 
-              <label class="block text-sm font-medium text-slate-700 dark:text-slate-300">Nome</label>
+              <label class="block text-sm font-medium text-slate-700 dark:text-slate-300">Name</label>
 
               <input type="text"
-                         placeholder="nome do usuário"
-                         formControlName="nome"
+                         placeholder="Enter"
+                         formControlName="name"
                          (blur)="updateErrorMessage()"
                          required
                          class="w-full rounded-lg border border-slate-300 px-4 py-2 text-sm outline-none transition-all
@@ -47,8 +47,8 @@
 
               <div class="flex flex-col gap-3 sm:flex-row">
 
-                @if(userForm.get('nome')?.invalid && userForm.get('nome')?.touched){
-                  <div class="text-red-600 dark:text-red-300 text-sm mt-1 ml-2">Nome inválido.</div>
+                @if(userForm.get('name')?.invalid && userForm.get('name')?.touched){
+                  <div class="text-red-600 dark:text-red-300 text-sm mt-1 ml-2">Invalid name</div>
                 }
 
               </div>
@@ -60,7 +60,7 @@
               <label class="block text-sm font-medium text-slate-700 dark:text-slate-300">E-mail</label>
 
               <input type="email"
-                         placeholder="nome@dominio.com.br"
+                         placeholder="Enter"
                          formControlName="email"
                          required
                          class="w-full rounded-lg border border-slate-300 px-4 py-2 text-sm outline-none transition-all
@@ -69,42 +69,42 @@
                               dark:border-slate-700 dark:focus:border-purple-500 dark:bg-slate-800/50 dark:text-white"/>
 
                @if(userForm.get('email')?.invalid && userForm.get('email')?.touched){
-                  <div class="text-red-600 dark:text-red-300 text-sm mt-1 ml-2">E-mail inválido.</div>
+                  <div class="text-red-600 dark:text-red-300 text-sm mt-1 ml-2">Invalid email</div>
                }
 
             </div>
 
             <div class="grid grid-cols-2 gap-4">
               <div>
-                <label class="block text-sm font-medium text-slate-700 dark:text-slate-300">Senha</label>
+                <label class="block text-sm font-medium text-slate-700 dark:text-slate-300">Password</label>
 
                 <input type="password"
-                       placeholder="digita a senha"
-                       formControlName="senha"
+                       placeholder="Enter"
+                       formControlName="password"
                        required
                        class="w-full rounded-lg border border-slate-300 px-4 py-2 text-sm outline-none transition-all
                               bg-white text-slate-900
                               focus:border-purple-500 focus:ring-1 focus:ring-purple-500
                               dark:border-slate-700 dark:focus:border-purple-500 dark:bg-slate-800/50 dark:text-white"/>
 
-                @if(userForm.get('senha')?.invalid && userForm.get('senha')?.touched){
-                  <div class="text-red-600 dark:text-red-300 text-sm mt-1 ml-2">Senha inválida.</div>
+                @if(userForm.get('password')?.invalid && userForm.get('password')?.touched){
+                  <div class="text-red-600 dark:text-red-300 text-sm mt-1 ml-2">Invalid password</div>
                 }
 
               </div>
               <div>
                 <label class="block text-sm font-medium text-slate-700 dark:text-slate-300">Confirmar</label>
                 <input type="password"
-                       placeholder="confirma a senha"
-                       formControlName="confirmaSenha"
+                       placeholder="Enter"
+                       formControlName="confirmPassword"
                        required
                        class="w-full rounded-lg border border-slate-300 px-4 py-2 text-sm outline-none transition-all
                               bg-white text-slate-900
                               focus:border-purple-500 focus:ring-1 focus:ring-purple-500
                               dark:border-slate-700 dark:focus:border-purple-500 dark:bg-slate-800/50 dark:text-white"/>
 
-                @if(userForm.get('confirmaSenha')?.invalid && userForm.get('confirmaSenha')?.touched){
-                  <div class="text-red-600 dark:text-red-300 text-sm mt-1 ml-2">Confirmação de senha inválida.</div>
+                @if(userForm.get('confirmPassword')?.invalid && userForm.get('confirmPassword')?.touched){
+                  <div class="text-red-600 dark:text-red-300 text-sm mt-1 ml-2">Invalid password</div>
                 }
 
               </div>
@@ -117,7 +117,7 @@
                       class="cursor-pointer flex-1 rounded-lg border border-slate-200 px-4 py-2 text-sm font-semibold
                            text-slate-700 transition-colors hover:bg-gray-50 dark:border-slate-600
                            dark:text-slate-200 dark:hover:bg-slate-700">
-                <i class="pi pi-undo mr-3"></i> Cancelar
+                <i class="pi pi-undo mr-3"></i> Cancel
               </button>
 
               <button class="flex-1 rounded-lg cursor-pointer bg-indigo-600 px-6 py-2 text-sm font-semibold text-white
@@ -126,9 +126,9 @@
                       type="submit"
                       >
                 @if (isLoading()) {
-                  <i class="pi pi-spin pi-spinner mr-3"></i> Salvando...
+                  <i class="pi pi-spin pi-spinner mr-3"></i> Saving...
                 } @else {
-                  <i class="pi pi-save mr-3"></i> Salvar
+                  <i class="pi pi-save mr-3"></i> Save
                 }
 
               </button>

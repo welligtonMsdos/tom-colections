@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Vinil } from './vinil';
+import { Vinyl } from './vinyl';
 
-describe('Vinil', () => {
-  let component: Vinil;
-  let fixture: ComponentFixture<Vinil>;
+describe('Vinyl', () => {
+  let component: Vinyl;
+  let fixture: ComponentFixture<Vinyl>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Vinil]
+      imports: [Vinyl]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(Vinil);
+    fixture = TestBed.createComponent(Vinyl);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

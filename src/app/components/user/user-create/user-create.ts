@@ -25,12 +25,12 @@ export class UserCreate {
   isLoading = signal(false);
 
   userForm = this.fb.group({
-    nome: ['', Validators.required],
+    name: ['', Validators.required],
     email: ['', [Validators.required, Validators.email]],
-    senha: ['', [Validators.required, Validators.minLength(6)]],
-    confirmaSenha: ['', Validators.required]
+    password: ['', [Validators.required, Validators.minLength(6)]],
+    confirmPassword: ['', Validators.required]
   }, {
-    validators: (group) => group.get('senha')?.value === group.get('confirmaSenha')?.value ? null : { mismatch: true }
+    validators: (group) => group.get('password')?.value === group.get('confirmPassword')?.value ? null : { mismatch: true }
   });
 
   save() {
@@ -41,18 +41,18 @@ export class UserCreate {
 
       this.errorMessage.set(null);
 
-      const { nome, email, senha } = this.userForm.getRawValue();
+      const { name, email, password } = this.userForm.getRawValue();
       const userData: UserCreateDto = {
-        name: nome || '',
+        name: name || '',
         email: email || '',
-        password: senha || ''
+        password: password || ''
       };
 
       this.userService.addNewUser(userData).subscribe({
         next: (response) => {
 
           if (response.success) {
-            this.alert.showSuccess(response.message || 'Cadastro realizado com sucesso!');
+            this.alert.showSuccess(response.message);
           }
 
           this.saved.emit(response.data);
@@ -70,9 +70,8 @@ export class UserCreate {
 
             this.errorMessage.set(messages.join(' | '));
 
-            //this.alert.showError(messages.join(' | '));
           } else {
-            this.errorMessage.set(err.error?.message || 'Erro desconhecido no servidor.');
+            this.errorMessage.set(err.error?.message);
           }
         }
       });

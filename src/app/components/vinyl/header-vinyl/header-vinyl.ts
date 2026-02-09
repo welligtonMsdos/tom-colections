@@ -3,12 +3,12 @@ import { VinylService } from '../../../service/vinyl.service';
 import { CurrencyPipe } from '@angular/common';
 
 @Component({
-  selector: 'app-header-vinil',
+  selector: 'app-header-vinyl',
   imports: [CurrencyPipe],
-  templateUrl: './header-vinil.html',
-  styleUrl: './header-vinil.css',
+  templateUrl: './header-vinyl.html',
+  styleUrl: './header-vinyl.css',
 })
-export class HeaderVinil {
+export class HeaderVinyl {
 
   protected vinylService = inject(VinylService);
 

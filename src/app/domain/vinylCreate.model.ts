@@ -1,5 +1,4 @@
-export interface VinylDto{
-  guid: string;
+export interface VinylCreateDto{
   artist: string;
   album: string;
   year: number;

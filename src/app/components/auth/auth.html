@@ -10,7 +10,7 @@
             bg-gray-50 text-slate-900
             dark:bg-slate-800 dark:text-white">
 
-             <h5 class="typing text-2xl font-bold dark:text-white">Listas de Shows</h5>
+             <h5 class="typing text-2xl font-bold dark:text-white">All my collections in one place</h5>
 
          </div>
 
@@ -39,14 +39,14 @@
 
                <div class="mt-2 flex flex-col gap-3 sm:flex-row">
                   @if(authForm.get('email')?.invalid && authForm.get('email')?.touched){
-                    <div class="text-red-600 dark:text-red-300 text-sm mt-1 ml-2">Email inválido.</div>
+                    <div class="text-red-600 dark:text-red-300 text-sm mt-1 ml-2">Invalid email</div>
                   }
                </div>
 
               <div class="mt-6 flex flex-col gap-3 sm:flex-row">
 
                 <input type="password"
-                       placeholder="Senha"
+                       placeholder="Password"
                        formControlName="password"
                        (blur)="updateErrorMessage()"
                        required
@@ -62,7 +62,7 @@
               <div class="mt-2 flex flex-col gap-3 sm:flex-row">
 
                 @if(authForm.get('password')?.invalid && authForm.get('password')?.touched){
-                  <div class="text-red-600 dark:text-red-300 text-sm mt-1 ml-2">Senha inválida.</div>
+                  <div class="text-red-600 dark:text-red-300 text-sm mt-1 ml-2">Invalid password</div>
                 }
 
               </div>
@@ -73,7 +73,7 @@
                                transition-colors hover:bg-indigo-700 active:scale-95"
                           type="button"
                           (click)="login()">
-                           <i class="pi pi-sign-in mr-3"></i> Entrar
+                           <i class="pi pi-sign-in mr-3"></i>Login
                 </button>
 
               </div>

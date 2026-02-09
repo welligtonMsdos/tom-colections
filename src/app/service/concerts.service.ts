@@ -9,7 +9,7 @@ import { ConcertDto } from '../domain/concert.model';
 })
 export class ConcertsService {
 
-  private apiUrl = 'http://localhost:5012/api/';
+  private apiUrl = 'http://localhost:5012/api/Concerts/';
 
   private concertSignal = signal<ConcertDto[]>([]);
 
@@ -18,7 +18,7 @@ export class ConcertsService {
   constructor(private http: HttpClient) {}
 
   getAllConcerts(): Observable<Result<ConcertDto[]>> {
-    return this.http.get<Result<ConcertDto[]>>(this.apiUrl + 'Concert/GetAllConcerts').pipe(
+    return this.http.get<Result<ConcertDto[]>>(this.apiUrl).pipe(
       tap(result => {
         if (result.success && result.data) {
           this.concertSignal.set(result.data);

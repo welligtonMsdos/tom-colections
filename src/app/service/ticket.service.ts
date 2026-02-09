@@ -9,7 +9,7 @@ import { tap } from "rxjs";
 })
 export class TicketService {
 
-  private apiUrl = 'http://localhost:5012/api/';
+  private apiUrl = 'http://localhost:5012/api/Concerts/';
 
   private filterSignal = signal<'upcoming' | 'past'>('upcoming');
 
@@ -47,9 +47,9 @@ export class TicketService {
 
     this.loading.set(true);
 
-    const endpoint = status === 'past' ? 'GetAllConcertsPast' : 'GetAllConcertsUpcoming';
+    const endpoint = status === 'past' ? 'Past' : 'Upcomming';
 
-    this.http.get<Result<ConcertDto[]>>(`${this.apiUrl}Concert/${endpoint}`).pipe(
+    this.http.get<Result<ConcertDto[]>>(`${this.apiUrl}${endpoint}`).pipe(
       tap((result) => {
         if (result.success) {
           this.cache.set(status, result);
