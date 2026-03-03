@@ -1,8 +1,14 @@
-export interface VinylDto{
-  guid: string;
+export interface Vinyl {
+  readonly guid: string;
   artist: string;
   album: string;
   year: number;
   photo: string;
   price: number;
 }
+
+export type VinylCreateDto = Omit<Vinyl, 'guid'>;
+export type VinylUpdateDto = Vinyl;
+export type VinylDto = Vinyl;
+
+

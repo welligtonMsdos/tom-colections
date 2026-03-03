@@ -11,6 +11,7 @@ import { UserUpdateDto } from '../domain/userUpdate.mode';
 })
 export class UserService {
 
+  //private apiUrl = 'http://13.59.37.186:5011/api/Users/';
   private apiUrl = 'http://localhost:5011/api/Users/';
 
   private usersSignal = signal<UserDto[]>([]);

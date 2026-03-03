@@ -2,8 +2,7 @@ import { Component, inject, output, signal } from '@angular/core';
 import { VinylService } from '../../../service/vinyl.service';
 import { AlertService } from '../../../service/alert.service';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { VinylCreateDto } from '../../../domain/vinylCreate.model';
-
+import { VinylCreateDto } from '../../../domain/vinyl.model';
 @Component({
   selector: 'app-vinyl-create',
   imports: [ReactiveFormsModule],

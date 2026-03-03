@@ -9,8 +9,8 @@ import { tap } from "rxjs";
 })
 export class TicketService {
 
+  //private apiUrl = 'http://13.59.37.186:8081/api/Concerts/';
   private apiUrl = 'http://localhost:5012/api/Concerts/';
-
   private filterSignal = signal<'upcoming' | 'past'>('upcoming');
 
   public loading = signal<boolean>(false);

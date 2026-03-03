@@ -1,0 +1,177 @@
+<div class="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+
+  <div class="bg-white dark:bg-slate-800 w-full max-w-md rounded-xl shadow-2xl border border-slate-200 dark:border-slate-700">
+
+    <div class="relative h-4 bg-linear-to-r from-blue-500 to-purple-600 rounded-t-xl">
+
+    </div>
+
+    <div class="px-6 pb-6 pt-2">
+
+      <header>
+        <h2 class="text-xl mb-4 mt-4 font-bold text-slate-800 dark:text-white">
+          <i class="pi pi-user mr-3 text-blue-500"></i>Editing vinyl
+        </h2>
+      </header>
+
+      @if (errorMessage()) {
+        <div class="mb-4 flex flex-col p-3 text-red-800 rounded-lg bg-red-50 dark:bg-red-900/30 dark:text-red-300 border border-red-200 dark:border-red-800" role="alert">
+          <div class="flex items-center">
+            <i class="pi pi-exclamation-circle mr-2 font-bold"></i>
+            <span class="text-xs font-bold uppercase">Update failed</span>
+            <button (click)="errorMessage.set(null)" class="ml-auto text-red-500 hover:text-red-700">
+              <i class="pi pi-times"></i>
+            </button>
+          </div>
+          <p class="text-sm mt-1 ml-6">{{ errorMessage() }}</p>
+        </div>
+      }
+
+      <div class="mt-1">
+
+        <form [formGroup]="vinylForm" (ngSubmit)="save()" class="space-y-4">
+
+          <div>
+            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300">Artist</label>
+
+              <input type="text"
+                     placeholder="Enter"
+                     formControlName="artist"
+                     (blur)="updateErrorMessage()"
+                     required
+                     class="w-full rounded-lg border border-slate-300 px-4 py-2 text-sm outline-none transition-all
+                          bg-white text-slate-900
+                          focus:border-purple-500 focus:ring-1 focus:ring-purple-500
+                          dark:border-slate-700 dark:focus:border-purple-500 dark:bg-slate-800/50 dark:text-white"/>
+
+              <div class="flex flex-col gap-3 sm:flex-row">
+
+                @if(vinylForm.get('artist')?.invalid && vinylForm.get('artist')?.touched){
+                  <div class="text-red-600 dark:text-red-300 text-sm mt-1 ml-2">Invalid artist</div>
+                }
+
+              </div>
+
+          </div>
+
+          <div class="grid grid-cols-2 gap-4">
+
+            <div>
+
+              <label class="block text-sm font-medium text-slate-700 dark:text-slate-300">Album</label>
+
+              <input type="text"
+                         placeholder="Enter"
+                         formControlName="album"
+                         required
+                         class="w-full rounded-lg border border-slate-300 px-4 py-2 text-sm outline-none transition-all
+                              bg-white text-slate-900
+                              focus:border-purple-500 focus:ring-1 focus:ring-purple-500
+                              dark:border-slate-700 dark:focus:border-purple-500 dark:bg-slate-800/50 dark:text-white"/>
+
+               @if(vinylForm.get('album')?.invalid && vinylForm.get('album')?.touched){
+                  <div class="text-red-600 dark:text-red-300 text-sm mt-1 ml-2">Invalid album</div>
+               }
+
+            </div>
+
+            <div>
+
+              <label class="block text-sm font-medium text-slate-700 dark:text-slate-300">Year</label>
+
+              <input type="number"
+                         placeholder="Enter"
+                         formControlName="year"
+                         required
+                         class="w-full rounded-lg border border-slate-300 px-4 py-2 text-sm outline-none transition-all
+                              bg-white text-slate-900
+                              focus:border-purple-500 focus:ring-1 focus:ring-purple-500
+                              dark:border-slate-700 dark:focus:border-purple-500 dark:bg-slate-800/50 dark:text-white"/>
+
+               @if(vinylForm.get('year')?.invalid && vinylForm.get('year')?.touched){
+                  <div class="text-red-600 dark:text-red-300 text-sm mt-1 ml-2">Invalid year</div>
+               }
+
+            </div>
+
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300">Photo</label>
+
+              <input type="text"
+                     placeholder="Enter"
+                     formControlName="photo"
+                     (blur)="updateErrorMessage()"
+                     required
+                     class="w-full rounded-lg border border-slate-300 px-4 py-2 text-sm outline-none transition-all
+                          bg-white text-slate-900
+                          focus:border-purple-500 focus:ring-1 focus:ring-purple-500
+                          dark:border-slate-700 dark:focus:border-purple-500 dark:bg-slate-800/50 dark:text-white"/>
+
+              <div class="flex flex-col gap-3 sm:flex-row">
+
+                @if(vinylForm.get('photo')?.invalid && vinylForm.get('photo')?.touched){
+                  <div class="text-red-600 dark:text-red-300 text-sm mt-1 ml-2">Invalid photo</div>
+                }
+              </div>
+
+          </div>
+
+          <div>
+            <label class="block text-sm font-medium text-slate-700 dark:text-slate-300">Price</label>
+
+              <input type="number"
+                     placeholder=""
+                     formControlName="price"
+                     (blur)="updateErrorMessage()"
+                     required
+                     class="w-full rounded-lg border border-slate-300 px-4 py-2 text-sm outline-none transition-all
+                          bg-white text-slate-900
+                          focus:border-purple-500 focus:ring-1 focus:ring-purple-500
+                          dark:border-slate-700 dark:focus:border-purple-500 dark:bg-slate-800/50 dark:text-white"/>
+
+              <div class="flex flex-col gap-3 sm:flex-row">
+
+                @if(vinylForm.get('price')?.invalid && vinylForm.get('price')?.touched){
+                  <div class="text-red-600 dark:text-red-300 text-sm mt-1 ml-2">Invalid price</div>
+                }
+              </div>
+
+          </div>
+
+          <div class="mt-6 flex gap-3">
+
+            <button type="button"
+                    (click)="close.emit()"
+                    class="cursor-pointer flex-1 rounded-lg border border-slate-200 px-4 py-2 text-sm font-semibold
+                         text-slate-700 transition-colors hover:bg-gray-50 dark:border-slate-600
+                         dark:text-slate-200 dark:hover:bg-slate-700">
+                <i class="pi pi-undo mr-3"></i> Cancel
+            </button>
+
+            <button class="flex-1 rounded-lg cursor-pointer bg-indigo-600 px-6 py-2 text-sm font-semibold text-white
+                           transition-colors hover:bg-indigo-700 active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+                    [disabled]="vinylForm.invalid || isLoading()"
+                    type="submit">
+
+              @if (isLoading()) {
+                  <i class="pi pi-spin pi-spinner mr-3"></i> Saving...
+              } @else {
+                  <i class="pi pi-save mr-3"></i> Save
+              }
+
+            </button>
+
+          </div>
+
+        </form>
+
+      </div>
+
+
+    </div>
+
+  </div>
+
+</div>

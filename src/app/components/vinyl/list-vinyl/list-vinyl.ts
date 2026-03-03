@@ -1,28 +1,34 @@
+import { VinylDto } from './../../../domain/vinyl.model';
 import { VinylService } from '../../../service/vinyl.service';
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
 import { VinylCreate } from "../vinyl-create/vinyl-create";
+import { DeleteData } from '../../shared/delete-data/delete-data';
+import { AlertService } from '../../../service/alert.service';
+import { VinylUpdate } from '../vinyl-update/vinyl-update';
 @Component({
   selector: 'app-list-vinyl',
-  imports: [CurrencyPipe, VinylCreate],
+  imports: [CurrencyPipe, VinylCreate, DeleteData, VinylUpdate],
   templateUrl: './list-vinyl.html',
   styleUrl: './list-vinyl.css',
 })
 export class ListVinyl implements OnInit{
 
  protected readonly Math = Math;
+ private alert = inject(AlertService);
+ protected vinylService = inject(VinylService);
 
  isLoading = signal(true);
-
- showModal = signal(false);
-
+ showModalCreate = signal(false);
+ showModalUpdate = signal(false);
+ showModalDelete = signal(false);
  currentPage = signal(1);
-
  itemsPerPage = signal(5);
-
  searchTerm = signal('');
+ idSelecionado = signal('');
 
- protected vinylService = inject(VinylService);
+ vinylSelected = signal<VinylDto | null>(null);
+
 
  filteredVinyls = computed(() => {
   const term = this.searchTerm().toLowerCase().trim();
@@ -51,7 +57,7 @@ export class ListVinyl implements OnInit{
   });
 
  ngOnInit(): void {
-    this.vinylService.getAll().subscribe({
+    this.vinylService.get().subscribe({
       next: () => this.isLoading.set(false),
       error: () => this.isLoading.set(false)
     });
@@ -61,6 +67,50 @@ export class ListVinyl implements OnInit{
     if (page >= 1 && page <= this.totalPages()) {
       this.currentPage.set(page);
     }
+  }
+
+  editVinyl(guid: string) {
+    this.isLoading.set(true);
+
+    this.vinylService.getByGuid(guid).subscribe({
+      next: (response) => {
+        if (response.success && response.data) {
+          this.vinylSelected.set(response.data);
+          this.showModalUpdate.set(true);
+        }
+        this.isLoading.set(false);
+      },
+      error: () => {
+        this.alert.showError('Error loading vinyl data');
+        this.isLoading.set(false);
+        }
+      });
+    }
+
+  delete() {
+    this.isLoading.set(true);
+
+    const id = this.idSelecionado();
+
+    this.vinylService.delete(id).subscribe({
+      next: (response) => {
+        if (response.success) {
+          this.alert.showSuccess(response.message);
+        }
+        this.finally();
+      },
+      error: (err) => {
+        this.alert.showError(err.error?.message);
+        this.finally();
+      }
+    });
+  }
+
+  private finally() {
+    this.isLoading.set(false);
+    this.showModalCreate.set(false);
+    this.showModalUpdate.set(false);
+    this.showModalDelete.set(false);
   }
 
 }

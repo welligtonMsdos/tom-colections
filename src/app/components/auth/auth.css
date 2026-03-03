@@ -3,7 +3,7 @@
   white-space: nowrap;
   overflow: hidden;
   border-right: 0.12em solid var(--color-primaria);
-  animation: typing 3s steps(14, end) 1s infinite alternate,
+  animation: typing 3s steps(10, end) 1s infinite alternate,
              blink-caret 0.7s step-end infinite;
 }
 
