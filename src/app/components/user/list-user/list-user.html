@@ -40,10 +40,10 @@
               </td>
               <td class="px-6 py-2">
                 <div class="flex justify-end gap-4">
-                  <button (click)="editarUsuario(u._id)" title="Editar" class="text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors cursor-pointer">
+                  <button (click)="editUser(u._id)" title="Editar" class="text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors cursor-pointer">
                     <i class="pi pi-pen-to-square"></i>
                   </button>
-                  <button (click)="prepararExclusao(u._id)" title="Excluir"
+                  <button (click)="showModalDelete.set(true); idSelected.set(u._id)" title="Excluir"
                           class="text-gray-400 hover:text-red-600 dark:hover:text-red-400 transition-colors cursor-pointer">
                     <i class="pi pi-trash"></i>
                   </button>
@@ -113,19 +113,19 @@
   </div>
 </div>
 
-@if (exibirModal()) {
+@if (showModalDelete()) {
   <app-delete-data
-    [id]="idSelecionado()"
-    (onCancel)="exibirModal.set(false)"
-    (onConfirm)="executarExclusao()">
+    [id]="idSelected()"
+    (onCancel)="showModalDelete.set(false)"
+    (onConfirm)="delete()">
   </app-delete-data>
 }
 
-@if (exibirModalUpdate()) {
+@if (showModalUpdate()) {
   <app-user-update
-    [user]="usuarioSelecionado()!"
-    (saved)="userService.getAllUsers().subscribe()"
-    (close)="exibirModalUpdate.set(false)">
+    [user]="userSelected()!"
+    (saved)="userService.get().subscribe()"
+    (close)="showModalUpdate.set(false)">
     >
   </app-user-update>
 }

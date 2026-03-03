@@ -17,14 +17,14 @@ export class ListUser implements OnInit {
   protected userService = inject(UserService);
   protected readonly Math = Math;
 
-  usuarioSelecionado = signal<UserDto | null>(null);
-  exibirModalUpdate = signal(false);
+  userSelected = signal<UserDto | null>(null);
+  showModalUpdate = signal(false);
+  showModalDelete = signal(false);
   searchTerm = signal('');
   isLoading = signal(true);
   currentPage = signal(1);
   itemsPerPage = signal(5);
-  exibirModal = signal(false);
-  idSelecionado = signal('');
+  idSelected = signal('');
 
   filteredUsers = computed(() => {
   const term = this.searchTerm().toLowerCase().trim();
@@ -38,14 +38,14 @@ export class ListUser implements OnInit {
     );
   });
 
-  editarUsuario(id: string) {
+  editUser(id: string) {
     this.isLoading.set(true);
 
-    this.userService.getUserById(id).subscribe({
+    this.userService.getById(id).subscribe({
       next: (response) => {
         if (response.success && response.data) {
-          this.usuarioSelecionado.set(response.data);
-          this.exibirModalUpdate.set(true);
+          this.userSelected.set(response.data);
+          this.showModalUpdate.set(true);
         }
         this.isLoading.set(false);
       },
@@ -78,7 +78,7 @@ export class ListUser implements OnInit {
   }
 
   ngOnInit(): void {
-    this.userService.getAllUsers().subscribe({
+    this.userService.get().subscribe({
       next: () => this.isLoading.set(false),
       error: () => this.isLoading.set(false)
     });
@@ -90,32 +90,28 @@ export class ListUser implements OnInit {
     }
   }
 
-  prepararExclusao(id: string) {
-    this.idSelecionado.set(id);
-    this.exibirModal.set(true);
-  }
-
-  executarExclusao() {
+  delete() {
     this.isLoading.set(true);
-    const id = this.idSelecionado();
+    const id = this.idSelected();
 
-    this.userService.deleteUser(id).subscribe({
+    this.userService.delete(id).subscribe({
       next: (response) => {
         if (response.success) {
           this.alert.showSuccess(response.message);
         }
-        this.finalizarAcao();
+        this.finally();
       },
-      error: () => {
-        this.alert.showError('Erro ao excluir usuário.');
-        this.finalizarAcao();
+      error: (err) => {
+        this.alert.showError(err.error?.message);
+        this.finally();
       }
     });
   }
 
-  private finalizarAcao() {
+  private finally() {
     this.isLoading.set(false);
-    this.exibirModal.set(false);
+    this.showModalUpdate.set(false);
+    this.showModalDelete.set(false);
   }
 
 }

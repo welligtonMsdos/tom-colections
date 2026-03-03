@@ -25,10 +25,8 @@ export class ListVinyl implements OnInit{
  currentPage = signal(1);
  itemsPerPage = signal(5);
  searchTerm = signal('');
- idSelecionado = signal('');
-
+ idSelected = signal('');
  vinylSelected = signal<VinylDto | null>(null);
-
 
  filteredVinyls = computed(() => {
   const term = this.searchTerm().toLowerCase().trim();
@@ -90,7 +88,7 @@ export class ListVinyl implements OnInit{
   delete() {
     this.isLoading.set(true);
 
-    const id = this.idSelecionado();
+    const id = this.idSelected();
 
     this.vinylService.delete(id).subscribe({
       next: (response) => {

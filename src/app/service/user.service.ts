@@ -12,7 +12,7 @@ import { UserUpdateDto } from '../domain/userUpdate.mode';
 export class UserService {
 
   //private apiUrl = 'http://13.59.37.186:5011/api/Users/';
-  private apiUrl = 'http://localhost:5011/api/Users/';
+  private apiUrl = 'http://localhost:5011/api/Users';
 
   private usersSignal = signal<UserDto[]>([]);
 
@@ -20,7 +20,7 @@ export class UserService {
 
   constructor(private http: HttpClient) {}
 
-  getAllUsers(): Observable<Result<UserDto[]>> {
+  get(): Observable<Result<UserDto[]>> {
     return this.http.get<Result<UserDto[]>>(this.apiUrl).pipe(
       tap(result => {
         if (result.success && result.data) {
@@ -30,12 +30,12 @@ export class UserService {
     );
   }
 
-  getUserById(id: string): Observable<Result<UserDto>> {
-    return this.http.get<Result<UserDto>>(this.apiUrl + `${id}`);
+  getById(id: string): Observable<Result<UserDto>> {
+    return this.http.get<Result<UserDto>>(this.apiUrl + `/${id}`);
   }
 
-  deleteUser(id: string): Observable<Result<void>> {
-    return this.http.delete<Result<void>>(this.apiUrl + `${id}`).pipe(
+  delete(id: string): Observable<Result<void>> {
+    return this.http.delete<Result<void>>(this.apiUrl + `/${id}`).pipe(
       tap(result => {
         if (result.success) {
           this.usersSignal.update(users => users.filter(u => u._id !== id));
@@ -44,7 +44,7 @@ export class UserService {
     );
   }
 
-  addNewUser(user: UserCreateDto): Observable<Result<UserDto>> {
+  post(user: UserCreateDto): Observable<Result<UserDto>> {
     return this.http.post<Result<UserDto>>(this.apiUrl, user).pipe(
       tap(result => {
         if (result.success && result.data) {
@@ -54,7 +54,7 @@ export class UserService {
     );
   }
 
-  updateUser(user: Partial<UserUpdateDto>): Observable<Result<UserDto>> {
+  put(user: Partial<UserUpdateDto>): Observable<Result<UserDto>> {
     return this.http.put<Result<UserDto>>(this.apiUrl, user).pipe(
       tap(result => {
         if (result.success && result.data) {

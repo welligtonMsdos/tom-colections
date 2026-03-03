@@ -69,7 +69,7 @@ export class VinylCreate {
             this.errorMessage.set(messages.join(' | '));
 
           } else {
-            this.errorMessage.set(err.error?.message || 'Erro desconhecido no servidor.');
+            this.errorMessage.set(err.error?.message);
           }
         }
       });

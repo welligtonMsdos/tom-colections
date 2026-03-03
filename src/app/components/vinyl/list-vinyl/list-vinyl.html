@@ -69,7 +69,7 @@
                 </button>
 
                 <button title="Excluir"
-                        (click)="showModalDelete.set(true); idSelecionado.set(vinyl.guid)"
+                        (click)="showModalDelete.set(true); idSelected.set(vinyl.guid)"
                         class="text-gray-400 hover:text-red-600 dark:hover:text-red-400 cursor-pointer">
                   <i class="pi pi-trash"></i>
                 </button>
@@ -143,7 +143,7 @@
 @if (showModalDelete()) {
 
   <app-delete-data
-   [id]="idSelecionado()"
+   [id]="idSelected()"
    (onCancel)="showModalDelete.set(false)"
    (onConfirm)="delete()" />
 

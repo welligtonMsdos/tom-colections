@@ -48,7 +48,7 @@ export class UserCreate {
         password: password || ''
       };
 
-      this.userService.addNewUser(userData).subscribe({
+      this.userService.post(userData).subscribe({
         next: (response) => {
 
           if (response.success) {

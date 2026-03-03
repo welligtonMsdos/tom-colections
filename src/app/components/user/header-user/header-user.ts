@@ -9,6 +9,6 @@ import { UserCreate } from "../user-create/user-create";
 })
 export class HeaderUser {
 
-  showModal = signal(false);
+  showModalCreate = signal(false);
 
 }

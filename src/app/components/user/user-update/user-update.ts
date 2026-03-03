@@ -62,9 +62,7 @@ export class UserUpdate {
           email: email || ''
         };
 
-        const userId = _id || '';
-
-        this.userService.updateUser(userData).subscribe({
+        this.userService.put(userData).subscribe({
           next: (response) => {
 
             if (response.success) {
@@ -86,7 +84,6 @@ export class UserUpdate {
 
               this.errorMessage.set(messages.join(' | '));
 
-              this.alert.showError(messages.join(' | '));
             } else {
               this.errorMessage.set(err.error?.message);
             }

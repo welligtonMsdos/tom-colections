@@ -7,20 +7,20 @@
         <h2 class="text-2xl font-bold text-gray-800 dark:text-white"><i class="pi pi-users text-blue-500"></i></h2>
 
         <button class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg transition cursor-pointer"
-                (click)="showModal.set(true)">
+                (click)="showModalCreate.set(true)">
 
                 <i class="pi pi-plus mr-2"></i>New User
 
         </button>
-
-        @if (showModal()) {
-
-          <app-user-create (close)="showModal.set(false)" />
-
-          }
 
       </div>
 
     </div>
 
 </div>
+
+ @if (showModalCreate()) {
+
+    <app-user-create (close)="showModalCreate.set(false)" />
+
+  }
