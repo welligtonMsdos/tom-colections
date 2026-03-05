@@ -1,16 +1,17 @@
 import { computed, Injectable, signal } from "@angular/core";
-import { ConcertDto } from "../domain/concert.model";
+import { ConcertCreateDto, ConcertDto } from "../domain/concert.model";
 import { Result } from "../domain/result.model";
 import { HttpClient } from "@angular/common/http";
-import { tap } from "rxjs";
+import { Observable, tap } from "rxjs";
 
 @Injectable({
   providedIn: 'root'
 })
-export class TicketService {
+export class ConcertService {
 
   //private apiUrl = 'http://13.59.37.186:8081/api/Concerts/';
   private apiUrl = 'http://localhost:5012/api/Concerts/';
+
   private filterSignal = signal<'upcoming' | 'past'>('upcoming');
 
   public loading = signal<boolean>(false);
@@ -29,15 +30,15 @@ export class TicketService {
   public ticketList = computed(() => this.ticketsState().data);
 
   constructor(private http: HttpClient) {
-    this.loadTickets();
+    this.get();
   }
 
   updateFilter(filter: 'upcoming' | 'past') {
     this.filterSignal.set(filter);
-    this.loadTickets();
+    this.get();
   }
 
-  loadTickets() {
+  get() {
     const status = this.filterSignal();
 
     if (this.cache.has(status)) {
@@ -60,10 +61,32 @@ export class TicketService {
     ).subscribe();
   }
 
+  post(concert: ConcertCreateDto): Observable<Result<ConcertDto>> {
+      return this.http.post<Result<ConcertDto>>(this.apiUrl, concert).pipe(
+        tap(result => {
+          if (result.success && result.data) {
+            this.addShowLocally(result.data);
+          }
+        })
+      )};
+
   addShowLocally(newShow: ConcertDto) {
-    this.ticketsState.update(state => ({
-      ...state,
-      data: [newShow, ...state.data]
-    }));
+    //const isPast = new Date(newShow.showDateDescription) < new Date();
+    //const targetKey = isPast ? 'past' : 'upcoming';
+
+    const targetKey = 'upcoming';
+
+    if (this.filterSignal() === targetKey) {
+      this.ticketsState.update(state => ({
+        ...state,
+        data: [newShow, ...state.data]
+      }));
+    }
+
+    if (this.cache.has(targetKey)) {
+     const cached = this.cache.get(targetKey)!;
+     this.cache.set(targetKey, { ...cached, data: [newShow, ...cached.data] });
+    }
+
   }
 }

@@ -2,17 +2,29 @@
 
   <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
 
-    @if (ticketService.loading()) {
+    @if (concertService.loading()) {
     <div class="absolute inset-0 bg-white/50 dark:bg-slate-900/50 flex justify-center items-center z-10">
       <p>Loading...</p>
     </div>
   }
 
-    @for (ticket of ticketService.ticketList(); track ticket.guid) {
+    @for (concert of concertService.ticketList(); track concert.guid) {
 
       <div class="rounded-lg border shadow-sm transition-all
                   bg-white border-slate-200
                   dark:bg-slate-800 dark:border-slate-700">
+
+        <div class="flex items-center justify-end p-2 gap-2">
+          <button title="Edit"
+                  class="text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 cursor-pointer">
+                  <i class="pi pi-pen-to-square"></i>
+          </button>
+
+          <button title="Delete"
+                  class="text-gray-400 hover:text-red-600 dark:hover:text-red-400 cursor-pointer">
+                  <i class="pi pi-trash"></i>
+          </button>
+        </div>
 
         <div class="flex items-center justify-between p-6">
 
@@ -21,19 +33,19 @@
             <div class="flex items-center space-x-3">
 
               <h3 class="truncate text-sm font-medium text-slate-900 dark:text-white">
-                {{ ticket.artist }}
+                {{ concert.artist }}
               </h3>
 
               <span class="inline-flex items-center rounded-full bg-green-50 px-2 py-1 text-xs font-medium
                           text-green-700 ring-1 ring-inset ring-green-600/20 dark:bg-green-900/30 dark:text-green-400">
-                {{ ticket.showDateDescription }}
+                {{ concert.showDateDescription }}
               </span>
 
             </div>
 
           </div>
 
-          <img [src]="ticket.photo" alt="" class="h-10 w-10 shrink-0 rounded-full bg-slate-300">
+          <img [src]="concert.photo" alt="" class="h-10 w-10 shrink-0 rounded-full bg-slate-300">
 
         </div>
 
@@ -47,7 +59,7 @@
 
                <i class="text-slate-400 text-lg pi pi-map-marker mr-3"></i>
 
-               {{ ticket.venue }}
+               {{ concert.venue }}
 
             </button>
 

@@ -2,7 +2,7 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
-import { TicketService } from '../../../service/ticket.service';
+import { ConcertService } from '../../../service/concert.service';
 
 @Component({
   selector: 'app-tickets',
@@ -12,6 +12,6 @@ import { TicketService } from '../../../service/ticket.service';
 })
 export class Tickets {
 
- protected ticketService = inject(TicketService);
+ protected concertService = inject(ConcertService);
 
 }

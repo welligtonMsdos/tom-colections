@@ -1,18 +1,22 @@
-import { Component} from '@angular/core';
-import { TicketService } from '../../../service/ticket.service';
+import { Component, signal} from '@angular/core';
+import { ConcertService } from '../../../service/concert.service';
 import { CommonModule } from '@angular/common';
+import { ConcertCreate } from '../concert-create/concert-create';
 @Component({
   selector: 'app-header-shows',
-  imports: [CommonModule],
+  imports: [CommonModule,
+            ConcertCreate],
   templateUrl: './header-shows.html',
   styleUrl: './header-shows.css',
 })
 export class HeaderShows {
 
-  constructor(public ticketService: TicketService) {}
+  showModalCreate = signal(false);
+
+  constructor(public concertService: ConcertService) {}
 
   changeFilter(type: 'upcoming' | 'past') {
-    this.ticketService.updateFilter(type);
+    this.concertService.updateFilter(type);
   }
 
 }
