@@ -16,11 +16,13 @@
 
         <div class="flex items-center justify-end p-2 gap-2">
           <button title="Edit"
+                  (click)="editConcert(concert.guid)"
                   class="text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 cursor-pointer">
                   <i class="pi pi-pen-to-square"></i>
           </button>
 
           <button title="Delete"
+                  (click)="showModalDelete.set(true); idSelected.set(concert.guid)"
                   class="text-gray-400 hover:text-red-600 dark:hover:text-red-400 cursor-pointer">
                   <i class="pi pi-trash"></i>
           </button>
@@ -73,3 +75,21 @@
   </div>
 
 </div>
+
+@if(showModalUpdate()) {
+
+  <app-concert-update
+   [concert]="concertSelected()!"
+   (saved)="concertService.get()"
+   (close)="showModalUpdate.set(false)" />
+
+}
+
+@if (showModalDelete()) {
+
+  <app-delete-data
+   [id]="idSelected()"
+   (onCancel)="showModalDelete.set(false)"
+   (onConfirm)="delete()" />
+
+}

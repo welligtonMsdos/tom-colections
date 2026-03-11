@@ -2,6 +2,7 @@ export interface ConcertDto{
   guid: string;
   artist: string;
   venue: string;
+  showDate: Date;
   showDateDescription: string;
   photo: string;
 }

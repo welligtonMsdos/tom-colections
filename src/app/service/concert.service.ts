@@ -1,8 +1,8 @@
 import { computed, Injectable, signal } from "@angular/core";
-import { ConcertCreateDto, ConcertDto } from "../domain/concert.model";
+import { ConcertCreateDto, ConcertDto, ConcertUpdateDto } from "../domain/concert.model";
 import { Result } from "../domain/result.model";
 import { HttpClient } from "@angular/common/http";
-import { Observable, tap } from "rxjs";
+import { catchError, finalize, Observable, tap } from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +10,7 @@ import { Observable, tap } from "rxjs";
 export class ConcertService {
 
   //private apiUrl = 'http://13.59.37.186:8081/api/Concerts/';
-  private apiUrl = 'http://localhost:5012/api/Concerts/';
+  private apiUrl = 'http://localhost:5012/api/Concerts';
 
   private filterSignal = signal<'upcoming' | 'past'>('upcoming');
 
@@ -33,6 +33,12 @@ export class ConcertService {
     this.get();
   }
 
+  public refresh(){
+    this.cache.clear();
+    this.ticketsState.set({ data: [], success: true, message: '', errors: {} });
+    this.get();
+  }
+
   updateFilter(filter: 'upcoming' | 'past') {
     this.filterSignal.set(filter);
     this.get();
@@ -40,53 +46,73 @@ export class ConcertService {
 
   get() {
     const status = this.filterSignal();
+    const token = localStorage.getItem('token');
 
-    if (this.cache.has(status)) {
-      this.ticketsState.set(this.cache.get(status)!);
+    if(!token){
+      return;
+    }
+
+    const cacheKey = `${token}_${status}`;
+
+    if (this.cache.has(cacheKey)) {
+      this.ticketsState.set(this.cache.get(cacheKey)!);
+      this.loading.set(false);
       return;
     }
 
     this.loading.set(true);
 
-    const endpoint = status === 'past' ? 'Past' : 'Upcomming';
+    const endpoint = status === 'past' ? 'Past' : 'Upcoming';
 
-    this.http.get<Result<ConcertDto[]>>(`${this.apiUrl}${endpoint}`).pipe(
+    this.http.get<Result<ConcertDto[]>>(`${this.apiUrl}/${endpoint}`).pipe(
       tap((result) => {
         if (result.success) {
-          this.cache.set(status, result);
+          this.cache.set(cacheKey, result);
           this.ticketsState.set(result);
         }
         this.loading.set(false);
-      })
+      }),
+      catchError((error) => {
+        console.error(error);
+        this.ticketsState.set({ data: [], success: false, message: 'Erro ao carregar', errors: {} });
+        this.loading.set(false);
+        return [];
+      }),
+      finalize(() => this.loading.set(false))
     ).subscribe();
+  }
+
+   getByGuid(guid: string): Observable<Result<ConcertDto>> {
+      return this.http.get<Result<ConcertDto>>(this.apiUrl + `/${guid}`);
   }
 
   post(concert: ConcertCreateDto): Observable<Result<ConcertDto>> {
       return this.http.post<Result<ConcertDto>>(this.apiUrl, concert).pipe(
         tap(result => {
           if (result.success && result.data) {
-            this.addShowLocally(result.data);
+            this.refresh();
           }
         })
       )};
 
-  addShowLocally(newShow: ConcertDto) {
-    //const isPast = new Date(newShow.showDateDescription) < new Date();
-    //const targetKey = isPast ? 'past' : 'upcoming';
-
-    const targetKey = 'upcoming';
-
-    if (this.filterSignal() === targetKey) {
-      this.ticketsState.update(state => ({
-        ...state,
-        data: [newShow, ...state.data]
-      }));
+  put(concert: ConcertUpdateDto): Observable<Result<ConcertDto>> {
+      return this.http.put<Result<ConcertDto>>(this.apiUrl, concert).pipe(
+        tap(result => {
+          if (result.success && result.data) {
+            this.refresh();
+          }
+        })
+      );
     }
 
-    if (this.cache.has(targetKey)) {
-     const cached = this.cache.get(targetKey)!;
-     this.cache.set(targetKey, { ...cached, data: [newShow, ...cached.data] });
-    }
-
+  delete(guid: string): Observable<Result<any>> {
+    return this.http.delete<Result<any>>(`${this.apiUrl}/${guid}`).pipe(
+      tap(result => {
+        if (result.success) {
+          this.refresh();
+        }
+      })
+    );
   }
+
 }

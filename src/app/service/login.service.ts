@@ -6,6 +6,7 @@ import { firstValueFrom } from 'rxjs';
 import { jwtDecode } from 'jwt-decode';
 import { Result } from '../domain/result.model';
 import { AlertService } from './alert.service';
+import { ConcertService } from './concert.service';
 interface UserPayload {
   name: string;
   email: string;
@@ -24,7 +25,9 @@ export class LoginService {
 
    currentUser = computed(() => this.userSignal());
 
-    private alert = inject(AlertService);
+   private alert = inject(AlertService);
+
+   private concertService = inject(ConcertService);
 
    constructor(private http: HttpClient
    ) {
@@ -47,6 +50,7 @@ export class LoginService {
   logout() {
     localStorage.removeItem('token');
     this.userSignal.set(null);
+    this.concertService.refresh();
   }
 
   async login(userLoginDto: UserLoginDto): Promise<Result<ApiResponse>> {
