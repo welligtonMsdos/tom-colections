@@ -54,11 +54,11 @@ export class UserService {
     );
   }
 
-  put(user: Partial<UserUpdateDto>): Observable<Result<UserDto>> {
-    return this.http.put<Result<UserDto>>(this.apiUrl, user).pipe(
+  put(user: Partial<UserUpdateDto>, id: string): Observable<Result<UserDto>> {
+    return this.http.put<Result<UserDto>>(this.apiUrl + `/${id}`, user).pipe(
       tap(result => {
         if (result.success && result.data) {
-          this.usersSignal.update(users => users.map(u => u._id === user._id ? result.data! : u));
+          this.usersSignal.update(users => users.map(u => u._id === id ? result.data! : u));
         }
       })
     );

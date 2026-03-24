@@ -49,11 +49,11 @@ export class VinylService {
       })
     )};
 
-  put(vinyl: VinylUpdateDto): Observable<Result<VinylDto>> {
-    return this.http.put<Result<VinylDto>>(this.apiUrl, vinyl).pipe(
+  put(vinyl: VinylUpdateDto, guid: string): Observable<Result<VinylDto>> {
+    return this.http.put<Result<VinylDto>>(this.apiUrl + `/${guid}`, vinyl).pipe(
       tap(result => {
         if (result.success && result.data) {
-          this.vinylsSignal.update(vinyls => vinyls.map(v => v.guid === vinyl.guid ? result.data! : v));
+          this.vinylsSignal.update(vinyls => vinyls.map(v => v.guid === guid ? result.data! : v));
         }
       })
     );

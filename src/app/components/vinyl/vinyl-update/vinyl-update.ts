@@ -21,7 +21,6 @@ export class VinylUpdate {
       const vinylData = this.vinyl();
       if (vinylData) {
         this.vinylForm.patchValue({
-          guid: vinylData.guid,
           artist: vinylData.artist,
           album: vinylData.album,
           year: vinylData.year,
@@ -45,7 +44,6 @@ export class VinylUpdate {
   isLoading = signal(false);
 
   vinylForm = this.fb.group({
-    guid: [''],
     artist: ['', [Validators.required]],
     album: ['', [Validators.required]],
     year: [new Date().getFullYear(), [Validators.required]],
@@ -62,7 +60,7 @@ export class VinylUpdate {
 
       const vinylData: VinylUpdateDto = this.vinylForm.getRawValue();
 
-      this.vinylService.put(vinylData).subscribe({
+      this.vinylService.put(vinylData, this.vinyl().guid).subscribe({
         next: (response) => {
           if (response.success) {
             this.alert.showSuccess(response.message);

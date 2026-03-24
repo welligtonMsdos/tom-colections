@@ -2,10 +2,11 @@ import { Component, signal} from '@angular/core';
 import { ConcertService } from '../../../service/concert.service';
 import { CommonModule } from '@angular/common';
 import { ConcertCreate } from '../concert-create/concert-create';
+
 @Component({
   selector: 'app-header-shows',
   imports: [CommonModule,
-            ConcertCreate],
+    ConcertCreate],
   templateUrl: './header-shows.html',
   styleUrl: './header-shows.css',
 })

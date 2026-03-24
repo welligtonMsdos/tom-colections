@@ -16,4 +16,4 @@ export interface Concert {
 }
 
 export type ConcertCreateDto = Omit<Concert, 'guid'>;
-export type ConcertUpdateDto = Concert;
+export type ConcertUpdateDto = Omit<Concert, 'guid'>;

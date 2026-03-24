@@ -8,7 +8,7 @@ export interface Vinyl {
 }
 
 export type VinylCreateDto = Omit<Vinyl, 'guid'>;
-export type VinylUpdateDto = Vinyl;
+export type VinylUpdateDto = Omit<Vinyl, 'guid'>;
 export type VinylDto = Vinyl;
 
 

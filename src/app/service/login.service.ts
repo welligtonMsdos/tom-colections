@@ -18,8 +18,8 @@ interface UserPayload {
 
 export class LoginService {
 
-   //private readonly apiUrl = 'http://13.59.37.186:5011/api/Users/';
-   private readonly apiUrl = 'http://localhost:5011/api/Users/';
+   //private readonly apiUrl = 'http://13.59.37.186:5011/api/Auth/';
+   private readonly apiUrl = 'http://localhost:5011/api/Auth/';
 
    private userSignal = signal<UserPayload | null>(null);
 
@@ -76,7 +76,7 @@ export class LoginService {
 
       const backendError = error.error;
 
-      this.alert.showError(backendError.Errors ?? 'Erro ao realizar login');
+      this.alert.showError(backendError.Errors);
 
       throw backendError;
     }

@@ -1,47 +1,37 @@
-  <header class="flex flex-col sm:flex-row items-center justify-between gap-4 p-6
-               bg-white dark:bg-slate-900 border-b border-slate-200
-                 dark:border-slate-800 transition-colors duration-300">
+<div class="row mb-4">
+  <div class="col-12 d-flex justify-content-between align-items-center">
 
-  <div class="flex items-center gap-8">
+    <div>
+      <h1 class="h3 mb-3">Concerts</h1>
+      <div class="d-flex gap-2">
+        <button
+          class="btn"
+          [ngClass]="concertService.currentFilter() === 'upcoming' ? 'btn-primary' : 'btn-outline-primary'"
+          (click)="changeFilter('upcoming')">
+          <i class="pi pi-calendar-plus me-2"></i>
+          Next concert
+        </button>
 
-    <h1 class="text-2xl font-bold text-slate-800 dark:text-slate-100 tracking-tight">
-      Concerts
-    </h1>
+        <button
+          class="btn"
+          [ngClass]="concertService.currentFilter() === 'past' ? 'btn-primary' : 'btn-outline-primary'"
+          (click)="changeFilter('past')">
+          <i class="pi pi-history me-2"></i>
+          Past concert
+        </button>
+      </div>
+    </div>
 
-    <nav class="flex bg-slate-100 dark:bg-slate-800 p-1 rounded-lg">
-      <button
-    (click)="changeFilter('upcoming')"
-    [class]="concertService.currentFilter() === 'upcoming'
-      ? 'bg-indigo-600 text-white'
-      : 'bg-transparent text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700'"
-    class="px-4 py-2 rounded-lg text-sm font-semibold transition-all cursor-pointer">
-    <i class="pi pi-calendar-plus mr-2"></i> Next concert
-  </button>
-
-      <button
-    (click)="changeFilter('past')"
-    [class]="concertService.currentFilter() === 'past'
-      ? 'bg-indigo-600 text-white'
-      : 'bg-transparent text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-700'"
-    class="px-4 py-2 rounded-lg text-sm font-semibold transition-all cursor-pointer">
-    <i class="pi pi-history mr-2"></i> Past concert
-  </button>
-    </nav>
+    <div class="align-self-end">
+      <button class="btn btn-primary" (click)="showModalCreate.set(true)">
+        <i class="pi pi-plus me-2"></i>
+        New concert
+      </button>
+    </div>
 
   </div>
-
-  <button class="cursor-pointer rounded-lg bg-indigo-600 px-6 py-2 text-sm font-semibold text-white
-                 transition-colors hover:bg-indigo-700 active:scale-95"
-          type="button"
-          (click)="showModalCreate.set(true)">
-          <i class="pi pi-plus mr-2"></i> New concert
-  </button>
-
-</header>
+</div>
 
 @if (showModalCreate()) {
-
   <app-concert-create (close)="showModalCreate.set(false)" />
-
 }
-

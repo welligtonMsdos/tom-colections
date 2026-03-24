@@ -1,8 +1,9 @@
-import { computed, Injectable, signal } from "@angular/core";
+import { computed, inject, Injectable, signal } from "@angular/core";
 import { ConcertCreateDto, ConcertDto, ConcertUpdateDto } from "../domain/concert.model";
 import { Result } from "../domain/result.model";
 import { HttpClient } from "@angular/common/http";
 import { catchError, finalize, Observable, tap } from "rxjs";
+import { AlertService } from "./alert.service";
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,8 @@ export class ConcertService {
   private apiUrl = 'http://localhost:5012/api/Concerts';
 
   private filterSignal = signal<'upcoming' | 'past'>('upcoming');
+
+  private alert = inject(AlertService);
 
   public loading = signal<boolean>(false);
 
@@ -46,6 +49,7 @@ export class ConcertService {
 
   get() {
     const status = this.filterSignal();
+
     const token = localStorage.getItem('token');
 
     if(!token){
@@ -74,6 +78,8 @@ export class ConcertService {
       }),
       catchError((error) => {
         console.error(error);
+        const backendError = error.error;
+        this.alert.showError(backendError.Errors);
         this.ticketsState.set({ data: [], success: false, message: 'Erro ao carregar', errors: {} });
         this.loading.set(false);
         return [];
@@ -95,8 +101,8 @@ export class ConcertService {
         })
       )};
 
-  put(concert: ConcertUpdateDto): Observable<Result<ConcertDto>> {
-      return this.http.put<Result<ConcertDto>>(this.apiUrl, concert).pipe(
+  put(concert: ConcertUpdateDto, guid: string): Observable<Result<ConcertDto>> {
+      return this.http.put<Result<ConcertDto>>(this.apiUrl + `/${guid}`, concert).pipe(
         tap(result => {
           if (result.success && result.data) {
             this.refresh();

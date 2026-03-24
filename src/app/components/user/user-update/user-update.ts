@@ -21,7 +21,6 @@ export class UserUpdate {
       const userData = this.user();
       if (userData) {
         this.userForm.patchValue({
-          _id: userData._id,
           name: userData.name,
           email: userData.email
         });
@@ -42,7 +41,6 @@ export class UserUpdate {
   isLoading = signal(false);
 
   userForm = this.fb.group({
-    _id: ['', Validators.required],
     name: ['', Validators.required],
     email: ['', [Validators.required, Validators.email]],
     });
@@ -55,14 +53,13 @@ export class UserUpdate {
 
         this.errorMessage.set(null);
 
-        const { _id, name, email } = this.userForm.getRawValue();
+        const { name, email } = this.userForm.getRawValue();
         const userData: UserUpdateDto = {
-          _id: _id || '',
           name: name || '',
           email: email || ''
         };
 
-        this.userService.put(userData).subscribe({
+        this.userService.put(userData, this.user()._id).subscribe({
           next: (response) => {
 
             if (response.success) {

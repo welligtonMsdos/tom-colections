@@ -1,6 +1,5 @@
 mat-toolbar {
   background: linear-gradient(to right, #00539f, #cd072e);
-  /* background: var(--color-primaria); */
   box-shadow: 0 4px 6px rgba(0,0,0,0.3);
   font-family: "Days One", sans-serif;
   padding: 0 1rem;

@@ -21,7 +21,6 @@ export class ConcertUpdate {
       const concertData = this.concert();
       if (concertData) {
         this.concertForm.patchValue({
-          guid: concertData.guid,
           artist: concertData.artist,
           venue: concertData.venue,
           showDate: concertData.showDate,
@@ -41,7 +40,6 @@ export class ConcertUpdate {
   isLoading = signal(false);
 
   concertForm = this.fb.group({
-    guid: [''],
     artist: ['', [Validators.required, Validators.minLength(3)]],
     venue: ['', [Validators.required, Validators.minLength(3)]],
     showDate: [new Date(), [Validators.required]],
@@ -50,10 +48,14 @@ export class ConcertUpdate {
 
   save() {
     if (this.concertForm.valid) {
+
        this.isLoading.set(true);
+
        this.errorMessage.set(null);
+
        const concertData: ConcertUpdateDto = this.concertForm.getRawValue();
-       this.concertService.put(concertData).subscribe({
+
+       this.concertService.put(concertData, this.concert().guid).subscribe({
         next: (response) => {
           if (response.success) {
             this.alert.showSuccess(response.message);
