@@ -1,95 +1,67 @@
-<div class="p-8">
+<div class="container-fluid p-4">
 
-  <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-
-    @if (concertService.loading()) {
-    <div class="absolute inset-0 bg-white/50 dark:bg-slate-900/50 flex justify-center items-center z-10">
+  @if (concertService.loading()) {
+    <div class="text-center my-3">
+      <div class="spinner-border text-primary" role="status"></div>
       <p>Loading...</p>
     </div>
   }
 
+  <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
     @for (concert of concertService.ticketList(); track concert.guid) {
+      <div class="col">
 
-      <div class="rounded-lg border shadow-sm transition-all
-                  bg-white border-slate-200
-                  dark:bg-slate-800 dark:border-slate-700">
+        <div class="card h-100 border-0 shadow-sm position-relative overflow-visible"
+             style="border-radius: 15px; background: #eaedf0;">
 
-        <div class="flex items-center justify-end p-2 gap-2">
-          <button title="Edit"
-                  (click)="editConcert(concert.guid)"
-                  class="text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 cursor-pointer">
-                  <i class="pi pi-pen-to-square"></i>
-          </button>
+          <div class="d-flex justify-content-end gap-1 p-2">
+            <button (click)="editConcert(concert.guid)" class="btn btn-sm btn-light text-primary rounded-circle">
+              <i class="pi pi-pen-to-square"></i>
+            </button>
+            <button (click)="showModalDelete.set(true); idSelected.set(concert.guid)" class="btn btn-sm btn-light text-danger rounded-circle">
+              <i class="pi pi-trash"></i>
+            </button>
+          </div>
 
-          <button title="Delete"
-                  (click)="showModalDelete.set(true); idSelected.set(concert.guid)"
-                  class="text-gray-400 hover:text-red-600 dark:hover:text-red-400 cursor-pointer">
-                  <i class="pi pi-trash"></i>
-          </button>
-        </div>
+          <div class="px-3 text-center">
+            <img [src]="concert.photo"
+                 class="rounded object-fit-cover shadow-sm"
+                 style="height: 120px; width: 100%;"
+                 alt="Artist">
+          </div>
 
-        <div class="flex items-center justify-between p-6">
+          <div class="card-body text-center">
+            <h5 class="card-title fw-bold text-truncate mt-1 mb-0">{{ concert.artist }}</h5>
+            <div class="badge bg-success mt-2">{{ concert.showDateDescription }}</div>
+          </div>
 
-          <div class="flex-1 truncate">
+          <div class="card-footer border-0 p-3 mt-2 text-center position-relative"
+               style="background-color: #f8f9fa; border-top: 2px dashed #dee2e6 !important; border-radius: 0 0 15px 15px;">
 
-            <div class="flex items-center space-x-3">
-
-              <h3 class="truncate text-sm font-medium text-slate-900 dark:text-white">
-                {{ concert.artist }}
-              </h3>
-
-              <span class="inline-flex items-center rounded-full bg-green-50 px-2 py-1 text-xs font-medium
-                          text-green-700 ring-1 ring-inset ring-green-600/20 dark:bg-green-900/30 dark:text-green-400">
-                {{ concert.showDateDescription }}
-              </span>
-
+            <div class="d-flex align-items-center justify-content-center text-secondary">
+              <i class="pi pi-map-marker me-2 text-danger"></i>
+              <span class="fw-medium small text-truncate">{{ concert.venue }}</span>
             </div>
 
-          </div>
-
-          <img [src]="concert.photo" alt="" class="h-10 w-10 shrink-0 rounded-full bg-slate-300">
-
-        </div>
-
-        <div class="flex border-t border-slate-200 dark:border-slate-700">
-
-          <div class="flex w-0 flex-1 border-r border-slate-200 dark:border-slate-700">
-
-            <button class="relative inline-flex w-0 flex-1 items-center justify-center
-                           gap-x-3 rounded-bl-lg py-4 text-sm font-semibold
-                           text-slate-900 dark:text-white hover:bg-slate-50 dark:hover:bg-slate-700/50">
-
-               <i class="text-slate-400 text-lg pi pi-map-marker mr-3"></i>
-
-               {{ concert.venue }}
-
-            </button>
 
           </div>
 
         </div>
-
       </div>
     }
-
   </div>
-
 </div>
 
 @if(showModalUpdate()) {
-
   <app-concert-update
    [concert]="concertSelected()!"
    (saved)="concertService.get()"
    (close)="showModalUpdate.set(false)" />
-
 }
 
 @if (showModalDelete()) {
-
   <app-delete-data
    [id]="idSelected()"
    (onCancel)="showModalDelete.set(false)"
    (onConfirm)="delete()" />
-
 }

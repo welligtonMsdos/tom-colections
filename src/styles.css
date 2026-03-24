@@ -14,6 +14,7 @@ html, body {
   --bs-body-bg: #1c1c1c;
   --bs-body-color: #e0e0e0;
   --bs-danger-rgb: 255, 107, 107;
+ --bs-card-subtitle-color: #adb5bd;
 }
 
 .success-snake {
