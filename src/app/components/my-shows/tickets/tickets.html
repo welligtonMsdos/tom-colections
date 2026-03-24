@@ -9,40 +9,45 @@
 
   <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
     @for (concert of concertService.ticketList(); track concert.guid) {
+
       <div class="col">
 
-        <div class="card h-100 border-0 shadow-sm position-relative overflow-visible"
-             style="border-radius: 15px; background: #eaedf0;">
+        <div class="card cardTicket h-100 border-0 shadow-sm position-relative overflow-visible">
 
           <div class="d-flex justify-content-end gap-1 p-2">
-            <button (click)="editConcert(concert.guid)" class="btn btn-sm btn-light text-primary rounded-circle">
+
+            <button (click)="editConcert(concert.guid)"
+                    class="btn btn-sm btn-light text-primary rounded-circle">
               <i class="pi pi-pen-to-square"></i>
             </button>
-            <button (click)="showModalDelete.set(true); idSelected.set(concert.guid)" class="btn btn-sm btn-light text-danger rounded-circle">
+
+            <button (click)="showModalDelete.set(true); idSelected.set(concert.guid)"
+                    class="btn btn-sm btn-light text-danger rounded-circle">
               <i class="pi pi-trash"></i>
             </button>
+
           </div>
 
           <div class="px-3 text-center">
             <img [src]="concert.photo"
-                 class="rounded object-fit-cover shadow-sm"
-                 style="height: 120px; width: 100%;"
+                 class="rounded object-fit-cover shadow-sm ticketPhoto"
                  alt="Artist">
           </div>
 
-          <div class="card-body text-center">
-            <h5 class="card-title fw-bold text-truncate mt-1 mb-0">{{ concert.artist }}</h5>
+          <div class="card-body text-center text-secondary">
+
+            <h5 class="fw-bold text-truncate mt-1 mb-0">{{ concert.artist }}</h5>
+
             <div class="badge bg-success mt-2">{{ concert.showDateDescription }}</div>
+
           </div>
 
-          <div class="card-footer border-0 p-3 mt-2 text-center position-relative"
-               style="background-color: #f8f9fa; border-top: 2px dashed #dee2e6 !important; border-radius: 0 0 15px 15px;">
+          <div class="card-footer ticketFooter border-0 p-3 mt-2 text-center position-relative">
 
             <div class="d-flex align-items-center justify-content-center text-secondary">
-              <i class="pi pi-map-marker me-2 text-danger"></i>
+              <i class="pi pi-map-marker me-2 text-secondary"></i>
               <span class="fw-medium small text-truncate">{{ concert.venue }}</span>
             </div>
-
 
           </div>
 

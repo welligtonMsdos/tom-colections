@@ -1,26 +1,38 @@
-<div class="p-3 bg-gray-50 dark:bg-gray-900">
+<div class="row g-3 mb-3">
 
-    <div class="max-w-5xl mx-auto">
+  <div class="col-md-12">
 
-      <div class="flex justify-between items-center mb-6">
+    <h1 class="h3 mb-3">
+      <i class="pi pi-users mr-3 mx-2"></i>Users
+    </h1>
 
-        <h2 class="text-2xl font-bold text-gray-800 dark:text-white"><i class="pi pi-users text-blue-500"></i></h2>
+    <div class="d-flex align-items-center justify-content-between gap-2">
 
-        <button class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg transition cursor-pointer"
+      <div class="d-flex align-items-center gap-2">
+        <input type="text"
+               class="form-control"
+               style="max-width: 400px;"
+               placeholder="search by name or email..."
+               autocomplete="off"
+               (input)="onSearch($event)">
+        <div class="badge p-2 bg-secondary">
+          {{ userService.filteredUsers().length }} Found users
+        </div>
+      </div>
+
+      <div class="ms-auto">
+        <button class="btn btn-primary"
                 (click)="showModalCreate.set(true)">
-
-                <i class="pi pi-plus mr-2"></i>New User
-
+          <i class="pi pi-plus me-2"></i>
+          New User
         </button>
-
       </div>
 
     </div>
-
+  </div>
 </div>
 
- @if (showModalCreate()) {
+@if(showModalCreate()){
+  <app-user-create (close)="showModalCreate.set(false)"></app-user-create>
+}
 
-    <app-user-create (close)="showModalCreate.set(false)" />
-
-  }

@@ -1,4 +1,4 @@
-import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, effect, inject, OnInit, signal } from '@angular/core';
 import { UserService } from '../../../service/user.service';
 import { DeleteData } from '../../shared/delete-data/delete-data';
 import { AlertService } from '../../../service/alert.service';
@@ -20,23 +20,17 @@ export class ListUser implements OnInit {
   userSelected = signal<UserDto | null>(null);
   showModalUpdate = signal(false);
   showModalDelete = signal(false);
-  searchTerm = signal('');
   isLoading = signal(true);
   currentPage = signal(1);
   itemsPerPage = signal(5);
   idSelected = signal('');
 
-  filteredUsers = computed(() => {
-  const term = this.searchTerm().toLowerCase().trim();
-  const allUsers = this.userService.users() || [];
-
-  if (!term) return allUsers;
-
-  return allUsers.filter(user =>
-      user.name?.toLowerCase().includes(term) ||
-      user.email?.toLowerCase().includes(term)
-    );
-  });
+  constructor() {
+    effect(() => {
+      this.userService.searchTerm();
+      this.currentPage.set(1);
+    }, { allowSignalWrites: true });
+  }
 
   editUser(id: string) {
     this.isLoading.set(true);
@@ -58,11 +52,11 @@ export class ListUser implements OnInit {
 
   paginatedUsers = computed(() => {
     const startIndex = (this.currentPage() - 1) * this.itemsPerPage();
-    return this.filteredUsers().slice(startIndex, startIndex + this.itemsPerPage());
+    return this.userService.filteredUsers().slice(startIndex, startIndex + this.itemsPerPage());
   });
 
   totalPages = computed(() => {
-    const total = Math.ceil(this.filteredUsers().length / this.itemsPerPage());
+    const total = Math.ceil(this.userService.filteredUsers().length / this.itemsPerPage());
     return total > 0 ? total : 1;
   });
 
@@ -70,12 +64,6 @@ export class ListUser implements OnInit {
     const pages = this.totalPages();
     return Array.from({ length: pages }, (_, i) => i + 1);
   });
-
-  onSearch(event: Event) {
-    const value = (event.target as HTMLInputElement).value;
-    this.searchTerm.set(value);
-    this.currentPage.set(1);
-  }
 
   ngOnInit(): void {
     this.userService.get().subscribe({

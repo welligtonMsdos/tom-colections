@@ -1,2 +1,25 @@
-.card { transition: transform 0.2s; }
-.card:hover { transform: translateY(-5px); }
+.card {
+  transition: transform 0.2s;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+}
+
+.cardTicket{
+  border-radius: 15px;
+  background: #eaedf0;
+}
+
+.ticketPhoto{
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  height: 120px;
+  width: 100%;
+}
+
+.ticketFooter{
+  background-color: #f8f9fa;
+  border-top: 2px dashed #dee2e6 !important;
+  border-radius: 0 0 15px 15px;
+}

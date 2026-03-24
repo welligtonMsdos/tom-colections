@@ -11,10 +11,10 @@ html, body {
 }
 
 [data-bs-theme="dark"] {
-  --bs-body-bg: #1c1c1c;
-  --bs-body-color: #e0e0e0;
+  --bs-body-bg: #363636;
+  --bs-body-color: #E8E8E8;
   --bs-danger-rgb: 255, 107, 107;
- --bs-card-subtitle-color: #adb5bd;
+  --bs-card-subtitle-color: #eb1010;
 }
 
 .success-snake {
@@ -55,10 +55,14 @@ html, body {
 
 .error-snake.mat-mdc-snack-bar-container .mdc-snackbar__surface {
   background-color: #f44336 !important;
+}
+
+.container{
+  margin-top: 50px;
 }
 
 :root {
-  --color-primaria: #00539f;
+  /* --color-primaria: #00539f;
   --color-secudaria: #ba0000;
   --color-primaria2: #0371d8;
   --color-success: #d8f0e1;
@@ -69,6 +73,6 @@ html, body {
   --text-warning: #9F6000;
   --color-info: #D9EDF7;
   --text-info: #31708F;
-  --color-terceiraria: #5e148f;
+  --color-terceiraria: #5e148f; */
   --mat-toolbar-container-text-color: #fff;
 }

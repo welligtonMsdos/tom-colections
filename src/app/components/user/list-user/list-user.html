@@ -1,117 +1,95 @@
-<div class="p-1 bg-gray-50 dark:bg-gray-900">
-  <div class="max-w-5xl mx-auto">
+<table class="table table-striped">
 
-    <div class="mb-6 flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-      <div class="relative flex-1 max-w-md">
-        <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-gray-400">
-          <i class="pi pi-search"></i>
-        </span>
-        <input
-          type="text"
-          (input)="onSearch($event)"
-          placeholder="search by name or email..."
-          class="block w-full rounded-lg border border-gray-300 bg-white py-2 pl-10 pr-3 text-sm placeholder-gray-500 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200 dark:placeholder-gray-400"
-        />
-      </div>
+  <thead>
 
-      <span class="text-sm text-gray-500 dark:text-gray-400">
-        {{ filteredUsers().length }} Found users
-      </span>
-    </div>
+    <tr>
 
-    <div class="overflow-hidden rounded-lg border border-gray-200 dark:border-gray-700 shadow-md">
-      <table class="w-full border-collapse bg-white dark:bg-gray-800 text-left text-sm text-gray-500 dark:text-gray-400">
-        <thead class="bg-gray-50 dark:bg-gray-800/50">
-          <tr>
-            <th class="px-6 py-4 font-semibold text-gray-900 dark:text-white">Name</th>
-            <th class="px-6 py-4 font-semibold text-gray-900 dark:text-white">Email</th>
-            <th class="px-6 py-4 font-semibold text-gray-900 dark:text-white text-right"></th>
-          </tr>
-        </thead>
+      <th scope="col">Name</th>
+      <th scope="col">Email</th>
+      <th scope="col"></th>
 
-        <tbody class="divide-y divide-gray-100 dark:divide-gray-700 border-t border-gray-100 dark:border-gray-700">
-          @for (u of paginatedUsers(); track u._id) {
-            <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
-              <td class="px-6 py-4 text-gray-700 dark:text-gray-300 font-medium">
-                {{ u.name }}
-              </td>
-              <td class="px-6 py-4 text-gray-600 dark:text-gray-400">
-                {{ u.email }}
-              </td>
-              <td class="px-6 py-2">
-                <div class="flex justify-end gap-4">
-                  <button (click)="editUser(u._id)" title="Editar" class="text-gray-400 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors cursor-pointer">
-                    <i class="pi pi-pen-to-square"></i>
-                  </button>
-                  <button (click)="showModalDelete.set(true); idSelected.set(u._id)" title="Excluir"
-                          class="text-gray-400 hover:text-red-600 dark:hover:text-red-400 transition-colors cursor-pointer">
-                    <i class="pi pi-trash"></i>
-                  </button>
-                </div>
-              </td>
-            </tr>
-          } @empty {
-            @if (!isLoading()) {
-              <tr>
-                <td colspan="3" class="px-6 py-10 text-center text-gray-400 italic">
-                  <i class="pi pi-inbox block text-2xl mb-2"></i>
-                  @if (searchTerm()) {
-                    no results for "{{ searchTerm() }}"
-                  } @else {
-                    no users found
-                  }
-                </td>
-              </tr>
-            }
-          }
+    </tr>
 
-          @if (isLoading()) {
-            <tr>
-              <td colspan="3" class="px-6 py-10 text-center">
-                <i class="pi pi-spin pi-spinner text-indigo-600 text-2xl"></i>
-                <p class="mt-2 text-sm text-gray-500">loading...</p>
-              </td>
-            </tr>
-          }
-        </tbody>
-      </table>
+  </thead>
 
-      @if (filteredUsers().length > 0) {
-        <div class="flex items-center justify-between border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 px-6 py-4">
-          <div class="hidden sm:block">
-            <p class="text-sm text-gray-700 dark:text-gray-400">
-              showing <span class="font-bold text-gray-900 dark:text-white">{{ (currentPage() - 1) * itemsPerPage() + 1 }}</span> of
-              <span class="font-bold text-gray-900 dark:text-white">{{ Math.min(currentPage() * itemsPerPage(), filteredUsers().length) }}</span> a
-              <span class="font-bold text-gray-900 dark:text-white">{{ filteredUsers().length }}</span> results
-            </p>
+  <tbody>
+
+     @for (u of paginatedUsers(); track u._id) {
+
+      <tr>
+        <td> {{ u.name }} </td>
+        <td> {{ u.email }} </td>
+        <td>
+          <div class="flex justify-end gap-4">
+
+            <button (click)="editUser(u._id)"
+                  class="btn btn-sm text-info mx-2">
+            <i class="pi pi-pen-to-square"></i>
+          </button>
+          <button (click)="showModalDelete.set(true); idSelected.set(u._id)"
+                  class="btn btn-sm text-danger">
+            <i class="pi pi-trash"></i>
+          </button>
+
           </div>
 
-          <nav class="isolate inline-flex -space-x-px rounded-md shadow-sm" aria-label="Pagination">
-            <button (click)="goToPage(currentPage() - 1)" [disabled]="currentPage() === 1"
-                    class="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 dark:ring-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-30">
-              <i class="pi pi-chevron-left text-xs"></i>
-            </button>
+        </td>
+      </tr>
 
-            @for (page of pageNumbers(); track page) {
-              <button (click)="goToPage(page)"
-                [class]="currentPage() === page
-                  ? 'z-10 bg-indigo-600 text-white ring-indigo-600'
-                  : 'text-gray-900 dark:text-gray-200 ring-gray-300 dark:ring-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700'"
-                class="relative inline-flex items-center px-4 py-2 text-sm font-semibold ring-1 ring-inset focus:z-20 transition-all">
-                {{ page }}
-              </button>
-            }
+     }
 
-            <button (click)="goToPage(currentPage() + 1)" [disabled]="currentPage() === totalPages()"
-                    class="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 dark:ring-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 disabled:opacity-30">
-              <i class="pi pi-chevron-right text-xs"></i>
-            </button>
-          </nav>
-        </div>
-      }
+  </tbody>
+
+</table>
+
+@if (userService.filteredUsers().length > 0) {
+  <div class="d-flex align-items-center justify-content-between border-top p-4 bgPrimary">
+
+    <div class="d-none d-sm-block">
+      <p class="mb-0 text-secondary small">
+        Showing <span class="fw-bold text-body">{{ (currentPage() - 1) * itemsPerPage() + 1 }}</span> to
+        <span class="fw-bold text-body">{{ Math.min(currentPage() * itemsPerPage(), userService.filteredUsers().length) }}</span> of
+        <span class="fw-bold text-body">{{ userService.filteredUsers().length }}</span> results
+      </p>
     </div>
+
+    <nav aria-label="User pagination">
+      <ul class="pagination pagination-sm mb-0 shadow-sm">
+
+        <li class="page-item" [class.disabled]="currentPage() === 1">
+          <button class="page-link"
+                  (click)="goToPage(currentPage() - 1)"
+                  [disabled]="currentPage() === 1"
+                  aria-label="Previous">
+            <i class="pi pi-chevron-left" style="font-size: 0.7rem"></i>
+          </button>
+        </li>
+
+        @for (page of pageNumbers(); track page) {
+          <li class="page-item" [class.active]="currentPage() === page">
+            <button class="page-link shadow-none" (click)="goToPage(page)">
+              {{ page }}
+            </button>
+          </li>
+        }
+
+        <li class="page-item" [class.disabled]="currentPage() === totalPages()">
+          <button class="page-link"
+                  (click)="goToPage(currentPage() + 1)"
+                  [disabled]="currentPage() === totalPages()"
+                  aria-label="Next">
+            <i class="pi pi-chevron-right" style="font-size: 0.7rem"></i>
+          </button>
+        </li>
+
+      </ul>
+    </nav>
   </div>
-</div>
+}
+
+
+
+
 
 @if (showModalDelete()) {
   <app-delete-data

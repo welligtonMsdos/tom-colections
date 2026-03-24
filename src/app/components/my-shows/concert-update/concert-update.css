@@ -1,0 +1,24 @@
+.modal {
+  transition: opacity 0.3s linear;
+  background: rgba(0, 0, 0, 0.5);
+  display: block;
+}
+
+.modal-dialog {
+  transition: transform 0.9s ease-out;
+  transform: translateY(-50px);
+}
+
+.modal.show .modal-dialog {
+  transform: translateY(0);
+}
+
+:host {
+  display: block;
+  animation: fadeIn 0.9s fadeIn forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}

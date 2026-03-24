@@ -16,6 +16,20 @@ export class UserService {
 
   private usersSignal = signal<UserDto[]>([]);
 
+  searchTerm = signal('');
+
+  filteredUsers = computed(() => {
+    const term = this.searchTerm().toLowerCase().trim();
+    const allUsers = this.users() || [];
+
+    if (!term) return allUsers;
+
+    return allUsers.filter(user =>
+      user.name?.toLowerCase().includes(term) ||
+      user.email?.toLowerCase().includes(term)
+    );
+  });
+
   readonly users = computed(() => this.usersSignal());
 
   constructor(private http: HttpClient) {}

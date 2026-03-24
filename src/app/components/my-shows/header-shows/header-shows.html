@@ -2,7 +2,6 @@
   <div class="col-12 d-flex justify-content-between align-items-center">
 
     <div>
-      <h1 class="h3 mb-3">Concerts</h1>
       <div class="d-flex gap-2">
         <button
           class="btn"
@@ -23,15 +22,22 @@
     </div>
 
     <div class="align-self-end">
-      <button class="btn btn-primary" (click)="showModalCreate.set(true)">
+
+      <button class="btn btn-primary"
+              (click)="showModalCreate.set(true)"
+             >
         <i class="pi pi-plus me-2"></i>
         New concert
       </button>
+
     </div>
 
   </div>
+
 </div>
 
 @if (showModalCreate()) {
-  <app-concert-create (close)="showModalCreate.set(false)" />
+
+   <app-concert-create (close)="showModalCreate.set(false)" />
+
 }

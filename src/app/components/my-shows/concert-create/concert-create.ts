@@ -13,12 +13,19 @@ import { AlertService } from '../../../service/alert.service';
 export class ConcertCreate {
 
   private fb = inject(FormBuilder);
+
   private concertService = inject(ConcertService);
+
   private alert = inject(AlertService);
+
   close = output<void>();
+
   saved = output<ConcertDto>();
+
   updateErrorMessage = () => {};
+
   errorMessage = signal<string | null>(null);
+
   isLoading = signal(false);
 
   concertForm = this.fb.nonNullable.group({
@@ -33,11 +40,14 @@ export class ConcertCreate {
     if (this.concertForm.valid) {
 
       this.isLoading.set(true);
+
       this.errorMessage.set(null);
+
       const concertData: ConcertCreateDto = this.concertForm.getRawValue();
 
       this.concertService.post(concertData).subscribe({
         next: (response) => {
+
           if (response.success) {
             this.alert.showSuccess(response.message);
           }
@@ -47,15 +57,20 @@ export class ConcertCreate {
           this.close.emit();
         },
         error: (err) => {
+
           this.isLoading.set(false);
+
           const apiErrors = err.error?.errors;
+
           if (apiErrors) {
             const messages = Object.values(apiErrors).flat() as string[];
             this.errorMessage.set(messages.join(' | '));
           } else {
             this.errorMessage.set(err.error?.message);
           }
+
         }
+
       });
 
     }
