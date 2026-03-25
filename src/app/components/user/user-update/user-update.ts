@@ -82,8 +82,9 @@ export class UserUpdate {
               this.errorMessage.set(messages.join(' | '));
 
             } else {
-              this.errorMessage.set(err.error?.message);
+              this.errorMessage.set(err.error?.Message);
             }
+
           }
         });
       }

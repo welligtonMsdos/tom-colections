@@ -2,9 +2,7 @@
 
   <div class="col-md-12">
 
-    <h1 class="h3 mb-3">
-      <i class="pi pi-users mr-3 mx-2"></i>Users
-    </h1>
+    <h3><i class="pi pi-users mr-3 mx-2"></i>Users</h3>
 
     <div class="d-flex align-items-center justify-content-between gap-2">
 
@@ -33,6 +31,8 @@
 </div>
 
 @if(showModalCreate()){
+
   <app-user-create (close)="showModalCreate.set(false)"></app-user-create>
+
 }
 
