@@ -4,12 +4,16 @@
 
     <div class="modal-content">
 
-      <div class="modal-header mb-2 p-2 shadow-sm">
+      <div class="modal-header header-grid mb-2 p-2">
 
-        <i class="pi pi-ticket mr-3 mx-2"></i>
-        <h1 class="modal-title fs-5">
-          Register concert
-        </h1>
+        <div></div>
+
+        <div class="d-flex align-items-center justify-content-center">
+          <i class="pi pi-ticket me-2 fs-6"></i>
+          <h1 class="modal-title fs-5 m-0">
+            Register concert
+          </h1>
+        </div>
 
         <button type="button"
                 class="btn-close"
@@ -23,13 +27,13 @@
 
         @if (errorMessage()) {
 
-          <div class="alert alert-danger border-danger border-2 mb-2 p-2 shadow-sm" role="alert">
+          <div class="alert text-danger alert-danger border-danger border-2 mb-2 p-2 shadow-sm" role="alert">
 
             <div class="flex items-center">
 
               <i class="pi pi-exclamation-circle me-2"></i>
 
-              <span class="text-xs font-bold uppercase">Failed to register concert</span>
+              <span class="text-xs font-bold uppercase"><strong>Failed to register concert</strong></span>
 
               <button (click)="errorMessage.set(null)"
                       class="btn btn-sm text-danger btn-ghost ml-auto">
@@ -38,7 +42,7 @@
 
             </div>
 
-            <p class="text-sm mt-1 ml-6">{{ errorMessage() }}</p>
+            <span class="text-sm mt-1 ml-6">{{ errorMessage() }}</span>
 
           </div>
 
@@ -50,7 +54,10 @@
 
             <div class="col-md-12">
 
-              <label class="form-label">Artist</label>
+              <div class="iconCustom d-flex align-items-center gap-2">
+                <i class="pi pi-microphone"></i>
+                <label class="form-label mt-2">Artist</label>
+              </div>
 
               <input type="text"
                      class="form-control"
@@ -72,7 +79,10 @@
 
             <div class="col-md-12">
 
-              <label class="form-label">Venue</label>
+              <div class="iconCustom d-flex align-items-center gap-2">
+                <i class="pi pi-map-marker"></i>
+                <label class="form-label mt-2">Venue</label>
+              </div>
 
               <input type="text"
                      class="form-control"
@@ -94,7 +104,10 @@
 
             <div class="col-md-12">
 
-              <label class="form-label">Show Date</label>
+              <div class="iconCustom d-flex align-items-center gap-2">
+                <i class="pi pi-calendar"></i>
+                <label class="form-label mt-2">Show Date</label>
+              </div>
 
               <input type="date"
                      class="form-control"
@@ -116,7 +129,10 @@
 
             <div class="col-md-12">
 
-              <label class="form-label">Photo</label>
+              <div class="iconCustom d-flex align-items-center gap-2">
+                <i class="pi pi-image"></i>
+                <label class="form-label mt-2">Photo</label>
+              </div>
 
               <input type="text"
                      class="form-control"
@@ -139,7 +155,7 @@
             <div class="col-12 mt-4 d-flex justify-content-end gap-2">
 
               <button (click)="close.emit()"
-                      class="btn btn-secondary mx-2"
+                      class="btn btn-outline-secondary mx-2"
                       type="button">
                       <i class="pi pi-undo mr-3"></i> Cancel
               </button>
