@@ -54,7 +54,10 @@ export class Auth {
             this.router.navigate(['/home']);
           }
         })
-        .catch(err => this.errorMessage.set('An error occurred during login. Please try again later.'));
+        .catch(
+          error => {            
+            this.alert.showError(error.error || error);
+          } );
     }
 
   }

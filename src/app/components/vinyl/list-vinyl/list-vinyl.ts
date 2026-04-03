@@ -2,13 +2,12 @@ import { VinylDto } from './../../../domain/vinyl.model';
 import { VinylService } from '../../../service/vinyl.service';
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
-import { VinylCreate } from "../vinyl-create/vinyl-create";
 import { DeleteData } from '../../shared/delete-data/delete-data';
 import { AlertService } from '../../../service/alert.service';
 import { VinylUpdate } from '../vinyl-update/vinyl-update';
 @Component({
   selector: 'app-list-vinyl',
-  imports: [CurrencyPipe, VinylCreate, DeleteData, VinylUpdate],
+  imports: [CurrencyPipe, DeleteData, VinylUpdate],
   templateUrl: './list-vinyl.html',
   styleUrl: './list-vinyl.css',
 })
@@ -18,8 +17,7 @@ export class ListVinyl implements OnInit{
  private alert = inject(AlertService);
  protected vinylService = inject(VinylService);
 
- isLoading = signal(true);
- showModalCreate = signal(false);
+ isLoading = signal(true); 
  showModalUpdate = signal(false);
  showModalDelete = signal(false);
  currentPage = signal(1);
@@ -28,18 +26,19 @@ export class ListVinyl implements OnInit{
  idSelected = signal('');
  vinylSelected = signal<VinylDto | null>(null);
 
- filteredVinyls = computed(() => {
-  const term = this.searchTerm().toLowerCase().trim();
-  const allVinyls = this.vinylService.vinyls() || [];
+  filteredVinyls = computed(() => {
+    const term = this.searchTerm().toLowerCase().trim();
+    const allVinyls = this.vinylService.vinyls() || [];
 
-  if (!term) return allVinyls;
+    if (!term) return allVinyls;
 
-  return allVinyls.filter(vinyl =>
-      {}
-    );
+    return allVinyls.filter(vinyl =>
+       vinyl.album.toLowerCase().includes(term) ||
+       vinyl.artist.toLowerCase().includes(term)
+     );
   });
 
- paginatedVinyls = computed(() => {
+  paginatedVinyls = computed(() => {
     const startIndex = (this.currentPage() - 1) * this.itemsPerPage();
     return this.filteredVinyls().slice(startIndex, startIndex + this.itemsPerPage());
   });
@@ -105,8 +104,7 @@ export class ListVinyl implements OnInit{
   }
 
   private finally() {
-    this.isLoading.set(false);
-    this.showModalCreate.set(false);
+    this.isLoading.set(false);    
     this.showModalUpdate.set(false);
     this.showModalDelete.set(false);
   }

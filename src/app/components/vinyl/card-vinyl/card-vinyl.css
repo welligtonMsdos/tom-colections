@@ -1,0 +1,31 @@
+.collection-card {
+  width: 100%;
+  max-width: 450px;
+  border-radius: 25px;
+  overflow: hidden; 
+}
+
+.card-header-gradient {
+  background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+  /* Ou use as cores exatas da imagem: */
+  background: linear-gradient(180deg, #8126d3 0%, #3b28b1 100%);
+}
+
+.card-footer-custom {
+  background-color: #2c343f;
+  border-top: 1px solid #3d4653;
+}
+
+.value-text {
+  color: #00e676; 
+  font-size: 2rem;
+}
+
+.records-text {
+  color: #4facfe; 
+  font-size: 2rem;
+}
+
+.text-secondary {
+  color: #a0a0a0 !important;
+}
