@@ -132,3 +132,7 @@ p {
   --snack-bg: #f44336 !important;
 }
 
+.cursor{
+  cursor: pointer;
+}
+

@@ -1,17 +1,18 @@
 import { HttpClient } from '@angular/common/http';
 import { computed, Injectable, signal } from '@angular/core';
-import { Observable, tap } from 'rxjs';
+import { firstValueFrom, Observable, tap } from 'rxjs';
 import { Result } from '../domain/result.model';
 import { UserDto } from '../domain/user.model';
 import { UserCreateDto } from '../domain/userCreate.model';
 import { UserUpdateDto } from '../domain/userUpdate.mode';
+import { ApiResponse } from '../domain/api-response';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  //private apiUrl = 'http://13.59.37.186:5011/api/Users/';
+  //private apiUrl = 'http://13.59.37.186:5011/api/Users';
   private apiUrl = 'http://localhost:5011/api/Users';
 
   private usersSignal = signal<UserDto[]>([]);
@@ -67,6 +68,37 @@ export class UserService {
       })
     );
   }
+
+  async signUp(userCreateDto: UserCreateDto): Promise<Result<ApiResponse>> {
+    try {
+          const response = await firstValueFrom(
+            this.http.post<Result<any>>(this.apiUrl + "/SignUp", userCreateDto)
+        );    
+  
+        if (response.success && response.data) {
+  
+          //console.log(response);
+          
+        }   
+  
+        console.log(response);
+
+        return response;
+  
+      } catch (error: any) {         
+  
+        const apiError = error.error;      
+  
+        const messageToDisplay = apiError?.errors || apiError?.Errors; 
+        
+        //console.log(messageToDisplay);
+      
+        throw messageToDisplay;
+  
+      }
+    }
+
+  
 
   put(user: Partial<UserUpdateDto>, id: string): Observable<Result<UserDto>> {
     return this.http.put<Result<UserDto>>(this.apiUrl + `/${id}`, user).pipe(

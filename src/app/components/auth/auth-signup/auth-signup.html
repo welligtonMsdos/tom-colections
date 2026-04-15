@@ -1,0 +1,76 @@
+<div class="card shadow-lg p-3">
+        
+    <div class="card-body">
+          
+        <form [formGroup]="authForm">
+
+            <div class="mb-3">
+                <label for="name" class="form-label">Name</label>
+                <input type="text"
+                        id="name"
+                        formControlName="name"
+                        (blur)="updateErrorMessage()"
+                        required
+                        class="form-control"
+                        placeholder="name"/>
+
+                @if(authForm.get('name')?.invalid && authForm.get('name')?.touched){
+                    <div class="text-danger mt-1 small">Invalid name</div>
+                }
+            </div>
+            
+            <div class="mb-3">
+                <label for="email" class="form-label">Email address</label>
+                <input type="email"
+                        id="email"
+                        formControlName="email"
+                        (blur)="updateErrorMessage()"
+                        required
+                        class="form-control"
+                        placeholder="name@example.com"/>
+
+                @if(authForm.get('email')?.invalid && authForm.get('email')?.touched){
+                    <div class="text-danger mt-1 small">Invalid email</div>
+                }
+            </div>
+
+            <div class="mb-3">
+                <label for="password" class="form-label">Password</label>
+                <input type="password"
+                        id="password"
+                        formControlName="password"
+                        (blur)="updateErrorMessage()"
+                        required
+                        class="form-control"
+                        placeholder="Enter your password"/>
+
+                @if(authForm.get('password')?.invalid && authForm.get('password')?.touched){
+                    <div class="text-danger mt-1 small">Invalid password</div>
+                }
+            </div>
+
+            <div class="mb-3">
+                <p class="text-end">
+                    <button (click)="toggle.emit()" class="btn btn-link">Back to Login</button>
+                </p>
+            </div>
+
+            <button type="button" 
+                    class="btn btn-primary w-100" (click)="save()"
+                    >
+                <i class="pi pi-person-plus me-2"></i>Sign Up 
+            </button>
+          
+        </form>
+        
+    </div>
+      
+</div>
+    
+
+
+
+
+
+
+
