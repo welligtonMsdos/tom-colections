@@ -1,0 +1,28 @@
+.cardTicket {
+  border-radius: 15px;
+  background: #192027; /* Cor escura que você definiu */
+  transition: transform 0.2s ease-in-out;
+  overflow: hidden;
+}
+
+.cardTicket:hover {
+  transform: translateY(-5px);
+  cursor: pointer;
+}
+
+.ticketPhoto {
+  /* Garante que a imagem seja quadrada e cubra o espaço */
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  width: 100%;
+  border-radius: 10px !important; /* Arredondamento leve interno */
+}
+
+/* Ajuste para o texto não sumir no fundo escuro */
+.card-body h5 {
+  color: #ffffff;
+}
+
+.text-secondary {
+  color: #a0a0a0 !important;
+}

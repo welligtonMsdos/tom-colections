@@ -1,0 +1,39 @@
+<div class="container">
+    <div class="container-fluid p-4">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            
+            @for (concert of concertService.ticketList(); track concert.guid) {
+                <div class="col">
+                    <div class="card cardTicket h-100 border-0 shadow-sm">
+                        <div class="row g-0 align-items-center">
+                            
+                            <div class="col-4">
+                                <div class="p-2">
+                                    <img [src]="concert.photo" 
+                                         class="img-fluid rounded ticketPhoto" 
+                                         alt="{{ concert.artist }}">
+                                </div>
+                            </div>
+
+                            <div class="col-8">
+                                <div class="card-body py-2 px-3 text-start">
+                                    <div class="badge bg-secondary mb-1">
+                                        {{ concert.showDateDescription }}
+                                    </div>
+                                    <h5 class="fw-bold text-white text-truncate mb-0">
+                                        {{ concert.artist }}
+                                    </h5>
+                                    <p class="small text-secondary mb-0">
+                                        <i class="bi bi-geo-alt"></i>{{ concert.venue }}
+                                    </p>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+</div>
