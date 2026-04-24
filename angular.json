@@ -56,6 +56,9 @@
         },
         "serve": {
           "builder": "@angular/build:dev-server",
+          "options": {
+                       "liveReload": true
+                     },
           "configurations": {
             "production": {
               "buildTarget": "tomshow2:build:production"

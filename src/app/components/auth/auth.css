@@ -16,3 +16,7 @@
   from { width: 0ch; }
   to { width: 14ch; }
 }
+
+.container{
+  margin-top: 0px;
+}

@@ -1,38 +1,29 @@
+<div class="row g-3 mb-3 p-3 mt-3">
 
-<div class="flex items-center justify-center bg-white dark:bg-gray-800 p-4">
-  <div class="w-full max-w-sm bg-white dark:bg-gray-800 shadow-lg rounded-xl overflow-hidden
-              transform transition-all duration-300 hover:scale-105
-              border border-gray-200 dark:border-gray-700">
+  <div class="col-md-12">  
 
-    <div class="bg-linear-to-r from-purple-600 to-indigo-600 dark:from-purple-800 dark:to-indigo-800
-                p-6 text-white text-center flex flex-col items-center justify-center">
-      <svg class="w-16 h-16 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
-      </svg>
-      <h2 class="text-3xl font-extrabold tracking-tight">My Vinyl collection</h2>
-      <p class="text-sm opacity-90 mt-1">Your passion at a glance</p>
-    </div>
+    <div class="d-flex align-items-center justify-content-between gap-2">     
 
-    <div class="p-6">
-      <div class="flex flex-col sm:flex-row justify-around items-center gap-4">
-        <div class="text-center">
-          <p class="text-gray-500 dark:text-gray-400 text-sm font-medium">Estimated total value</p>
-          <p class="text-4xl font-bold text-green-600 dark:text-green-400 mt-1">{{ vinylService.totalValue() | currency:'BRL' }}</p>
-        </div>
+      <div class="ms-auto">
+        <button class="btn btn-primary"
+                (click)="showModalCreate.set(true)">
+          <i class="pi pi-plus me-2"></i>
+          New Vinyl
+        </button>
 
-        <div class="hidden sm:block h-16 w-px bg-gray-300 dark:bg-gray-600"></div>
-        <div class="block sm:hidden w-full h-px bg-gray-300 dark:bg-gray-600 my-2"></div>
-
-        <div class="text-center">
-          <p class="text-gray-500 dark:text-gray-400 text-sm font-medium">Total records</p>
-          <p class="text-4xl font-bold text-blue-600 dark:text-blue-400 mt-1">{{ vinylService.totalQuantity() }}</p>
-        </div>
       </div>
-    </div>
 
-    <div class="bg-gray-50 dark:bg-gray-700 p-4 text-center text-gray-600 dark:text-gray-300 text-sm border-t border-gray-200 dark:border-gray-600">
-      <p>Last updated: 20/07/2024</p>
     </div>
 
   </div>
+
 </div>
+
+@if (showModalCreate()) {
+
+  <app-vinyl-create (close)="showModalCreate.set(false)" />
+
+}
+
+
+

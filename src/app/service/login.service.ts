@@ -55,34 +55,31 @@ export class LoginService {
 
   async login(userLoginDto: UserLoginDto): Promise<Result<ApiResponse>> {
   try {
-    const response = await firstValueFrom(
-      this.http.post<Result<any>>(this.apiUrl + "Login", userLoginDto)
-    );
+        const response = await firstValueFrom(
+        this.http.post<Result<any>>(this.apiUrl + "Login", userLoginDto)
+      );    
 
-    if (response.success && response.data) {
+      if (response.success && response.data) {
 
-      const jwt = response.data.result;
+        const jwt = response.data.result;
 
-      if (jwt) {
-        localStorage.setItem('token', jwt);
-        this.getUserFromToken();
-      }
+        if (jwt) {
+          localStorage.setItem('token', jwt);
+          this.getUserFromToken();
+        }
+      }   
+
+      return response;
+
+    } catch (error: any) {         
+
+      const apiError = error.error;      
+
+      const messageToDisplay = apiError?.errors || apiError?.Errors || "Erro ao realizar login.";      
+    
+      throw messageToDisplay;
+
     }
-
-    return response;
-
-  } catch (error: any) {
-    if (error.error) {
-
-      const backendError = error.error;
-
-      this.alert.showError(backendError.Errors);
-
-      throw backendError;
-    }
-    throw error;
   }
-}
-
 
 }

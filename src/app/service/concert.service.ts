@@ -10,7 +10,7 @@ import { AlertService } from "./alert.service";
 })
 export class ConcertService {
 
-  //private apiUrl = 'http://13.59.37.186:8081/api/Concerts/';
+  //private apiUrl = 'http://13.59.37.186:8081/api/Concerts';
   private apiUrl = 'http://localhost:5012/api/Concerts';
 
   private filterSignal = signal<'upcoming' | 'past'>('upcoming');

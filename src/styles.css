@@ -16,6 +16,7 @@
   --heading-color: #ec7000;
   --paragraph-color: #ffffff;
   --text-warning-custom: #FFFFFF;
+  --cardCollection-bg: #1a222d;
 }
 
 [data-bs-theme="light"] {
@@ -24,6 +25,7 @@
   --heading-color: var(--bs-primary);
   --paragraph-color: var(--bs-primary);
   --text-warning-custom: #CD950C;
+  --cardCollection-bg: #FFF;
 }
 
 html, body {
@@ -44,6 +46,10 @@ h1, h3, h5, .iconCustom > i, .modal-header > .d-flex > i {
 
 p {
   color: var(--paragraph-color);
+}
+
+.bg-dark-custom {
+  background-color: var(--cardCollection-bg); 
 }
 
 .modal {
@@ -124,5 +130,9 @@ p {
 
 .error-snake {
   --snack-bg: #f44336 !important;
+}
+
+.cursor{
+  cursor: pointer;
 }
 
