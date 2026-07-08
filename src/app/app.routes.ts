@@ -10,12 +10,7 @@ export const routes: Routes = [
     path: 'concerts',
     loadComponent: () => import('./components/my-shows/my-shows').then(m => m.MyShows),
     canActivate: [authGuard]
-  },
-  {
-    path: 'my-tickets',
-    loadComponent: () => import('./components/my-shows/my-tickets/my-tickets').then(m => m.MyTickets),
-    canActivate: [authGuard]
-  },
+  },  
   {
     path: 'vinyl',
     loadComponent: () => import('./components/vinyl/vinyl').then(m => m.Vinyl),

@@ -14,4 +14,10 @@ export class HeaderVinyl {
 
   showModalCreate = signal(false);
 
+  searchTerm = this.vinylService.searchTerm;
+
+  updateSearch(term: string): void {
+    this.vinylService.searchTerm.set(term);
+  }
+
 }
