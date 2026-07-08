@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MyTickets } from './my-tickets';
+import { GridVinyl } from './grid-vinyl';
 
-describe('MyTickets', () => {
-  let component: MyTickets;
-  let fixture: ComponentFixture<MyTickets>;
+describe('GridVinyl', () => {
+  let component: GridVinyl;
+  let fixture: ComponentFixture<GridVinyl>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MyTickets]
+      imports: [GridVinyl]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(MyTickets);
+    fixture = TestBed.createComponent(GridVinyl);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

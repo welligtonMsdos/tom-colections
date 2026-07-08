@@ -14,7 +14,7 @@
       <div class="row text-center align-items-center">
         <div class="col-7 border-end border-secondary">
           <p class="text-secondary small mb-1">Estimated total value</p>
-          <h2 class="value-text fw-bold">{{ vinylService.totalValue() | currency:'BRL' }}</h2>
+          <h2 class="value-text fw-bold text-success">{{ vinylService.totalValue() | currency:'BRL':'R$ '}}</h2>         
         </div>
         <div class="col-5">
           <p class="text-secondary small mb-1">Total records</p>
@@ -24,7 +24,7 @@
     </div>
 
     <div class="card-footer-custom p-3 text-center">
-      <small class="text-secondary">Last updated: 20/07/2024</small>
+      <!-- <small class="text-secondary">Last updated: 20/07/2024</small> -->
     </div>
     
   </div>

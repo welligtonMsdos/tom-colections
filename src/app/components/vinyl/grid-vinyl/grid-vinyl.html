@@ -1,0 +1,79 @@
+<div class="catalog-container">
+  
+  <div class="vinyl-grid">
+    @for (vinyl of paginatedVinyls(); track vinyl.guid) {
+      
+      <div class="card bg-body-tertiary text-body border-light-subtle h-100 shadow-sm position-relative overflow-hidden p-2 rounded-3">                
+       
+        <div class="image-wrapper bg-black bg-opacity-10 d-flex align-items-center justify-content-center position-relative rounded-2 p-2">
+          <img [src]="vinyl.photo" [alt]="vinyl.artist" class="img-fluid rounded-1" loading="lazy" />       
+                    
+          <div class="card-actions position-absolute top-0 end-0 m-2 d-flex gap-2 z-3">            
+            
+            <button title="Editar"
+                    (click)="editVinyl(vinyl.guid)"
+                    class="btn btn-sm btn-light border shadow-sm rounded-circle p-0 d-flex align-items-center justify-content-center"
+                    style="width: 32px; height: 32px;">
+              <i class="text-primary pi pi-pen-to-square fs-6"></i>
+            </button>
+
+            <button title="Excluir"
+                    (click)="showModalDelete.set(true); idSelected.set(vinyl.guid)"
+                    class="btn btn-sm btn-light border shadow-sm rounded-circle p-0 d-flex align-items-center justify-content-center">
+              <i class="text-danger pi pi-trash fs-6"></i>
+            </button>
+
+          </div>
+        </div>
+        
+        <div class="card-body p-2 d-flex flex-column justify-content-end mt-2">
+          <div class="d-flex align-items-center justify-content-between w-100">    
+            <span class="badge text-bg-primary bg-opacity-75 px-2 py-1 fs-7 fw-normal">{{ vinyl.year }}</span>        
+            <span class="fs-5 fw-bold text-success">{{ vinyl.price | currency:'BRL':'R$ ' }}</span>
+          </div>
+        </div>
+
+      </div>
+    } @empty {
+      <div class="col-12 text-center py-5">
+        <p class="text-muted fs-5"><i class="pi pi-info-circle me-2"></i>Nenhum LP encontrado.</p>
+      </div>
+    }
+  </div>
+  
+  <nav aria-label="Navegação de páginas" class="d-flex justify-content-center mt-4">
+    <ul class="pagination pagination-sm m-0 gap-1">
+      @for (page of pagesArray(); track page) {
+        <li class="page-item" [class.active]="currentPage() === page">
+          <button class="page-link rounded-circle border-0 text-center d-flex align-items-center justify-content-center" 
+                  style="width: 32px; height: 32px;"
+                  (click)="goToPage(page)">
+            {{ page }}
+          </button>
+        </li>
+      }
+      @if (currentPage() < totalPages()) {
+        <li class="page-item">
+          <button class="page-link rounded-circle border-0 text-center d-flex align-items-center justify-content-center" 
+                  style="width: 32px; height: 32px;"
+                  (click)="goToPage(currentPage() + 1)">&gt;</button>
+        </li>
+      }
+    </ul>
+  </nav>
+
+</div>
+
+@if (showModalDelete()) {
+  <app-delete-data
+   [id]="idSelected()"
+   (onCancel)="showModalDelete.set(false)"
+   (onConfirm)="delete()" />
+}
+
+@if(showModalUpdate()) {
+  <app-vinyl-update
+    [vinyl]="vinylSelected()!"
+    (saved)="vinylService.get().subscribe()"
+    (close)="showModalUpdate.set(false)"  />
+}
