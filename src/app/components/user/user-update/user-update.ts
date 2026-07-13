@@ -40,10 +40,16 @@ export class UserUpdate {
 
   isLoading = signal(false);
 
+  isCollapsed = true;
+
   userForm = this.fb.group({
     name: ['', Validators.required],
     email: ['', [Validators.required, Validators.email]],
     });
+
+  toggleCollapse() {
+    this.isCollapsed = !this.isCollapsed;
+  }
 
   save() {
 
@@ -70,21 +76,21 @@ export class UserUpdate {
 
             this.close.emit();
           },
-          error: (err) => {
+          error: (err) => {            
+
             this.isLoading.set(false);
 
-            const apiErrors = err.error?.errors;
+            var msgError = err.error?.errors;
 
-            if (apiErrors) {
-
-              const messages = Object.values(apiErrors).flat() as string[];
-
+            const eObjetoLiteral = msgError !== null && typeof msgError === 'object' && !Array.isArray(msgError);
+            
+            if(eObjetoLiteral){            
+              const messages = Object.values(err.error?.errors).flat() as string[];
               this.errorMessage.set(messages.join(' | '));
-
-            } else {
-              this.errorMessage.set(err.error?.Message);
+            }else{            
+              this.errorMessage.set(msgError);
             }
-
+            
           }
         });
       }

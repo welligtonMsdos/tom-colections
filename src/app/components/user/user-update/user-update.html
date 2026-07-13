@@ -105,6 +105,66 @@
 
             </div>
 
+            <div class="col-md-12">
+
+              <button class="btn btn-outline-secondary" 
+                      type="button" 
+                      (click)="toggleCollapse()"
+                      [attr.aria-expanded]="!isCollapsed" 
+                      aria-controls="collapseExample">
+                Change password
+              </button>
+
+            </div>
+
+            @if (!isCollapsed) {
+
+               <div class="col-md-12">
+
+                    <div class="iconCustom d-flex align-items-center gap-2">
+                      <i class="pi pi-key"></i>
+                      <label class="form-label">Current Password</label>
+                    </div>
+
+                    <input  type="password"
+                            class="form-control"                   
+                            placeholder="Enter password"  
+                            required>
+
+                    @if(userForm.get('password')?.invalid && userForm.get('password')?.touched){
+
+                      <div class="invalid-feedback">
+                        Invalid password
+                      </div>
+
+                    }
+
+                  </div>
+
+                  <div class="col-md-12">
+
+                    <div class="iconCustom d-flex align-items-center gap-2">
+                      <i class="pi pi-key"></i>
+                      <label class="form-label">New password</label>
+                    </div>
+
+                    <input type="password"
+                           class="form-control"                           
+                           placeholder="Enter password"                       
+                           required>
+
+                    @if(userForm.get('confirmPassword')?.invalid && userForm.get('confirmPassword')?.touched){
+
+                      <div class="invalid-feedback">
+                        Invalid password
+                      </div>
+
+                    }
+
+                  </div>
+              
+            }
+
             <div class="col-12 mt-4 d-flex justify-content-end gap-2">
 
               <button (click)="close.emit()"

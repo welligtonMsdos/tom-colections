@@ -38,9 +38,11 @@ export class UserService {
   get(): Observable<Result<UserDto[]>> {
     return this.http.get<Result<UserDto[]>>(this.apiUrl).pipe(
       tap(result => {
+        
         if (result.success && result.data) {
           this.usersSignal.set(result.data);
         }
+
       })
     );
   }
@@ -52,9 +54,11 @@ export class UserService {
   delete(id: string): Observable<Result<void>> {
     return this.http.delete<Result<void>>(this.apiUrl + `/${id}`).pipe(
       tap(result => {
+       
         if (result.success) {
           this.usersSignal.update(users => users.filter(u => u._id !== id));
         }
+
       })
     );
   }
@@ -62,10 +66,13 @@ export class UserService {
   post(user: UserCreateDto): Observable<Result<UserDto>> {
     return this.http.post<Result<UserDto>>(this.apiUrl, user).pipe(
       tap(result => {
+
         if (result.success && result.data) {
           this.usersSignal.update(users => [...users, result.data!]);
         }
+
       })
+
     );
   }
 
@@ -73,15 +80,7 @@ export class UserService {
     try {
           const response = await firstValueFrom(
             this.http.post<Result<any>>(this.apiUrl + "/SignUp", userCreateDto)
-        );    
-  
-        if (response.success && response.data) {
-  
-          //console.log(response);
-          
-        }   
-  
-        console.log(response);
+        ); 
 
         return response;
   
@@ -90,15 +89,11 @@ export class UserService {
         const apiError = error.error;      
   
         const messageToDisplay = apiError?.errors || apiError?.Errors; 
-        
-        //console.log(messageToDisplay);
       
         throw messageToDisplay;
   
       }
-    }
-
-  
+    }  
 
   put(user: Partial<UserUpdateDto>, id: string): Observable<Result<UserDto>> {
     return this.http.put<Result<UserDto>>(this.apiUrl + `/${id}`, user).pipe(
