@@ -18,7 +18,7 @@ interface UserPayload {
 
 export class LoginService {
 
-   private readonly apiUrl = 'http://13.59.37.186:5011/api/Auth/';
+   private readonly apiUrl = 'https://authproject-8vvl.onrender.com/api/Auth/';
    //private readonly apiUrl = 'http://localhost:5011/api/Auth/';
 
    private userSignal = signal<UserPayload | null>(null);
