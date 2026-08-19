@@ -1,0 +1,46 @@
+<div class="container">
+
+  <div class="card shadow-lg">
+
+    <div class="card-body">
+
+         <div class="mt-1">
+
+            <form [formGroup]="userForm" class="row g-3">
+
+                <div class="col-md-12">
+                    <div class="iconCustom d-flex align-items-center gap-2">
+                        <i class="pi pi-user-plus"></i>
+                        <label class="form-label mt-2">Name</label>
+                    </div>
+
+                    <input type="text"
+                           class="form-control"                    
+                           placeholder="Enter name"
+                           formControlName="name">              
+
+                </div>
+
+                <div class="col-md-12">
+
+                    <div class="iconCustom d-flex align-items-center gap-2">
+                        <i class="pi pi-at"></i>
+                        <label class="form-label mt-2">Email</label>
+                    </div>
+
+                    <input type="email"
+                           class="form-control"                    
+                           placeholder="Enter email"
+                           formControlName="email">             
+
+                </div>
+
+            </form>
+
+         </div>
+
+    </div>
+
+  </div>
+
+</div>
