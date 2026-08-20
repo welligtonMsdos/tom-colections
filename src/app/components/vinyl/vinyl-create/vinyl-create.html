@@ -12,7 +12,7 @@
 
           <i class="pi pi-play me-2 fs-6"></i>
 
-          <h1 class="modal-title fs-5 m-0">Register vinyl</h1>
+          <h1 class="modal-title fs-5 m-0">Registrar LP</h1>
 
         </div>
 
@@ -34,7 +34,7 @@
 
               <i class="pi pi-exclamation-circle me-2"></i>
 
-              <span class="text-xs font-bold uppercase"><strong>Failed to register vinyl</strong></span>
+              <span class="text-xs font-bold uppercase"><strong>Falha ao registrar LP</strong></span>
 
               <button (click)="errorMessage.set(null)"
                       class="btn btn-sm text-danger btn-ghost ml-auto">
@@ -57,13 +57,13 @@
 
               <div class="iconCustom d-flex align-items-center gap-2">
                 <i class="pi pi-user-plus"></i>
-                <label class="form-label mt-2">Artist</label>
+                <label class="form-label mt-2">Artista</label>
               </div>
 
               <input type="text"
                      class="form-control"
                      [class.is-invalid]="vinylForm.get('artist')?.invalid && vinylForm.get('artist')?.touched"
-                     placeholder="Enter artist"
+                     placeholder="Entre com o artista"
                      formControlName="artist"
                      (blur)="updateErrorMessage()"
                      required>
@@ -71,7 +71,7 @@
               @if(vinylForm.get('artist')?.invalid && vinylForm.get('artist')?.touched){
 
                 <div class="invalid-feedback">
-                  Invalid artist
+                  Artista inválido
                 </div>
 
               }
@@ -82,13 +82,13 @@
 
               <div class="iconCustom d-flex align-items-center gap-2">
                 <i class="pi pi-list"></i>
-                <label class="form-label mt-2">Album</label>
+                <label class="form-label mt-2">Álbum</label>
               </div>
 
               <input type="text"
                      class="form-control"
                      [class.is-invalid]="vinylForm.get('album')?.invalid && vinylForm.get('album')?.touched"
-                     placeholder="Enter album"
+                     placeholder="Entre com o álbum"
                      formControlName="album"
                      (blur)="updateErrorMessage()"
                      required>
@@ -96,7 +96,7 @@
               @if(vinylForm.get('album')?.invalid && vinylForm.get('album')?.touched){
 
                 <div class="invalid-feedback">
-                  Invalid album
+                  Álbum inválido
                 </div>
 
               }
@@ -107,13 +107,13 @@
 
               <div class="iconCustom d-flex align-items-center gap-2">
                 <i class="pi pi-calendar"></i>
-                <label class="form-label mt-2">Year</label>
+                <label class="form-label mt-2">Ano</label>
               </div>
 
               <input type="text"
                      class="form-control"
                      [class.is-invalid]="vinylForm.get('year')?.invalid && vinylForm.get('year')?.touched"
-                     placeholder="Enter year"
+                     placeholder="Entre com o ano"
                      formControlName="year"
                      (blur)="updateErrorMessage()"
                      required>
@@ -121,7 +121,7 @@
               @if(vinylForm.get('year')?.invalid && vinylForm.get('year')?.touched){
 
                 <div class="invalid-feedback">
-                  Invalid year
+                  Ano inválido
                 </div>
 
               }
@@ -132,13 +132,13 @@
 
               <div class="iconCustom d-flex align-items-center gap-2">
                 <i class="pi pi-image"></i>
-                <label class="form-label mt-2">Photo</label>
+                <label class="form-label mt-2">Foto</label>
               </div>
 
               <input type="text"
                      class="form-control"
                      [class.is-invalid]="vinylForm.get('photo')?.invalid && vinylForm.get('photo')?.touched"
-                     placeholder="Enter photo URL"
+                     placeholder="Entre com a URL da foto"
                      formControlName="photo"
                      (blur)="updateErrorMessage()"
                      required>
@@ -146,7 +146,7 @@
               @if(vinylForm.get('photo')?.invalid && vinylForm.get('photo')?.touched){
 
                 <div class="invalid-feedback">
-                  Invalid photo URL
+                  URL da foto inválida
                 </div>
 
               }
@@ -157,13 +157,13 @@
 
               <div class="iconCustom d-flex align-items-center gap-2">
                 <i class="pi pi-dollar"></i>
-                <label class="form-label mt-2">Price</label>
+                <label class="form-label mt-2">Preço</label>
               </div>
 
               <input type="number"
                      class="form-control"
                      [class.is-invalid]="vinylForm.get('price')?.invalid && vinylForm.get('price')?.touched"
-                     placeholder="Enter price"
+                     placeholder="Entre com o preço"
                      formControlName="price"
                      (blur)="updateErrorMessage()"
                      required>
@@ -171,7 +171,7 @@
               @if(vinylForm.get('price')?.invalid && vinylForm.get('price')?.touched){
 
                 <div class="invalid-feedback">
-                  Invalid price
+                  Preço inválido
                 </div>
 
               }
@@ -183,7 +183,7 @@
               <button (click)="close.emit()"
                       class="btn btn-outline-secondary mx-2"
                       type="button">
-                      <i class="pi pi-undo mr-3"></i> Cancel
+                      <i class="pi pi-undo mr-3"></i> Cancelar
               </button>
 
               <button class="btn btn-primary"
@@ -191,9 +191,9 @@
                       type="submit">
 
                 @if (isLoading()) {
-                    <i class="pi pi-spin pi-spinner mr-3"></i> Saving...
+                    <i class="pi pi-spin pi-spinner mr-3"></i> Salvando...
                 } @else {
-                    <i class="pi pi-save mr-3"></i> Save
+                    <i class="pi pi-save mr-3"></i> Salvar
                 }
 
               </button>
