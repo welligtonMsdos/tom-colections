@@ -12,7 +12,7 @@
 
           <i class="pi pi-ticket mr-3 mx-2"></i>
           <h1 class="modal-title fs-6">
-            Update concert
+            Atualizar show
           </h1>
 
         </div>
@@ -35,7 +35,7 @@
 
               <i class="pi pi-exclamation-circle me-2"></i>
 
-              <span class="text-xs font-bold uppercase">Failed to update concert</span>
+              <span class="text-xs font-bold uppercase">Erro ao atualizar o show</span>
 
               <button (click)="errorMessage.set(null)"
                       class="btn btn-sm text-danger btn-ghost ml-auto">
@@ -58,19 +58,19 @@
 
               <div class="iconCustom d-flex align-items-center gap-2">
                 <i class="pi pi-microphone"></i>
-                <label class="form-label mt-2">Artist</label>
+                <label class="form-label mt-2">Artista</label>
               </div>
 
               <input type="text"
                       class="form-control"
                       [class.is-invalid]="concertForm.get('artist')?.invalid && concertForm.get('artist')?.touched"
-                      placeholder="Enter artist name"
+                      placeholder="Entre com o nome do artista"
                       formControlName="artist"
                       (blur)="updateErrorMessage()">
 
               @if(concertForm.get('artist')?.invalid && concertForm.get('artist')?.touched){
                 <div class="invalid-feedback">
-                  Invalid artist
+                  Nome do artista inválido
                 </div>
               }
             </div>
@@ -79,12 +79,12 @@
 
               <div class="iconCustom d-flex align-items-center gap-2">
                 <i class="pi pi-map-marker"></i>
-                <label class="form-label mt-2">Venue</label>
+                <label class="form-label mt-2">Lugar do Show</label>
               </div>
 
               <input type="text"
                      class="form-control"
-                     placeholder="Enter venue name"
+                     placeholder="Entre com o nome do lugar do show"
                      [class.is-invalid]="concertForm.get('venue')?.invalid && concertForm.get('venue')?.touched"
                      formControlName="venue"
                     (blur)="updateErrorMessage()"
@@ -93,7 +93,7 @@
               @if(concertForm.get('venue')?.invalid && concertForm.get('venue')?.touched){
 
                 <div class="invalid-feedback">
-                  Invalid venue
+                  Nome do lugar do show inválido
                 </div>
 
               }
@@ -104,12 +104,12 @@
 
               <div class="iconCustom d-flex align-items-center gap-2">
                 <i class="pi pi-calendar"></i>
-                <label class="form-label mt-2">Show Date</label>
+                <label class="form-label mt-2">Data do Show</label>
               </div>
 
               <input type="date"
                      class="form-control"
-                     placeholder="Enter show date"
+                     placeholder="Entre com a data do show"
                      [class.is-invalid]="concertForm.get('showDate')?.invalid && concertForm.get('showDate')?.touched"
                      formControlName="showDate"
                     (blur)="updateErrorMessage()"
@@ -118,7 +118,7 @@
               @if(concertForm.get('showDate')?.invalid && concertForm.get('showDate')?.touched){
 
                 <div class="invalid-feedback">
-                  Invalid show date
+                  Data do show inválida
                 </div>
 
               }
@@ -129,12 +129,12 @@
 
               <div class="iconCustom d-flex align-items-center gap-2">
                 <i class="pi pi-image"></i>
-                <label class="form-label mt-2">Photo</label>
+                <label class="form-label mt-2">Foto</label>
               </div>
 
               <input type="text"
                      class="form-control"
-                     placeholder="Enter photo URL"
+                     placeholder="Entre com a URL da foto"
                      [class.is-invalid]="concertForm.get('photo')?.invalid && concertForm.get('photo')?.touched"
                      formControlName="photo"
                     (blur)="updateErrorMessage()"
@@ -143,7 +143,7 @@
               @if(concertForm.get('photo')?.invalid && concertForm.get('photo')?.touched){
 
                 <div class="invalid-feedback">
-                  Invalid photo
+                  URL da foto inválida
                 </div>
 
               }
@@ -155,7 +155,7 @@
               <button (click)="close.emit()"
                       class="btn btn-outline-secondary mx-2"
                       type="button">
-                      <i class="pi pi-undo mr-3"></i> Cancel
+                      <i class="pi pi-undo mr-3"></i> Cancelar
               </button>
 
               <button class="btn btn-primary"
@@ -163,9 +163,9 @@
                       type="submit">
 
                 @if (isLoading()) {
-                    <i class="pi pi-spin pi-spinner mr-3"></i> Saving...
+                    <i class="pi pi-spin pi-spinner mr-3"></i> Salvando...
                 } @else {
-                    <i class="pi pi-save mr-3"></i> Save
+                    <i class="pi pi-save mr-3"></i> Salvar
                 }
 
               </button>

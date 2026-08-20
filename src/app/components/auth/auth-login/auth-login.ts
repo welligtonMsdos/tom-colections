@@ -54,7 +54,7 @@ export class AuthLogin {
         .then(data =>{
           if (data.success) {
 
-            this.alert.showSuccess('Welcome ' + this.loginService.currentUser()?.name);
+            this.alert.showSuccess('Olá ' + this.loginService.currentUser()?.name);
 
             this.router.navigate(['/home']);
           }

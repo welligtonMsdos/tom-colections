@@ -5,32 +5,32 @@
             <form [formGroup]="authForm">
             
                 <div class="mb-3">
-                    <label for="email" class="form-label">Email address</label>
+                    <label for="email" class="form-label">Email</label>
                     <input type="email"
                            id="email"
                            formControlName="email"
                            (blur)="updateErrorMessage()"
                            required
                            class="form-control"
-                           placeholder="name@example.com"/>
+                           placeholder="email@dominio.com.br"/>
 
                     @if(authForm.get('email')?.invalid && authForm.get('email')?.touched){
-                        <div class="text-danger mt-1 small">Invalid email</div>
+                        <div class="text-danger mt-1 small">Email inválido</div>
                     }
                 </div>
 
                 <div class="mb-3">
-                    <label for="password" class="form-label">Password</label>
+                    <label for="password" class="form-label">Senha</label>
                     <input type="password"
                            id="password"
                            formControlName="password"
                            (blur)="updateErrorMessage()"
                            required
                            class="form-control"
-                           placeholder="Enter your password"/>
+                           placeholder="Entre com sua senha"/>
 
                     @if(authForm.get('password')?.invalid && authForm.get('password')?.touched){
-                        <div class="text-danger mt-1 small">Invalid password</div>
+                        <div class="text-danger mt-1 small">Senha inválida</div>
                     }
                 </div>
 
