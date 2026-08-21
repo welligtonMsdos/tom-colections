@@ -14,11 +14,7 @@
 
               <header>
                 <h5>Olá, {{ user.name }}!</h5>               
-              </header>
-
-              <main>
-                <p>Conteúdo exclusivo de sua conta.</p>
-              </main>
+              </header>            
 
             }
 
@@ -26,21 +22,33 @@
 
              <div class="alert text-warning alert-warning border-warning border-2 mb-2 p-2 shadow-sm" role="alert">
 
-            <div class="flex items-center">
+                <div class="flex items-center">
 
-              <i class="pi pi-exclamation-triangle me-2"></i>
+                  <i class="pi pi-exclamation-triangle me-2"></i>
 
-              <span class="text-xs font-bold uppercase">Por favor, faça login para acessar recursos adicionais.</span>
+                  <span class="text-xs font-bold uppercase">Por favor, faça login para acessar recursos adicionais.</span>
 
-            </div>
+                </div>
 
+             </div>
+
+          }        
+
+          <div class="d-flex gap-2">
+
+            <button class="btn btn-primary" routerLink="/vinyl"> 
+              <i class="pi pi-play"></i>
+              LPs
+            </button>
+
+            <button class="btn btn-primary" routerLink="/k7">
+              <i class="pi pi-play"></i>
+              K7s
+            </button>
 
           </div>
 
-
-          }
-
-        </div>
+        </div>          
 
       </div>
 
@@ -49,5 +57,7 @@
   </div>
 
 </div>
+
+
 
 

@@ -8,7 +8,7 @@
           [ngClass]="concertService.currentFilter() === 'upcoming' ? 'btn-primary' : 'btn-outline-primary'"
           (click)="changeFilter('upcoming')">
           <i class="pi pi-calendar-plus me-2"></i>
-          Próximos Shows
+          Próximos
         </button>
 
         <button
@@ -16,7 +16,7 @@
           [ngClass]="concertService.currentFilter() === 'past' ? 'btn-primary' : 'btn-outline-primary'"
           (click)="changeFilter('past')">
           <i class="pi pi-history"></i>
-          Shows passados
+          Passados
         </button>
       </div>
     </div>
@@ -27,7 +27,7 @@
               (click)="showModalCreate.set(true)"
              >
         <i class="pi pi-plus"></i>
-        Novo show
+        Novo
       </button>
 
     </div>

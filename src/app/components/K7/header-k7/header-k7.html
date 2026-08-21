@@ -8,14 +8,12 @@
         <input 
           type="text" 
           class="form-control ps-5" 
-          placeholder="Buscar por artista ou álbum..."
-          [value]="searchTerm()"
-          (input)="updateSearch($any($event.target).value)">
+          placeholder="Buscar por artista ou álbum...">
         <i class="pi pi-search position-absolute top-50 start-0 translate-middle-y ms-3 text-muted"></i>
       </div>
       
       <div class="ms-auto">
-        <button class="btn btn-primary" (click)="showModalCreate.set(true)">
+        <button class="btn btn-primary">
           <i class="pi pi-plus me-2"></i>
           Novo
         </button>
@@ -26,8 +24,4 @@
   </div>
 
 </div>
-
-@if (showModalCreate()) {
-  <app-vinyl-create (close)="showModalCreate.set(false)" />
-}
 
