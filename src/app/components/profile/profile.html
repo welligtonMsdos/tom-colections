@@ -6,6 +6,12 @@
 
          <div class="mt-1">
 
+             @if (loginService.currentUser(); as user) 
+             {
+
+                
+             }
+
             <form [formGroup]="userForm" class="row g-3">
 
                 <div class="col-md-12">

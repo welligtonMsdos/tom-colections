@@ -3,6 +3,7 @@ import { LoginService } from '../../service/login.service';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { RouterLink } from '@angular/router';
+import { AuthService } from '../../service/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -13,5 +14,6 @@ import { RouterLink } from '@angular/router';
 export class Home {
 
   public loginService = inject(LoginService);
+  public authService = inject(AuthService);
 
 }

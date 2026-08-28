@@ -1,28 +1,42 @@
 import { Injectable } from "@angular/core";
+import { jwtDecode } from "jwt-decode";
+
+interface JwtPayload {
+  role?: string;
+  exp?: number;
+  // outros claims que seu backend envia
+}
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class AuthService {
 
-  private readonly TOKEN_KEY = 'token';
+  private token: string | null = null;
 
-  isAuthenticated(): boolean {
-    const token = localStorage.getItem(this.TOKEN_KEY);
-    if(!token) return false;
-
-    const payload = this.decodeToken(token);
-    const now = Math.floor(Date.now() / 1000);
-    return payload && payload.exp > now;
+  setToken(token: string): void {
+    this.token = token;
   }
 
-  private decodeToken(token: string): any {
-    try {
-      const payload = token.split('.')[1];
-      return JSON.parse(atob(payload));
-    } catch (e) {
-      return null;
-    }
+  getToken(): string | null {
+    return this.token;
+  }
+
+  clearToken(): void {
+    this.token = null;
+  }
+
+  getRole(): string | null {
+    if (!this.token) return null;
+    const decoded = jwtDecode<JwtPayload>(this.token);
+    return decoded.role || null;
+  }
+
+  isAuthenticated(): boolean {
+    if (!this.token) return false;
+    const decoded = jwtDecode<JwtPayload>(this.token);
+    return decoded.exp ? Date.now() < decoded.exp * 1000 : true;
   }
 
 }

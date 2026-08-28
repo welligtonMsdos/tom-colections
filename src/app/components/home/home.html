@@ -10,11 +10,25 @@
 
           @if (loginService.currentUser(); as user) {
 
-            @if(user.email) {
+            @if(user.email) {               
+              
+              <div class="d-flex gap-2">
+           
+                <button color="primary" 
+                        routerLink="/vinyl" 
+                        class="btn btn-primary action-tile rounded-3 d-flex flex-column align-items-center justify-content-center p-3 shadow-sm">
+                    <mat-icon class="tile-icon mb-1">album</mat-icon>
+                    <span class="tile-label font-semibold">LPs</span>
+                </button>
 
-              <header>
-                <h5>Olá, {{ user.name }}!</h5>               
-              </header>            
+                <button color="primary" 
+                        routerLink="/k7" 
+                        class="btn btn-primary action-tile rounded-3 d-flex flex-column align-items-center justify-content-center p-3 shadow-sm">
+                    <mat-icon class="tile-icon mb-1">graphic_eq</mat-icon>
+                    <span class="tile-label font-semibold">K7s</span>
+                </button>            
+
+              </div>
 
             }
 
@@ -34,19 +48,7 @@
 
           }        
 
-          <div class="d-flex gap-2">
-
-            <button class="btn btn-primary" routerLink="/vinyl"> 
-              <i class="pi pi-play"></i>
-              LPs
-            </button>
-
-            <button class="btn btn-primary" routerLink="/k7">
-              <i class="pi pi-play"></i>
-              K7s
-            </button>
-
-          </div>
+        
 
         </div>          
 
@@ -57,7 +59,3 @@
   </div>
 
 </div>
-
-
-
-
