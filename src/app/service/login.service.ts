@@ -5,8 +5,9 @@ import { ApiResponse } from '../domain/api-response';
 import { firstValueFrom } from 'rxjs';
 import { jwtDecode } from 'jwt-decode';
 import { Result } from '../domain/result.model';
-import { AlertService } from './alert.service';
 import { ConcertService } from './concert.service';
+import { AuthService } from './auth.service';
+
 interface UserPayload {
   name: string;
   email: string;
@@ -18,24 +19,25 @@ interface UserPayload {
 
 export class LoginService {
 
-   private readonly apiUrl = 'https://authproject-8vvl.onrender.com/api/Auth/';
-   //private readonly apiUrl = 'http://localhost:5011/api/Auth/';
+   private readonly apiUrl = 'https://authproject-8vvl.onrender.com/api/Auth/';   
 
    private userSignal = signal<UserPayload | null>(null);
 
    currentUser = computed(() => this.userSignal());
 
-   private alert = inject(AlertService);
-
    private concertService = inject(ConcertService);
+
+   private authService = inject(AuthService);
 
    constructor(private http: HttpClient
    ) {
     this.getUserFromToken();
    }
 
-   private getUserFromToken() {
-    const token = localStorage.getItem('token');
+   private getUserFromToken() {   
+
+    const token = this.authService.getToken();
+
     if (token) {
       try {
         const decoded = jwtDecode<UserPayload>(token);
@@ -47,8 +49,8 @@ export class LoginService {
     }
   }
 
-  logout() {
-    localStorage.removeItem('token');
+  logout() {    
+    this.authService.clearToken();
     this.userSignal.set(null);
     this.concertService.refresh();
   }
@@ -57,15 +59,15 @@ export class LoginService {
   try {
         const response = await firstValueFrom(
         this.http.post<Result<any>>(this.apiUrl + "Login", userLoginDto)
-      );    
+      );          
 
       if (response.success && response.data) {
 
-        const jwt = response.data.result;
+        const jwt = response.data.result;        
 
         if (jwt) {
-          localStorage.setItem('token', jwt);
-          this.getUserFromToken();
+          this.authService.setToken(jwt);     
+          this.getUserFromToken();     
         }
       }   
 

@@ -4,6 +4,7 @@ import { Result } from "../domain/result.model";
 import { HttpClient } from "@angular/common/http";
 import { catchError, finalize, Observable, tap } from "rxjs";
 import { AlertService } from "./alert.service";
+import { AuthService } from "./auth.service";
 
 @Injectable({
   providedIn: 'root'
@@ -31,6 +32,8 @@ export class ConcertService {
   public currentFilter = this.filterSignal.asReadonly();
 
   public ticketList = computed(() => this.ticketsState().data);
+ 
+  private authService = inject(AuthService);
 
   constructor(private http: HttpClient) {
     this.get();
@@ -48,9 +51,9 @@ export class ConcertService {
   }
 
   get() {
-    const status = this.filterSignal();
+    const status = this.filterSignal();   
 
-    const token = localStorage.getItem('token');
+    const token = this.authService.getToken();
 
     if(!token){
       return;

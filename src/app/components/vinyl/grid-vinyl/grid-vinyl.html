@@ -3,49 +3,53 @@
   <div class="vinyl-grid">
     @for (vinyl of paginatedVinyls(); track vinyl.guid) {
       
-      <div class="card bg-body-tertiary text-body border-light-subtle h-100 shadow-sm position-relative overflow-hidden p-2 rounded-3">                
+      <div class="card bg-body-tertiary text-body border-secondary-subtle h-100 shadow-sm p-3 rounded-3">        
        
-        <div class="image-wrapper bg-black bg-opacity-10 d-flex align-items-center justify-content-center position-relative rounded-2 p-2">
-          <img [src]="vinyl.photo" [alt]="vinyl.artist" class="img-fluid rounded-1" loading="lazy" />       
-                    
-          <div class="card-actions position-absolute top-0 end-0 m-2 d-flex gap-2 z-3">            
-            
-            <button title="Editar"
-                    (click)="editVinyl(vinyl.guid)"
-                    class="btn btn-sm btn-light border shadow-sm rounded-circle p-0 d-flex align-items-center justify-content-center"
-                    style="width: 32px; height: 32px;">
-              <i class="text-primary pi pi-pen-to-square fs-6"></i>
+        <!-- Topo: Ano à esquerda + Ações à direita -->
+        <div class="d-flex align-items-center justify-content-between mb-2">
+          <span class="badge bg-body-secondary text-body-secondary border border-secondary-subtle px-2 py-1 fs-7 fw-semibold">
+            {{ vinyl.year }}
+          </span>
+
+          <div class="d-flex gap-1">
+            <button (click)="editVinyl(vinyl.guid)"
+                    class="btn btn-sm btn-link text-body-secondary p-1 border-0"
+                    title="Editar">
+              <i class="pi pi-pen-to-square fs-6"></i>
             </button>
 
-            <button title="Excluir"
-                    (click)="showModalDelete.set(true); idSelected.set(vinyl.guid)"
-                    class="btn btn-sm btn-light border shadow-sm rounded-circle p-0 d-flex align-items-center justify-content-center">
-              <i class="text-danger pi pi-trash fs-6"></i>
+            <button (click)="showModalDelete.set(true); idSelected.set(vinyl.guid)"
+                    class="btn btn-sm btn-link text-danger p-1 border-0"
+                    title="Excluir">
+              <i class="pi pi-trash fs-6"></i>
             </button>
-
           </div>
         </div>
+
+        <!-- Capa do Álbum com proporção quadrada 1:1 -->
+        <div class="image-wrapper bg-body-secondary d-flex align-items-center justify-content-center rounded-2 p-1 overflow-hidden ratio ratio-1x1 border border-secondary-subtle">
+          <img [src]="vinyl.photo" [alt]="vinyl.artist" class="img-fluid rounded-1 object-fit-cover" loading="lazy" />       
+        </div>
         
-        <div class="card-body p-2 d-flex flex-column justify-content-end mt-2">
-          <div class="d-flex align-items-center justify-content-between w-100">    
-            <span class="badge text-bg-primary bg-opacity-75 px-2 py-1 fs-7 fw-normal">{{ vinyl.year }}</span>        
-            <span class="fs-5 fw-bold text-success">{{ vinyl.price | currency:'BRL':'R$ ' }}</span>
-          </div>
+        <!-- Rodapé do card: Preço -->
+        <div class="card-body p-0 pt-3 d-flex align-items-center justify-content-end">
+          <span class="fs-5 fw-bold text-success">{{ vinyl.price | currency:'BRL':'R$ ' }}</span>
         </div>
 
       </div>
     } @empty {
       <div class="col-12 text-center py-5">
-        <p class="text-muted fs-5"><i class="pi pi-info-circle me-2"></i>Nenhum LP encontrado.</p>
+        <p class="text-body-secondary fs-5"><i class="pi pi-info-circle me-2"></i>Nenhum LP encontrado.</p>
       </div>
     }
   </div>
   
+  <!-- Paginação adaptável aos dois temas -->
   <nav aria-label="Navegação de páginas" class="d-flex justify-content-center mt-4">
     <ul class="pagination pagination-sm m-0 gap-1">
       @for (page of pagesArray(); track page) {
         <li class="page-item" [class.active]="currentPage() === page">
-          <button class="page-link rounded-circle border-0 text-center d-flex align-items-center justify-content-center" 
+          <button class="page-link bg-body-tertiary text-body border-secondary-subtle rounded-circle text-center d-flex align-items-center justify-content-center shadow-sm" 
                   style="width: 32px; height: 32px;"
                   (click)="goToPage(page)">
             {{ page }}
@@ -54,7 +58,7 @@
       }
       @if (currentPage() < totalPages()) {
         <li class="page-item">
-          <button class="page-link rounded-circle border-0 text-center d-flex align-items-center justify-content-center" 
+          <button class="page-link bg-body-tertiary text-body border-secondary-subtle rounded-circle text-center d-flex align-items-center justify-content-center shadow-sm" 
                   style="width: 32px; height: 32px;"
                   (click)="goToPage(currentPage() + 1)">&gt;</button>
         </li>
