@@ -1,131 +1,36 @@
-<div class="table table-striped p-3">    
-
-  <table class="table table-hover align-middle mb-0">
-    <thead>
-      <tr>
-        <th class="border-0 ps-4">Album</th>
-        <th class="border-0">Artist</th>
-        <th class="border-0 text-center">Year</th>
-        <th class="border-0 text-center">Price</th>
-        <th class="border-0 text-end pe-4"></th>
-      </tr>
-    </thead>
-      
-    <tbody>
-
+<section class="vinyl-list" aria-label="Coleção de LPs">
+  @if (paginatedVinyls().length > 0) {
+    <div class="vinyl-grid">
       @for (vinyl of paginatedVinyls(); track vinyl.guid) {
-
-        <tr>
-          <td class="ps-4">
-            <div class="d-flex align-items-center">
-
-              <img [src]="vinyl.photo" alt="Capa" class="rounded-circle me-3" style="width: 50px; height: 50px; object-fit: cover;">                
-
-              <span class="fw-bold">{{ vinyl.album }}</span>
-
+        <article class="vinyl-card">
+          <div class="vinyl-card__topbar">
+            <span class="vinyl-card__year">{{ vinyl.year }}</span>
+            <div class="vinyl-card__actions">
+              <button type="button" title="Editar LP" [attr.aria-label]="'Editar ' + vinyl.album" (click)="editVinyl(vinyl.guid)"><i class="pi pi-pen-to-square" aria-hidden="true"></i></button>
+              <button type="button" title="Excluir LP" [attr.aria-label]="'Excluir ' + vinyl.album" class="delete-action" (click)="showModalDelete.set(true); idSelected.set(vinyl.guid)"><i class="pi pi-trash" aria-hidden="true"></i></button>
             </div>
-          </td>
+          </div>
 
-          <td><span class="text-info-custom">{{ vinyl.artist }}</span></td>
-          
-          <td class="text-center"><span class="badge text-bg-secondary">{{ vinyl.year }}</span></td>
-          
-          <td class="text-center fw-semibold">{{ vinyl.price | currency:'BRL' }}</td>
-          
-          <td class="text-end pe-4">
-            <button title="Editar"
-                    (click)="editVinyl(vinyl.guid)"
-                    class="btn btn-sm">
-              <i class="text-primary pi pi-pen-to-square"></i>
-            </button>
+          <div class="vinyl-card__cover">
+            <img [src]="vinyl.photo" [alt]="'Capa de ' + vinyl.album" loading="lazy" />
+          </div>
 
-            <button title="Excluir"
-                    (click)="showModalDelete.set(true); idSelected.set(vinyl.guid)"
-                    class="btn btn-sm text-danger">
-              <i class="pi pi-trash"></i>
-            </button>
-          </td>
-        </tr>
-
+          <div class="vinyl-card__content">
+            <h3 title="{{ vinyl.album }}">{{ vinyl.album }}</h3>
+            <p title="{{ vinyl.artist }}">{{ vinyl.artist }}</p>
+            <strong class="vinyl-card__price">{{ vinyl.price | currency:'BRL' }}</strong>
+          </div>
+        </article>
       }
-        
-    </tbody>
-
-  </table>
-
-  @if (filteredVinyls().length > 0) {
-
-    <div class="d-flex align-items-center justify-content-between border-top p-4 bgPrimary">
-
-      <div class="d-none d-sm-block">
-        
-        <p class="mb-0 text-secondary small">
-            Showing <span class="fw-bold text-body">{{ (currentPage() - 1) * itemsPerPage() + 1 }}</span> to
-          
-          <span class="fw-bold text-body">{{ Math.min(currentPage() * itemsPerPage(), filteredVinyls().length) }}</span> of
-          
-          <span class="fw-bold text-body">{{ filteredVinyls().length }}</span> results
-        
-        </p>
-
-      </div>
-
-      <nav aria-label="User pagination">
-
-        <ul class="pagination pagination-sm mb-0 shadow-sm">
-
-          <li class="page-item" [class.disabled]="currentPage() === 1">
-            <button class="page-link"
-                    (click)="goToPage(currentPage() - 1)"
-                    [disabled]="currentPage() === 1"
-                    aria-label="Previous">
-              <i class="pi pi-chevron-left" style="font-size: 0.7rem"></i>
-            </button>
-          </li>
-
-          @for (page of pageNumbers(); track page) {
-            <li class="page-item" [class.active]="currentPage() === page">
-              <button class="page-link shadow-none" (click)="goToPage(page)">
-                {{ page }}
-              </button>
-            </li>
-          }
-
-          <li class="page-item" [class.disabled]="currentPage() === totalPages()">
-            <button class="page-link"
-                    (click)="goToPage(currentPage() + 1)"
-                    [disabled]="currentPage() === totalPages()"
-                    aria-label="Next">
-              <i class="pi pi-chevron-right" style="font-size: 0.7rem"></i>
-            </button>
-          </li>
-
-        </ul>
-
-      </nav>
-
     </div>
-
+  } @else {
+    <div class="empty-state"><span><i class="pi pi-disc"></i></span><h3>Nenhum LP encontrado</h3><p>Ajuste a busca ou adicione um disco à sua coleção.</p></div>
   }
-    
-</div>
 
-@if (showModalDelete()) {
+  @if (filteredVinyls().length > 0 && totalPages() > 1) {
+    <footer class="list-pagination"><span>Mostrando {{ (currentPage() - 1) * itemsPerPage() + 1 }}–{{ Math.min(currentPage() * itemsPerPage(), filteredVinyls().length) }} de {{ filteredVinyls().length }}</span><nav aria-label="Paginação dos LPs"><button type="button" (click)="goToPage(currentPage() - 1)" [disabled]="currentPage() === 1" aria-label="Página anterior"><i class="pi pi-chevron-left"></i></button>@for (page of pageNumbers(); track page) {<button type="button" (click)="goToPage(page)" [class.is-active]="currentPage() === page">{{ page }}</button>}<button type="button" (click)="goToPage(currentPage() + 1)" [disabled]="currentPage() === totalPages()" aria-label="Próxima página"><i class="pi pi-chevron-right"></i></button></nav></footer>
+  }
+</section>
 
-  <app-delete-data
-   [id]="idSelected()"
-   (onCancel)="showModalDelete.set(false)"
-   (onConfirm)="delete()" />
-
-}
-
-@if(showModalUpdate()) {
-
-  <app-vinyl-update
-    [vinyl]="vinylSelected()!"
-    (saved)="vinylService.get().subscribe()"
-    (close)="showModalUpdate.set(false)"  />
-
-}
-
-
+@if (showModalDelete()) { <app-delete-data [id]="idSelected()" (onCancel)="showModalDelete.set(false)" (onConfirm)="delete()" /> }
+@if (showModalUpdate()) { <app-vinyl-update [vinyl]="vinylSelected()!" (saved)="vinylService.get().subscribe()" (close)="showModalUpdate.set(false)" /> }

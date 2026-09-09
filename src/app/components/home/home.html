@@ -1,61 +1,60 @@
-<div class="container">
+<main class="home-page">
+  @if (loginService.currentUser(); as user) {
+    <section class="home-shell" aria-labelledby="home-title">
+      <header class="welcome-panel">
+        <div>
 
-  <div class="row">
-
-    <div class="col-12 mt-5">
-
-      <div class="card shadow-lg">
-
-        <div class="card-body">
-
-          @if (loginService.currentUser(); as user) {
-
-            @if(user.email) {               
-              
-              <div class="d-flex gap-2">
-           
-                <button color="primary" 
-                        routerLink="/vinyl" 
-                        class="btn btn-primary action-tile rounded-3 d-flex flex-column align-items-center justify-content-center p-3 shadow-sm">
-                    <mat-icon class="tile-icon mb-1">album</mat-icon>
-                    <span class="tile-label font-semibold">LPs</span>
-                </button>
-
-                <button color="primary" 
-                        routerLink="/k7" 
-                        class="btn btn-primary action-tile rounded-3 d-flex flex-column align-items-center justify-content-center p-3 shadow-sm">
-                    <mat-icon class="tile-icon mb-1">graphic_eq</mat-icon>
-                    <span class="tile-label font-semibold">K7s</span>
-                </button>            
-
-              </div>
-
-            }
-
-          } @else {
-
-             <div class="alert text-warning alert-warning border-warning border-2 mb-2 p-2 shadow-sm" role="alert">
-
-                <div class="flex items-center">
-
-                  <i class="pi pi-exclamation-triangle me-2"></i>
-
-                  <span class="text-xs font-bold uppercase">Por favor, faça login para acessar recursos adicionais.</span>
-
-                </div>
-
-             </div>
-
-          }        
-
+          <span class="eyebrow"><i class="pi pi-wave-pulse" aria-hidden="true"></i> Sua biblioteca musical</span>
+          <h1 id="home-title">Olá, {{ user.name || 'colecionador' }}.</h1>
+          <p>Escolha uma área para continuar cuidando da sua coleção.</p>
+          
+        </div>
         
+      </header>
 
-        </div>          
+      <section class="collection-section" aria-labelledby="collections-title">
+        <div class="section-heading">
+          <div>
+            <span class="section-kicker">Acessos rápidos</span>
+            <h2 id="collections-title">Sua coleção</h2>
+          </div>
+          <span class="section-hint">Tudo que importa, ao alcance.</span>
+        </div>
 
-      </div>
+        <div class="action-grid">
+          <a routerLink="/vinyl" class="collection-card collection-card--vinyl">
+            <span class="collection-card__icon"><mat-icon>album</mat-icon></span>
+            <span class="collection-card__body"><strong>LPs</strong><small>Explore seus discos e favoritos.</small></span>
+            <i class="pi pi-arrow-up-right" aria-hidden="true"></i>
+          </a>
 
-    </div>
+          <a routerLink="/k7" class="collection-card collection-card--k7">
+            <span class="collection-card__icon"><mat-icon>graphic_eq</mat-icon></span>
+            <span class="collection-card__body"><strong>K7s</strong><small>Reviva suas fitas e gravações.</small></span>
+            <i class="pi pi-arrow-up-right" aria-hidden="true"></i>
+          </a>
 
-  </div>
+          <a routerLink="/concerts" class="collection-card collection-card--shows">
+            <span class="collection-card__icon"><mat-icon>confirmation_number</mat-icon></span>
+            <span class="collection-card__body"><strong>Shows</strong><small>Guarde cada experiência ao vivo.</small></span>
+            <i class="pi pi-arrow-up-right" aria-hidden="true"></i>
+          </a>
+        </div>
+      </section>
 
-</div>
+      <section class="account-panel" aria-label="Atalho de perfil">
+        <span class="account-panel__icon"><i class="pi pi-user" aria-hidden="true"></i></span>
+        <div><strong>Seu perfil</strong><p>Atualize seus dados e personalize sua experiência.</p></div>
+        <a routerLink="/profile">Ver perfil <i class="pi pi-arrow-right" aria-hidden="true"></i></a>
+      </section>
+    </section>
+  } @else {
+    <section class="guest-panel" aria-labelledby="guest-title">
+      <span class="guest-panel__icon"><i class="pi pi-headphones" aria-hidden="true"></i></span>
+      <span class="eyebrow">Tom Collections</span>
+      <h1 id="guest-title">Sua coleção merece um lugar especial.</h1>
+      <p>Entre para organizar seus discos, fitas e as memórias dos seus shows.</p>
+      <a routerLink="/auth" class="guest-panel__button">Entrar na minha conta <i class="pi pi-arrow-right" aria-hidden="true"></i></a>
+    </section>
+  }
+</main>

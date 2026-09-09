@@ -1,25 +1,17 @@
-<div class="card shadow-lg">
-
-  <div class="card-body">
-
-    <div class="row g-3">
-
-      <div class="col-md-4">        
-        
-        <app-card-vinyl />
-
+<main class="vinyl-page">
+  <div class="vinyl-page__shell">
+    <header class="vinyl-page__intro">
+      <div>
+        <span class="vinyl-page__eyebrow"><i class="pi pi-disc" aria-hidden="true"></i> Minha discoteca</span>
+        <h1>LPs</h1>
+        <p>Organize seus discos, descubra detalhes e mantenha sua coleção sempre por perto.</p>
       </div>
+      <app-card-vinyl />
+    </header>
 
-      <div class="col-md-8">
-
-        <app-header-vinyl />
-
-        <app-grid-vinyl />
-
-      </div>
-
-    </div>
-
+    <section class="vinyl-page__catalog" aria-label="Catálogo de LPs">
+      <app-header-vinyl />
+      <app-list-vinyl />
+    </section>
   </div>
-
-</div>
+</main>
