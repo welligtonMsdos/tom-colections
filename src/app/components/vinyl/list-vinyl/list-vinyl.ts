@@ -1,6 +1,6 @@
 import { VinylDto } from './../../../domain/vinyl.model';
 import { VinylService } from '../../../service/vinyl.service';
-import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import { Component, computed, effect, inject, OnInit, signal } from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
 import { DeleteData } from '../../shared/delete-data/delete-data';
 import { AlertService } from '../../../service/alert.service';
@@ -21,8 +21,8 @@ export class ListVinyl implements OnInit{
  showModalUpdate = signal(false);
  showModalDelete = signal(false);
  currentPage = signal(1);
- itemsPerPage = signal(5);
- searchTerm = signal('');
+ itemsPerPage = signal(8);
+ searchTerm = this.vinylService.searchTerm;
  idSelected = signal('');
  vinylSelected = signal<VinylDto | null>(null);
 
@@ -52,6 +52,13 @@ export class ListVinyl implements OnInit{
     const pages = this.totalPages();
     return Array.from({ length: pages }, (_, i) => i + 1);
   });
+
+  constructor() {
+    effect(() => {
+      this.searchTerm();
+      this.currentPage.set(1);
+    });
+  }
 
  ngOnInit(): void {
     this.vinylService.get().subscribe({
