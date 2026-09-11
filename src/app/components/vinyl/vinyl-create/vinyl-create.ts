@@ -7,7 +7,6 @@ import { VinylCreateDto } from '../../../domain/vinyl.model';
   selector: 'app-vinyl-create',
   imports: [ReactiveFormsModule],
   templateUrl: './vinyl-create.html',
-  styleUrl: './vinyl-create.css',
 })
 export class VinylCreate {
 

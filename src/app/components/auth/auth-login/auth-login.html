@@ -1,38 +1,124 @@
-<section class="login-card" aria-labelledby="login-title">
-  <div class="login-card__header">
-    <span class="login-card__eyebrow">Sua coleção, do seu jeito</span>
-    <h1 id="login-title">Boas-vindas de volta</h1>
-    <p>Acesse sua conta para continuar organizando o que você ama.</p>
+<section
+  class="card border-primary-subtle shadow-lg rounded-4"
+  aria-labelledby="login-title"
+>
+  <div class="card-body p-4 p-md-5">
+    <div class="mb-4">
+      <span class="d-inline-block text-primary fw-bold text-uppercase small">
+        Sua coleção, do seu jeito
+      </span>
+      <h1
+        id="login-title"
+        class="h2 fw-bold mt-2 mb-2"
+      >
+        Boas-vindas de volta
+      </h1>
+      <p class="text-secondary mb-0">
+        Acesse sua conta para continuar organizando o que você ama.
+      </p>
+    </div>
+
+    <form
+      [formGroup]="authForm"
+      (ngSubmit)="login()"
+      novalidate
+    >
+      <div class="mb-3">
+        <label
+          for="email"
+          class="form-label fw-semibold"
+        >
+          E-mail
+        </label>
+        <div class="input-group">
+          <span class="input-group-text bg-body">
+            <i
+              class="pi pi-envelope text-primary"
+              aria-hidden="true"
+            ></i>
+          </span>
+          <input
+            id="email"
+            type="email"
+            class="form-control"
+            formControlName="email"
+            autocomplete="email"
+            required
+            placeholder="voce@exemplo.com"
+            (blur)="updateErrorMessage()"
+          />
+        </div>
+        @if (authForm.get('email')?.invalid && authForm.get('email')?.touched) {
+          <div class="invalid-feedback d-block">
+            Informe um e-mail válido.
+          </div>
+        }
+      </div>
+
+      <div class="mb-3">
+        <label
+          for="password"
+          class="form-label fw-semibold"
+        >
+          Senha
+        </label>
+        <div class="input-group">
+          <span class="input-group-text bg-body">
+            <i
+              class="pi pi-lock text-primary"
+              aria-hidden="true"
+            ></i>
+          </span>
+          <input
+            id="password"
+            [type]="hide() ? 'password' : 'text'"
+            class="form-control"
+            formControlName="password"
+            autocomplete="current-password"
+            required
+            placeholder="Digite sua senha"
+            (blur)="updateErrorMessage()"
+          />
+          <button
+            type="button"
+            class="btn btn-outline-secondary"
+            [attr.aria-label]="hide() ? 'Mostrar senha' : 'Ocultar senha'"
+            (click)="clickEvent($event)"
+          >
+            <i
+              [class]="hide() ? 'pi pi-eye' : 'pi pi-eye-slash'"
+              aria-hidden="true"
+            ></i>
+          </button>
+        </div>
+        @if (authForm.get('password')?.invalid && authForm.get('password')?.touched) {
+          <div class="invalid-feedback d-block">
+            Informe sua senha.
+          </div>
+        }
+      </div>
+
+      <button
+        type="submit"
+        class="btn btn-primary w-100 d-flex align-items-center justify-content-between py-2 px-3"
+      >
+        <span>Entrar na minha conta</span>
+        <i
+          class="pi pi-arrow-right"
+          aria-hidden="true"
+        ></i>
+      </button>
+    </form>
+
+    <div class="d-flex flex-column flex-sm-row justify-content-center align-items-center gap-1 mt-4 text-secondary small">
+      <span>Ainda não tem uma conta?</span>
+      <button
+        type="button"
+        class="btn btn-link text-primary fw-bold p-0"
+        (click)="onToggle()"
+      >
+        Criar conta
+      </button>
+    </div>
   </div>
-
-  <form [formGroup]="authForm" (ngSubmit)="login()" novalidate>
-    <div class="field-group">
-      <label for="email">E-mail</label>
-      <div class="input-wrap">
-        <i class="pi pi-envelope" aria-hidden="true"></i>
-        <input type="email" id="email" formControlName="email" (blur)="updateErrorMessage()" autocomplete="email" required placeholder="voce@exemplo.com" />
-      </div>
-      @if (authForm.get('email')?.invalid && authForm.get('email')?.touched) {
-        <span class="field-error"><i class="pi pi-exclamation-circle"></i> Informe um e-mail válido.</span>
-      }
-    </div>
-
-    <div class="field-group">
-      <label for="password">Senha</label>
-      <div class="input-wrap">
-        <i class="pi pi-lock" aria-hidden="true"></i>
-        <input [type]="hide() ? 'password' : 'text'" id="password" formControlName="password" (blur)="updateErrorMessage()" autocomplete="current-password" required placeholder="Digite sua senha" />
-        <button class="password-toggle" type="button" (click)="clickEvent($event)" [attr.aria-label]="hide() ? 'Mostrar senha' : 'Ocultar senha'">
-          <i [class]="hide() ? 'pi pi-eye' : 'pi pi-eye-slash'" aria-hidden="true"></i>
-        </button>
-      </div>
-      @if (authForm.get('password')?.invalid && authForm.get('password')?.touched) {
-        <span class="field-error"><i class="pi pi-exclamation-circle"></i> Informe sua senha.</span>
-      }
-    </div>
-
-    <button type="submit" class="login-button"><span>Entrar na minha conta</span><i class="pi pi-arrow-right" aria-hidden="true"></i></button>
-  </form>
-
-  <div class="login-card__footer"><span>Ainda não tem uma conta?</span><button type="button" (click)="onToggle()">Criar conta</button></div>
 </section>

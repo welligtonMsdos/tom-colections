@@ -9,7 +9,6 @@ import { VinylUpdate } from '../vinyl-update/vinyl-update';
   selector: 'app-list-vinyl',
   imports: [CurrencyPipe, DeleteData, VinylUpdate],
   templateUrl: './list-vinyl.html',
-  styleUrl: './list-vinyl.css',
 })
 export class ListVinyl implements OnInit{
 

@@ -1,13 +1,13 @@
-<div class="catalog-container">
+<div class="container-fluid p-3">
   
-  <div class="vinyl-grid">
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 g-3">
     @for (vinyl of paginatedVinyls(); track vinyl.guid) {
-      
-      <div class="card bg-body-tertiary text-body border-secondary-subtle h-100 shadow-sm p-3 rounded-3">        
+      <article class="col">
+      <div class="card bg-body-tertiary text-body border-secondary-subtle h-100 shadow-sm p-3 rounded-3 overflow-hidden">
        
         <!-- Topo: Ano à esquerda + Ações à direita -->
         <div class="d-flex align-items-center justify-content-between mb-2">
-          <span class="badge bg-body-secondary text-body-secondary border border-secondary-subtle px-2 py-1 fs-7 fw-semibold">
+          <span class="vinyl-year badge bg-body-secondary text-body-secondary border border-secondary-subtle px-2 py-1 fs-7 fw-semibold">
             {{ vinyl.year }}
           </span>
 
@@ -27,8 +27,15 @@
         </div>
 
         <!-- Capa do Álbum com proporção quadrada 1:1 -->
-        <div class="image-wrapper bg-body-secondary d-flex align-items-center justify-content-center rounded-2 p-1 overflow-hidden ratio ratio-1x1 border border-secondary-subtle">
-          <img [src]="vinyl.photo" [alt]="vinyl.artist" class="img-fluid rounded-1 object-fit-cover" loading="lazy" />       
+        <div
+          class="vinyl-cover bg-body-secondary d-flex align-items-center justify-content-center rounded-circle p-1 overflow-hidden ratio ratio-1x1 border border-secondary-subtle w-100 mx-auto"
+        >
+          <img
+            [src]="vinyl.photo"
+            [alt]="vinyl.artist"
+            class="img-fluid rounded-circle object-fit-cover"
+            loading="lazy"
+          />
         </div>
         
         <!-- Rodapé do card: Preço -->
@@ -37,6 +44,7 @@
         </div>
 
       </div>
+      </article>
     } @empty {
       <div class="col-12 text-center py-5">
         <p class="text-body-secondary fs-5"><i class="pi pi-info-circle me-2"></i>Nenhum LP encontrado.</p>
@@ -49,8 +57,7 @@
     <ul class="pagination pagination-sm m-0 gap-1">
       @for (page of pagesArray(); track page) {
         <li class="page-item" [class.active]="currentPage() === page">
-          <button class="page-link bg-body-tertiary text-body border-secondary-subtle rounded-circle text-center d-flex align-items-center justify-content-center shadow-sm" 
-                  style="width: 32px; height: 32px;"
+          <button class="page-link bg-body-tertiary text-body border-secondary-subtle rounded text-center shadow-sm"
                   (click)="goToPage(page)">
             {{ page }}
           </button>
@@ -58,8 +65,7 @@
       }
       @if (currentPage() < totalPages()) {
         <li class="page-item">
-          <button class="page-link bg-body-tertiary text-body border-secondary-subtle rounded-circle text-center d-flex align-items-center justify-content-center shadow-sm" 
-                  style="width: 32px; height: 32px;"
+          <button class="page-link bg-body-tertiary text-body border-secondary-subtle rounded text-center shadow-sm"
                   (click)="goToPage(currentPage() + 1)">&gt;</button>
         </li>
       }
