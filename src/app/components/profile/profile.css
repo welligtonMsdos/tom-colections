@@ -1,0 +1,14 @@
+:host {
+  display: block;
+  min-height: 100%;
+  background: var(--bs-body-bg);
+}
+
+.profile-page {
+  min-height: calc(100dvh - 40px);
+  margin-top: 40px !important;
+}
+
+:host-context([data-bs-theme="dark"]) .profile-page .card {
+  border-color: #8367cf !important;
+}

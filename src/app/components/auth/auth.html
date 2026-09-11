@@ -1,1 +1,15 @@
-<main class="auth-page"><div class="auth-page__shell"><div class="auth-page__presentation"><app-auth-presentation /></div><div class="auth-page__form">@if (isLoginMode()) {<app-auth-login (toggle)="toggleMode()" />} @else {<app-auth-signup (toggle)="toggleMode()" />}</div></div></main>
+<main class="auth-page container d-flex align-items-center py-3">
+  <div class="col-12 col-md-10 col-lg-8 col-xl-6 mx-auto">
+    @if (isLoginMode()) {
+      <app-auth-login
+        class="d-block"
+        (toggle)="toggleMode()"
+      />
+    } @else {
+      <app-auth-signup
+        class="d-block"
+        (toggle)="toggleMode()"
+      />
+    }
+  </div>
+</main>

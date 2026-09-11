@@ -1,5 +1,13 @@
-:host { display: block; }
-.auth-page { display: grid; min-height: 100vh; padding: clamp(1rem, 3vw, 2.5rem); padding-top: calc(40px + clamp(1rem, 3vw, 2.5rem)); place-items: center; background: radial-gradient(circle at 4% 7%, color-mix(in srgb, var(--bs-primary) 9%, transparent), transparent 28rem), var(--bs-body-bg); }
-.auth-page__shell { display: grid; width: min(100%, 1180px); grid-template-columns: minmax(0, 1.08fr) minmax(360px, .92fr); gap: clamp(1.25rem, 4vw, 4rem); align-items: stretch; }
-.auth-page__form { display: grid; align-items: center; }
-@media (max-width: 767.98px) { .auth-page { padding: 1rem; }.auth-page__shell { grid-template-columns: minmax(0, 1fr); gap: 1rem; } }
+:host {
+  display: block;
+}
+
+.auth-page {
+  min-height: calc(100dvh - 40px);
+  margin-top: 40px !important;
+  background: var(--bs-body-bg);
+}
+
+:host-context([data-bs-theme="dark"]) .auth-page .card {
+  border-color: #8367cf !important;
+}

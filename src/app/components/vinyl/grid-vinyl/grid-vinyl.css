@@ -1,51 +1,9 @@
-:host {
-  display: block;
-  font-family: 'Roboto', sans-serif;
+:host-context([data-bs-theme="dark"]) .vinyl-year {
+  border-color: color-mix(in srgb, #a98cff 45%, transparent) !important;
+  background-color: color-mix(in srgb, #8367cf 35%, transparent) !important;
+  color: #cbbcff !important;
 }
 
-.catalog-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 1rem;
-}
-
-.vinyl-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 20px;
-}
-
-@media (max-width: 1024px) {
-  .vinyl-grid { grid-template-columns: repeat(3, 1fr); }
-}
-@media (max-width: 768px) {
-  .vinyl-grid { grid-template-columns: repeat(2, 1fr); }
-}
-@media (max-width: 480px) {
-  .vinyl-grid { grid-template-columns: 1fr; }
-}
-
-.image-wrapper img {
-  height: 200px;
-  object-fit: contain;
-  width: 100%;
-}
-
-.card-actions .btn {
-  width: 32px;
-  height: 32px;
-  transition: transform 0.2s ease, background-color 0.2s;
-}
-
-.card-actions .btn:hover {
-  transform: scale(1.1);
-}
-
-.fs-7 {
-  font-size: 0.8rem;
-}
-
-.cardVinyl{
-  border-radius: 15px;
-  background: #eaedf0;
+.vinyl-cover {
+  max-width: 14rem;
 }

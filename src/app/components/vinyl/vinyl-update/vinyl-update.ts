@@ -9,7 +9,6 @@ import { VinylUpdateDto } from '../../../domain/vinyl.model';
   selector: 'app-vinyl-update',
   imports: [ReactiveFormsModule],
   templateUrl: './vinyl-update.html',
-  styleUrl: './vinyl-update.css',
 })
 export class VinylUpdate {
 

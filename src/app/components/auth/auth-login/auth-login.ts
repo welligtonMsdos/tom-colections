@@ -9,7 +9,6 @@ import { Router } from '@angular/router';
   imports: [FormsModule, ReactiveFormsModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './auth-login.html',
-  styleUrl: './auth-login.css',
 })
 export class AuthLogin {
 
@@ -22,10 +21,6 @@ export class AuthLogin {
 
   toggle = output<void>();
 
-  onToggle() {
-    this.toggle.emit();
-  }
-
   private alert = inject(AlertService);
 
 
@@ -34,6 +29,10 @@ export class AuthLogin {
   ) {}
 
   updateErrorMessage = () => {};
+
+  onToggle(): void {
+    this.toggle.emit();
+  }
 
   hide = signal(true);
 

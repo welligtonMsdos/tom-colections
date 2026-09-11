@@ -1,17 +1,60 @@
-<section class="catalog-toolbar" aria-label="Ferramentas do catálogo">
-  <div class="catalog-toolbar__heading">
-    <span class="catalog-toolbar__kicker">Catálogo</span>
-    <h2>Seus discos</h2>
+<section
+  class="d-flex flex-column flex-md-row align-items-md-center justify-content-md-between gap-3 p-3 p-md-4 border-bottom"
+  aria-label="Ferramentas do catálogo"
+>
+  <div>
+    <span class="text-primary fw-bold text-uppercase small">Catálogo</span>
+    <h2 class="h4 fw-bold mb-0">Seus discos</h2>
   </div>
 
-  <div class="catalog-toolbar__actions">
-    <label class="search-field" for="vinyl-search">
-      <i class="pi pi-search" aria-hidden="true"></i>
-      <input id="vinyl-search" type="search" placeholder="Buscar artista ou álbum" [value]="searchTerm()" (input)="updateSearch($any($event.target).value)" />
-      @if (searchTerm()) { <button type="button" (click)="updateSearch('')" aria-label="Limpar busca"><i class="pi pi-times"></i></button> }
-    </label>
-    <button class="create-button" type="button" (click)="showModalCreate.set(true)"><i class="pi pi-plus" aria-hidden="true"></i><span>Novo LP</span></button>
+  <div class="d-flex flex-column flex-sm-row gap-2">
+    <div class="input-group">
+      <span class="input-group-text bg-body">
+        <i
+          class="pi pi-search"
+          aria-hidden="true"
+        ></i>
+      </span>
+      <input
+        #vinylSearch
+        id="vinyl-search"
+        type="search"
+        class="form-control"
+        placeholder="Buscar artista ou álbum"
+        [value]="searchTerm()"
+        (input)="updateSearch(vinylSearch.value)"
+      />
+      @if (searchTerm()) {
+        <button
+          type="button"
+          class="btn btn-outline-secondary"
+          aria-label="Limpar busca"
+          (click)="updateSearch('')"
+        >
+          <i
+            class="pi pi-times"
+            aria-hidden="true"
+          ></i>
+        </button>
+      }
+    </div>
+
+    <button
+      type="button"
+      class="btn btn-primary text-nowrap"
+      (click)="showModalCreate.set(true)"
+    >
+      <i
+        class="pi pi-plus me-2"
+        aria-hidden="true"
+      ></i>
+      Novo LP
+    </button>
   </div>
 </section>
 
-@if (showModalCreate()) { <app-vinyl-create (close)="showModalCreate.set(false)" /> }
+@if (showModalCreate()) {
+  <app-vinyl-create
+    (close)="showModalCreate.set(false)"
+  />
+}

@@ -1,5 +1,28 @@
-<section class="collection-summary" aria-label="Resumo da coleção de LPs">
-  <div class="collection-summary__icon"><mat-icon aria-hidden="true">album</mat-icon></div>
-  <div class="collection-summary__title"><span>Acervo atual</span><strong>{{ vinylService.totalQuantity() }} {{ vinylService.totalQuantity() === 1 ? 'LP' : 'LPs' }}</strong></div>
-  <div class="collection-summary__value"><span>Valor estimado</span><strong>{{ vinylService.totalValue() | currency:'BRL' }}</strong></div>
+<section
+  class="card border-primary-subtle shadow-sm rounded-4"
+  aria-label="Resumo da coleção de LPs"
+>
+  <div class="card-body d-flex flex-column flex-sm-row align-items-sm-center gap-3 p-3">
+    <span class="collection-summary__icon d-inline-flex align-items-center justify-content-center bg-primary text-white rounded-3 p-3">
+      <mat-icon aria-hidden="true">album</mat-icon>
+    </span>
+
+    <div class="flex-grow-1">
+      <span class="d-block text-secondary text-uppercase small fw-bold">
+        Acervo atual
+      </span>
+      <strong class="fs-5 text-body">
+        {{ vinylService.totalQuantity() }} {{ vinylService.totalQuantity() === 1 ? 'LP' : 'LPs' }}
+      </strong>
+    </div>
+
+    <div class="border-sm-start border-primary-subtle ps-sm-3">
+      <span class="d-block text-secondary text-uppercase small fw-bold">
+        Valor estimado
+      </span>
+      <strong class="fs-5 text-primary">
+        {{ vinylService.totalValue() | currency:'BRL' }}
+      </strong>
+    </div>
+  </div>
 </section>
