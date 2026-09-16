@@ -1,1 +1,24 @@
-<section class="collection-summary" aria-label="Resumo da coleção de K7s"><div class="collection-summary__icon"><i class="pi pi-volume-up" aria-hidden="true"></i></div><div class="collection-summary__title"><span>Acervo atual</span><strong>{{ k7Service.totalQuantity() }} {{ k7Service.totalQuantity() === 1 ? 'K7' : 'K7s' }}</strong></div><div class="collection-summary__value"><span>Valor estimado</span><strong>{{ k7Service.totalValue() | currency:'BRL' }}</strong></div></section>
+<section
+  class="collection-summary"
+  aria-label="Resumo da coleção de K7s"
+>
+  <div class="collection-summary__icon">
+    <i
+      class="pi pi-volume-up"
+      aria-hidden="true"
+    ></i>
+  </div>
+  <div class="collection-summary__title">
+    <span>Acervo atual</span>
+    <strong>
+      {{ cassetteService.totalQuantity() }}
+      {{ cassetteService.totalQuantity() === 1 ? 'K7' : 'K7s' }}
+    </strong>
+  </div>
+  <div class="collection-summary__value">
+    <span>Valor estimado</span>
+    <strong>
+      {{ cassetteService.totalValue() | currency:'BRL' }}
+    </strong>
+  </div>
+</section>

@@ -1,6 +1,6 @@
-import { Component, computed, effect, inject, signal } from '@angular/core';
+import { Component, computed, effect, inject, OnInit, signal } from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
-import { K7Service } from '../../../service/k7.service';
+import { CassetteService } from '../../../service/cassette.service';
 
 @Component({
   selector: 'app-grid-k7',
@@ -8,17 +8,17 @@ import { K7Service } from '../../../service/k7.service';
   templateUrl: './grid-k7.html',
   styleUrl: './grid-k7.css',
 })
-export class GridK7 {
+export class GridK7 implements OnInit {
   protected readonly Math = Math;
-  private readonly k7Service = inject(K7Service);
+  private readonly cassetteService = inject(CassetteService);
 
   protected readonly currentPage = signal(1);
   protected readonly itemsPerPage = signal(10);
-  protected readonly searchTerm = this.k7Service.searchTerm;
+  protected readonly searchTerm = this.cassetteService.searchTerm;
 
   protected readonly filteredK7s = computed(() => {
     const term = this.searchTerm().trim().toLowerCase();
-    const items = this.k7Service.k7s();
+    const items = this.cassetteService.cassettes();
     return term ? items.filter(item => item.album.toLowerCase().includes(term) || item.artist.toLowerCase().includes(term)) : items;
   });
 
@@ -35,6 +35,12 @@ export class GridK7 {
       this.searchTerm();
       this.currentPage.set(1);
     });
+  }
+
+  ngOnInit(): void {
+    this.cassetteService
+      .get()
+      .subscribe();
   }
 
   protected goToPage(page: number): void {
