@@ -19,7 +19,8 @@ interface UserPayload {
 
 export class LoginService {
 
-   private readonly apiUrl = 'https://authproject-8vvl.onrender.com/api/Auth/';   
+   //private readonly apiUrl = 'https://authproject-8vvl.onrender.com/api/Auth/';   
+   private readonly apiUrl = 'http://localhost:5001/api/Auth/';
 
    private userSignal = signal<UserPayload | null>(null);
 
@@ -63,7 +64,11 @@ export class LoginService {
 
       if (response.success && response.data) {
 
-        const jwt = response.data.result;        
+        const jwt = response.data.token;    
+        
+        console.log('response received:', response);
+        
+        console.log('JWT recebido:', jwt);
 
         if (jwt) {
           this.authService.setToken(jwt);     

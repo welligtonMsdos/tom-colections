@@ -2,7 +2,7 @@ import { Component, inject, output, signal } from '@angular/core';
 import { VinylService } from '../../../service/vinyl.service';
 import { AlertService } from '../../../service/alert.service';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { VinylCreateDto } from '../../../domain/vinyl.model';
+import { VinylCreateDto, VinylDto } from '../../../domain/vinyl.model';
 @Component({
   selector: 'app-vinyl-create',
   imports: [ReactiveFormsModule],
@@ -14,7 +14,7 @@ export class VinylCreate {
   private vinylService = inject(VinylService);
   private alert = inject(AlertService);
   close = output<void>();
-  saved = output<any>();
+  saved = output<VinylDto>();
 
   updateErrorMessage = () => {};
 
@@ -38,21 +38,19 @@ export class VinylCreate {
       this.errorMessage.set(null);
 
       const { artist, album, year, photo, price } = this.vinylForm.getRawValue();
-           const vinylData: VinylCreateDto = {
-             artist: artist || '',
-             album: album || '',
-             year: year || 0,
-             photo: photo || '',
-             price: price || 0
-           };
+      const vinylData: VinylCreateDto = {
+        artist: artist || '',
+        album: album || '',
+        year: year || 0,
+        photo: photo || '',
+        price: price || 0,
+      };
 
       this.vinylService.post(vinylData).subscribe({
         next: (response) => {
-          if (response.success) {
-            this.alert.showSuccess(response.message || 'Cadastro realizado com sucesso!');
-          }
+          this.alert.showSuccess('Cadastro realizado com sucesso!');
 
-          this.saved.emit(response.data);
+          this.saved.emit(response);
 
           this.close.emit();
         },

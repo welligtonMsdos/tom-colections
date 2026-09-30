@@ -1,24 +1,35 @@
-import { Component, computed, effect, inject, signal } from '@angular/core';
+import { Component, computed, effect, inject, OnInit, signal } from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
-import { K7Service } from '../../../service/k7.service';
+import { CassetteService } from '../../../service/cassette.service';
+import { AlertService } from '../../../service/alert.service';
+import { CassetteDto } from '../../../domain/cassette.model';
+import { CassetteCreate } from '../cassette-create/cassette-create';
+import { CassetteUpdate } from '../cassette-update/cassette-update';
+import { DeleteData } from '../../shared/delete-data/delete-data';
 
 @Component({
   selector: 'app-grid-k7',
-  imports: [CurrencyPipe],
+  imports: [CurrencyPipe, CassetteCreate, CassetteUpdate, DeleteData],
   templateUrl: './grid-k7.html',
   styleUrl: './grid-k7.css',
 })
-export class GridK7 {
+export class GridK7 implements OnInit {
   protected readonly Math = Math;
-  private readonly k7Service = inject(K7Service);
+  private readonly cassetteService = inject(CassetteService);
+  private readonly alert = inject(AlertService);
 
   protected readonly currentPage = signal(1);
   protected readonly itemsPerPage = signal(10);
-  protected readonly searchTerm = this.k7Service.searchTerm;
+  protected readonly searchTerm = this.cassetteService.searchTerm;
+  protected readonly showModalCreate = signal(false);
+  protected readonly showModalUpdate = signal(false);
+  protected readonly showModalDelete = signal(false);
+  protected readonly selectedCassette = signal<CassetteDto | null>(null);
+  protected readonly selectedGuid = signal('');
 
   protected readonly filteredK7s = computed(() => {
     const term = this.searchTerm().trim().toLowerCase();
-    const items = this.k7Service.k7s();
+    const items = this.cassetteService.cassettes();
     return term ? items.filter(item => item.album.toLowerCase().includes(term) || item.artist.toLowerCase().includes(term)) : items;
   });
 
@@ -37,8 +48,39 @@ export class GridK7 {
     });
   }
 
+  ngOnInit(): void {
+    this.cassetteService
+      .get()
+      .subscribe();
+  }
+
   protected goToPage(page: number): void {
     if (page >= 1 && page <= this.totalPages()) this.currentPage.set(page);
+  }
+
+  protected editCassette(guid: string): void {
+    this.cassetteService.getByGuid(guid).subscribe({
+      next: (cassette) => {
+        this.selectedCassette.set(cassette);
+        this.showModalUpdate.set(true);
+      },
+      error: () => this.alert.showError('Não foi possível carregar a fita.'),
+    });
+  }
+
+  protected confirmDelete(guid: string): void {
+    this.selectedGuid.set(guid);
+    this.showModalDelete.set(true);
+  }
+
+  protected deleteCassette(): void {
+    this.cassetteService.delete(this.selectedGuid()).subscribe({
+      next: () => {
+        this.alert.showSuccess('Fita excluída com sucesso!');
+        this.showModalDelete.set(false);
+      },
+      error: () => this.alert.showError('Não foi possível excluir a fita.'),
+    });
   }
 
 }

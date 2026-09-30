@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { CurrencyPipe } from '@angular/common';
-import { K7Service } from '../../../service/k7.service';
+import { CassetteService } from '../../../service/cassette.service';
 
 @Component({
   selector: 'app-card-k7',
@@ -9,6 +9,6 @@ import { K7Service } from '../../../service/k7.service';
   styleUrl: './card-k7.css',
 })
 export class CardK7 {
-  protected readonly k7Service = inject(K7Service);
+  protected readonly cassetteService = inject(CassetteService);
 
 }

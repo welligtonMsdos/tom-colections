@@ -1,0 +1,29 @@
+:host {
+  display: block;
+}
+
+.dashboard-page {
+  min-height: calc(100dvh - 40px);
+}
+
+.dashboard-panel {
+  background: var(--cardCollection-bg, var(--bs-body-bg));
+}
+
+.dashboard-vinyl {
+  border-bottom: 1px solid var(--bs-border-color);
+}
+
+.dashboard-vinyl:last-child {
+  border-bottom: 0;
+}
+
+.dashboard-vinyl__cover {
+  width: 76px;
+  height: 76px;
+  object-fit: cover;
+}
+
+.min-w-0 {
+  min-width: 0;
+}

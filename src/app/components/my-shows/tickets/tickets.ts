@@ -37,10 +37,8 @@ export class Tickets implements OnInit {
 
     this.concertService.getByGuid(guid).subscribe({
       next: (response) => {
-        if (response.success && response.data) {
-          this.concertSelected.set(response.data);
-          this.showModalUpdate.set(true);
-        }
+        this.concertSelected.set(response);
+        this.showModalUpdate.set(true);
         this.isLoading.set(false);
       },
       error: (err) => {
@@ -56,10 +54,8 @@ export class Tickets implements OnInit {
     const id = this.idSelected();
 
     this.concertService.delete(id).subscribe({
-      next: (response) => {
-        if (response.success) {
-          this.alert.showSuccess(response.message);
-        }
+      next: () => {
+        this.alert.showSuccess('Show excluído com sucesso!');
         this.finally();
       },
       error: (err) => {

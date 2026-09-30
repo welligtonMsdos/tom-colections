@@ -21,6 +21,12 @@ export const routes: Routes = [
     data: { role: ['Admin', 'User'] }  
   },
   {
+    path: 'dashboard',
+    loadComponent: () => import('./components/dashboard/dashboard').then(m => m.Dashboard),
+    canActivate: [RoleGuard],
+    data: { role: ['Admin', 'User'] }
+  },
+  {
     path:'k7',
     loadComponent: () => import('./components/K7/k7/k7').then(m => m.K7),
     canActivate: [RoleGuard],

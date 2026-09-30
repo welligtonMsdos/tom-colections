@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { K7Service } from '../../../service/k7.service';
+import { CassetteService } from '../../../service/cassette.service';
 
 @Component({
   selector: 'app-header-k7',
@@ -8,12 +8,12 @@ import { K7Service } from '../../../service/k7.service';
   styleUrl: './header-k7.css',
 })
 export class HeaderK7 {
-  private readonly k7Service = inject(K7Service);
+  private readonly cassetteService = inject(CassetteService);
 
-  protected readonly searchTerm = this.k7Service.searchTerm;
+  protected readonly searchTerm = this.cassetteService.searchTerm;
 
   protected updateSearch(term: string): void {
-    this.k7Service.searchTerm.set(term);
+    this.cassetteService.searchTerm.set(term);
   }
 
 }

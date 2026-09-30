@@ -31,7 +31,7 @@ export class ConcertCreate {
   concertForm = this.fb.nonNullable.group({
     artist: ['', [Validators.required, Validators.minLength(3)]],
     venue: ['', [Validators.required, Validators.minLength(3)]],
-    showDate: [new Date(), [Validators.required]],
+    showDate: ['', [Validators.required]],
     photo: ['', Validators.required]
   });
 
@@ -47,12 +47,8 @@ export class ConcertCreate {
 
       this.concertService.post(concertData).subscribe({
         next: (response) => {
-
-          if (response.success) {
-            this.alert.showSuccess(response.message);
-          }
-
-          this.saved.emit(response.data);
+          this.alert.showSuccess('Show cadastrado com sucesso!');
+          this.saved.emit(response);
 
           this.close.emit();
         },

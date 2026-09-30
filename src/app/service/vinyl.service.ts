@@ -2,7 +2,6 @@ import { VinylCreateDto, VinylUpdateDto } from './../domain/vinyl.model';
 import { computed, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
-import { Result } from '../domain/result.model';
 import { VinylDto } from '../domain/vinyl.model';
 
 
@@ -11,8 +10,8 @@ import { VinylDto } from '../domain/vinyl.model';
 })
 export class VinylService {
 
-  private apiUrl = 'https://collectionsproject.onrender.com/api/Vinyls';
-  //private apiUrl = 'http://localhost:5012/api/Vinyls';
+  //private apiUrl = 'https://collectionsproject.onrender.com/api/Vinyls';
+  private apiUrl = 'http://localhost:5002/api/Vinyls';
 
   private vinylsSignal = signal<VinylDto[]>([]);
 
@@ -28,45 +27,55 @@ export class VinylService {
 
   constructor(private http: HttpClient) {}
 
-  get(): Observable<Result<VinylDto[]>> {
-    return this.http.get<Result<VinylDto[]>>(this.apiUrl).pipe(
-      tap(result => {
-        if (result.success && result.data) {
-          this.vinylsSignal.set(result.data);
-        }
+  get(): Observable<VinylDto[]> {
+    return this.http.get<VinylDto[]>(this.apiUrl).pipe(
+      tap((vinyls) => {
+        this.vinylsSignal.set(vinyls);
       })
     );
   }
 
-  getByGuid(guid: string): Observable<Result<VinylDto>> {
-    return this.http.get<Result<VinylDto>>(this.apiUrl + `/${guid}`);
+  getMostExpensive(): Observable<VinylDto[]> {
+    return this.http.get<VinylDto[]>(`${this.apiUrl}/most-expensive`);
   }
 
-  post(vinyl: VinylCreateDto): Observable<Result<VinylDto>> {
-    return this.http.post<Result<VinylDto>>(this.apiUrl, vinyl).pipe(
-      tap(result => {
-        if (result.success && result.data) {
-          this.vinylsSignal.update(vinyls => [...vinyls, result.data!]);
-        }
-      })
-    )};
+  getThreeCheapest(): Observable<VinylDto[]> {
+    return this.http.get<VinylDto[]>(`${this.apiUrl}/three-cheapest`);
+  }
 
-  put(vinyl: VinylUpdateDto, guid: string): Observable<Result<VinylDto>> {
-    return this.http.put<Result<VinylDto>>(this.apiUrl + `/${guid}`, vinyl).pipe(
-      tap(result => {
-        if (result.success && result.data) {
-          this.vinylsSignal.update(vinyls => vinyls.map(v => v.guid === guid ? result.data! : v));
-        }
+  getByGuid(guid: string): Observable<VinylDto> {
+    return this.http.get<VinylDto>(this.apiUrl + `/${guid}`);
+  }
+
+  post(vinyl: VinylCreateDto): Observable<VinylDto> {
+    return this.http.post<VinylDto>(this.apiUrl, vinyl).pipe(
+      tap((createdVinyl) => {
+        this.vinylsSignal.update((vinyls) => [
+          ...vinyls,
+          createdVinyl,
+        ]);
       })
     );
   }
 
-  delete(guid: string): Observable<Result<void>> {
-    return this.http.delete<Result<void>>(this.apiUrl + `/${guid}`).pipe(
-      tap(result => {
-        if (result.success) {
-          this.vinylsSignal.update(vinyls => vinyls.filter(v => v.guid !== guid));
-        }
+  put(vinyl: VinylUpdateDto, guid: string): Observable<VinylDto> {
+    return this.http.put<VinylDto>(this.apiUrl + `/${guid}`, vinyl).pipe(
+      tap((updatedVinyl) => {
+        this.vinylsSignal.update((vinyls) =>
+          vinyls.map((currentVinyl) =>
+            currentVinyl.guid === guid ? updatedVinyl : currentVinyl
+          )
+        );
+      })
+    );
+  }
+
+  delete(guid: string): Observable<void> {
+    return this.http.delete<void>(this.apiUrl + `/${guid}`).pipe(
+      tap(() => {
+        this.vinylsSignal.update((vinyls) =>
+          vinyls.filter((vinyl) => vinyl.guid !== guid)
+        );
       })
     );
   }
