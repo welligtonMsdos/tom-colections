@@ -35,6 +35,14 @@ export class VinylService {
     );
   }
 
+  getMostExpensive(): Observable<VinylDto[]> {
+    return this.http.get<VinylDto[]>(`${this.apiUrl}/most-expensive`);
+  }
+
+  getThreeCheapest(): Observable<VinylDto[]> {
+    return this.http.get<VinylDto[]>(`${this.apiUrl}/three-cheapest`);
+  }
+
   getByGuid(guid: string): Observable<VinylDto> {
     return this.http.get<VinylDto>(this.apiUrl + `/${guid}`);
   }
