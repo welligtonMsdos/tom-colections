@@ -12,8 +12,8 @@ import { ApiResponse } from '../domain/api-response';
 })
 export class UserService {
 
-  private apiUrl = 'https://authproject-8vvl.onrender.com/api/Users';
-  //private apiUrl = 'http://localhost:5011/api/Users';
+  //private apiUrl = 'https://authproject-8vvl.onrender.com/api/Users';
+  private apiUrl = 'http://localhost:5001/api/Users';
 
   private usersSignal = signal<UserDto[]>([]);
 

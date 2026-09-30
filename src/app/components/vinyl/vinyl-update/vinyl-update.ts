@@ -24,7 +24,7 @@ export class VinylUpdate {
           album: vinylData.album,
           year: vinylData.year,
           photo: vinylData.photo,
-          price: vinylData.price
+          price: vinylData.price,
         });
       }
     });
@@ -34,7 +34,7 @@ export class VinylUpdate {
   private vinylService = inject(VinylService);
   private alert = inject(AlertService);
   close = output<void>();
-  saved = output<any>();
+  saved = output<VinylDto>();
 
   updateErrorMessage = () => {};
 
@@ -47,7 +47,7 @@ export class VinylUpdate {
     album: ['', [Validators.required]],
     year: [new Date().getFullYear(), [Validators.required]],
     photo: [''],
-    price: [0, [Validators.min(0)]]
+    price: [0, [Validators.min(0)]],
   });
 
   save() {
@@ -61,11 +61,9 @@ export class VinylUpdate {
 
       this.vinylService.put(vinylData, this.vinyl().guid).subscribe({
         next: (response) => {
-          if (response.success) {
-            this.alert.showSuccess(response.message);
-          }
+          this.alert.showSuccess('LP atualizado com sucesso!');
 
-          this.saved.emit(response.data);
+          this.saved.emit(response);
 
           this.close.emit();
         },

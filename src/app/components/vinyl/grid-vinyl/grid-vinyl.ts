@@ -76,10 +76,8 @@ export class GridVinyl implements OnInit{
 
     this.vinylService.getByGuid(guid).subscribe({
       next: (response) => {
-        if (response.success && response.data) {
-          this.vinylSelected.set(response.data);
-          this.showModalUpdate.set(true);
-        }
+        this.vinylSelected.set(response);
+        this.showModalUpdate.set(true);
         this.isLoading.set(false);
       },
       error: () => {
@@ -96,10 +94,8 @@ delete() {
     const id = this.idSelected();
 
     this.vinylService.delete(id).subscribe({
-      next: (response) => {
-        if (response.success) {
-          this.alert.showSuccess(response.message);
-        }
+      next: () => {
+        this.alert.showSuccess('LP excluído com sucesso!');
         this.finally();
       },
       error: (err) => {

@@ -53,6 +53,8 @@ export class AuthLogin {
         .then(data =>{
           if (data.success) {
 
+            console.log('Login bem-sucedido:', data);
+
             this.alert.showSuccess('Olá ' + this.loginService.currentUser()?.name);
 
             this.router.navigate(['/home']);

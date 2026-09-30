@@ -1,8 +1,7 @@
 import { computed, inject, Injectable, signal } from "@angular/core";
 import { ConcertCreateDto, ConcertDto, ConcertUpdateDto } from "../domain/concert.model";
-import { Result } from "../domain/result.model";
 import { HttpClient } from "@angular/common/http";
-import { catchError, finalize, Observable, tap } from "rxjs";
+import { catchError, finalize, Observable, of, tap } from "rxjs";
 import { AlertService } from "./alert.service";
 import { AuthService } from "./auth.service";
 
@@ -11,8 +10,8 @@ import { AuthService } from "./auth.service";
 })
 export class ConcertService {
 
-  private apiUrl = 'https://collectionsproject.onrender.com/api/Concerts';
-  //private apiUrl = 'http://localhost:5012/api/Concerts';
+  //private apiUrl = 'https://collectionsproject.onrender.com/api/Concerts';
+  private apiUrl = 'http://localhost:5002/api/Concerts';
 
   private filterSignal = signal<'upcoming' | 'past'>('upcoming');
 
@@ -20,18 +19,13 @@ export class ConcertService {
 
   public loading = signal<boolean>(false);
 
-  private cache = new Map<string, Result<ConcertDto[]>>();
+  private cache = new Map<string, ConcertDto[]>();
 
-  private ticketsState = signal<Result<ConcertDto[]>>({
-    data: [],
-    success: true,
-    message: '',
-    errors: {}
-  });
+  private ticketsState = signal<ConcertDto[]>([]);
 
   public currentFilter = this.filterSignal.asReadonly();
 
-  public ticketList = computed(() => this.ticketsState().data);
+  public ticketList = this.ticketsState.asReadonly();
  
   private authService = inject(AuthService);
 
@@ -39,18 +33,18 @@ export class ConcertService {
     this.get();
   }
 
-  public refresh(){
+  public refresh(): void {
     this.cache.clear();
-    this.ticketsState.set({ data: [], success: true, message: '', errors: {} });
+    this.ticketsState.set([]);
     this.get();
   }
 
-  updateFilter(filter: 'upcoming' | 'past') {
+  updateFilter(filter: 'upcoming' | 'past'): void {
     this.filterSignal.set(filter);
     this.get();
   }
 
-  get() {
+  get(): void {
     const status = this.filterSignal();   
 
     const token = this.authService.getToken();
@@ -71,55 +65,47 @@ export class ConcertService {
 
     const endpoint = status === 'past' ? 'Past' : 'Upcoming';
 
-    this.http.get<Result<ConcertDto[]>>(`${this.apiUrl}/${endpoint}`).pipe(
-      tap((result) => {
-        if (result.success) {
-          this.cache.set(cacheKey, result);
-          this.ticketsState.set(result);
-        }
+    this.http.get<ConcertDto[]>(`${this.apiUrl}/${endpoint}`).pipe(
+      tap((concerts) => {
+        this.cache.set(cacheKey, concerts);
+        this.ticketsState.set(concerts);
         this.loading.set(false);
       }),
       catchError((error) => {
         console.error(error);
         const backendError = error.error;
-        this.alert.showError(backendError.Errors);
-        this.ticketsState.set({ data: [], success: false, message: 'Erro ao carregar', errors: {} });
+        this.alert.showError(backendError?.Errors || 'Não foi possível carregar os shows.');
+        this.ticketsState.set([]);
         this.loading.set(false);
-        return [];
+        return of([]);
       }),
       finalize(() => this.loading.set(false))
     ).subscribe();
   }
 
-   getByGuid(guid: string): Observable<Result<ConcertDto>> {
-      return this.http.get<Result<ConcertDto>>(this.apiUrl + `/${guid}`);
+   getByGuid(guid: string): Observable<ConcertDto> {
+      return this.http.get<ConcertDto>(this.apiUrl + `/${guid}`);
   }
 
-  post(concert: ConcertCreateDto): Observable<Result<ConcertDto>> {
-      return this.http.post<Result<ConcertDto>>(this.apiUrl, concert).pipe(
-        tap(result => {
-          if (result.success && result.data) {
-            this.refresh();
-          }
+  post(concert: ConcertCreateDto): Observable<ConcertDto> {
+      return this.http.post<ConcertDto>(this.apiUrl, concert).pipe(
+        tap(() => {
+          this.refresh();
         })
       )};
 
-  put(concert: ConcertUpdateDto, guid: string): Observable<Result<ConcertDto>> {
-      return this.http.put<Result<ConcertDto>>(this.apiUrl + `/${guid}`, concert).pipe(
-        tap(result => {
-          if (result.success && result.data) {
-            this.refresh();
-          }
+  put(concert: ConcertUpdateDto, guid: string): Observable<ConcertDto> {
+      return this.http.put<ConcertDto>(this.apiUrl + `/${guid}`, concert).pipe(
+        tap(() => {
+          this.refresh();
         })
       );
     }
 
-  delete(guid: string): Observable<Result<any>> {
-    return this.http.delete<Result<any>>(`${this.apiUrl}/${guid}`).pipe(
-      tap(result => {
-        if (result.success) {
-          this.refresh();
-        }
+  delete(guid: string): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${guid}`).pipe(
+      tap(() => {
+        this.refresh();
       })
     );
   }

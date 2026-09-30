@@ -6,14 +6,13 @@ import {
   CassetteDto,
   CassetteUpdateDto,
 } from '../domain/cassette.model';
-import { Result } from '../domain/result.model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CassetteService {
   //private readonly apiUrl = 'https://collectionsproject.onrender.com/api/Cassettes';
-  private readonly apiUrl = 'http://localhost:5012/api/cassettes';
+private readonly apiUrl = 'http://localhost:5002/api/cassettes';
 
   private readonly cassettesSignal = signal<CassetteDto[]>([]);
 
@@ -34,37 +33,33 @@ export class CassetteService {
     private readonly http: HttpClient,
   ) {}
 
-  get(): Observable<Result<CassetteDto[]>> {
+  get(): Observable<CassetteDto[]> {
     return this.http
-      .get<Result<CassetteDto[]>>(this.apiUrl)
+      .get<CassetteDto[]>(this.apiUrl)
       .pipe(
-        tap((result) => {
-          if (result.success && result.data) {
-            this.cassettesSignal.set(result.data);
-          }
+        tap((cassettes) => {
+          this.cassettesSignal.set(cassettes);
         }),
       );
   }
 
   getByGuid(
     guid: string,
-  ): Observable<Result<CassetteDto>> {
-    return this.http.get<Result<CassetteDto>>(`${this.apiUrl}/${guid}`);
+  ): Observable<CassetteDto> {
+    return this.http.get<CassetteDto>(`${this.apiUrl}/${guid}`);
   }
 
   post(
     cassette: CassetteCreateDto,
-  ): Observable<Result<CassetteDto>> {
+  ): Observable<CassetteDto> {
     return this.http
-      .post<Result<CassetteDto>>(this.apiUrl, cassette)
+      .post<CassetteDto>(this.apiUrl, cassette)
       .pipe(
-        tap((result) => {
-          if (result.success && result.data) {
-            this.cassettesSignal.update((cassettes) => [
-              ...cassettes,
-              result.data,
-            ]);
-          }
+        tap((createdCassette) => {
+          this.cassettesSignal.update((cassettes) => [
+            ...cassettes,
+            createdCassette,
+          ]);
         }),
       );
   }
@@ -72,36 +67,32 @@ export class CassetteService {
   put(
     cassette: CassetteUpdateDto,
     guid: string,
-  ): Observable<Result<CassetteDto>> {
+  ): Observable<CassetteDto> {
     return this.http
-      .put<Result<CassetteDto>>(`${this.apiUrl}/${guid}`, cassette)
+      .put<CassetteDto>(`${this.apiUrl}/${guid}`, cassette)
       .pipe(
-        tap((result) => {
-          if (result.success && result.data) {
-            this.cassettesSignal.update((cassettes) =>
-              cassettes.map((item) =>
-                item.guid === guid
-                  ? result.data
-                  : item,
-              ),
-            );
-          }
+        tap((updatedCassette) => {
+          this.cassettesSignal.update((cassettes) =>
+            cassettes.map((item) =>
+              item.guid === guid
+                ? updatedCassette
+                : item,
+            ),
+          );
         }),
       );
   }
 
   delete(
     guid: string,
-  ): Observable<Result<void>> {
+  ): Observable<void> {
     return this.http
-      .delete<Result<void>>(`${this.apiUrl}/${guid}`)
+      .delete<void>(`${this.apiUrl}/${guid}`)
       .pipe(
-        tap((result) => {
-          if (result.success) {
-            this.cassettesSignal.update((cassettes) =>
-              cassettes.filter((cassette) => cassette.guid !== guid),
-            );
-          }
+        tap(() => {
+          this.cassettesSignal.update((cassettes) =>
+            cassettes.filter((cassette) => cassette.guid !== guid),
+          );
         }),
       );
   }

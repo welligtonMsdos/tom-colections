@@ -1,0 +1,97 @@
+<div
+  class="modal show"
+  tabindex="-1"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5">Editar fita</h1>
+        <button
+          type="button"
+          class="btn-close"
+          aria-label="Fechar"
+          (click)="close.emit()"
+        ></button>
+      </div>
+
+      <form
+        class="modal-body row g-3"
+        [formGroup]="cassetteForm"
+        (ngSubmit)="save()"
+      >
+        @if (errorMessage()) {
+          <div class="col-12">
+            <div class="alert alert-danger mb-0">{{ errorMessage() }}</div>
+          </div>
+        }
+
+        <div class="col-12">
+          <label class="form-label" for="edit-cassette-artist">Artista</label>
+          <input
+            id="edit-cassette-artist"
+            type="text"
+            class="form-control"
+            formControlName="artist"
+          />
+        </div>
+
+        <div class="col-12">
+          <label class="form-label" for="edit-cassette-album">Álbum</label>
+          <input
+            id="edit-cassette-album"
+            type="text"
+            class="form-control"
+            formControlName="album"
+          />
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label" for="edit-cassette-year">Ano</label>
+          <input
+            id="edit-cassette-year"
+            type="number"
+            class="form-control"
+            formControlName="year"
+          />
+        </div>
+
+        <div class="col-md-6">
+          <label class="form-label" for="edit-cassette-price">Preço</label>
+          <input
+            id="edit-cassette-price"
+            type="number"
+            class="form-control"
+            formControlName="price"
+          />
+        </div>
+
+        <div class="col-12">
+          <label class="form-label" for="edit-cassette-photo">URL da foto</label>
+          <input
+            id="edit-cassette-photo"
+            type="url"
+            class="form-control"
+            formControlName="photo"
+          />
+        </div>
+
+        <div class="col-12 d-flex justify-content-end gap-2">
+          <button
+            type="button"
+            class="btn btn-outline-secondary"
+            (click)="close.emit()"
+          >
+            Cancelar
+          </button>
+          <button
+            type="submit"
+            class="btn btn-primary"
+            [disabled]="cassetteForm.invalid || isLoading()"
+          >
+            Salvar
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
