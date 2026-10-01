@@ -43,6 +43,7 @@
 - Cada propriedade CSS ou SCSS deve ficar em uma linha separada.
 - Cada seletor CSS ou SCSS deve ter seu próprio bloco.
 - Preserve essa formatação mesmo quando o código for curto.
+- Ao criar ou revisar componentes, aplique esse padrão a todo o conteúdo HTML, CSS e SCSS do arquivo, inclusive trechos já existentes.
 - Não execute formatadores que compactem HTML, CSS ou SCSS em uma única linha.
 - Ao alterar arquivos existentes compactados, formate verticalmente apenas o trecho alterado.
 

@@ -1,26 +1,32 @@
 <div class="container-fluid p-3">
-  
   <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 g-3">
     @for (vinyl of paginatedVinyls(); track vinyl.guid) {
-      <article class="col">
-      <div class="card bg-body-tertiary text-body border-secondary-subtle h-100 shadow-sm p-3 rounded-3 overflow-hidden">
-       
+    <article class="col">
+      <div
+        class="card bg-body-tertiary text-body border-secondary-subtle h-100 shadow-sm p-3 rounded-3 overflow-hidden"
+      >
         <!-- Topo: Ano à esquerda + Ações à direita -->
         <div class="d-flex align-items-center justify-content-between mb-2">
-          <span class="vinyl-year badge bg-body-secondary text-body-secondary border border-secondary-subtle px-2 py-1 fs-7 fw-semibold">
+          <span
+            class="vinyl-year badge bg-body-secondary text-body-secondary border border-secondary-subtle px-2 py-1 fs-7 fw-semibold"
+          >
             {{ vinyl.year }}
           </span>
 
           <div class="d-flex gap-1">
-            <button (click)="editVinyl(vinyl.guid)"
-                    class="btn btn-sm btn-link text-body-secondary p-1 border-0"
-                    title="Editar">
+            <button
+              (click)="editVinyl(vinyl.guid)"
+              class="btn btn-sm btn-link text-body-secondary p-1 border-0"
+              title="Editar"
+            >
               <i class="pi pi-pen-to-square fs-6"></i>
             </button>
 
-            <button (click)="showModalDelete.set(true); idSelected.set(vinyl.guid)"
-                    class="btn btn-sm btn-link text-danger p-1 border-0"
-                    title="Excluir">
+            <button
+              (click)="showModalDelete.set(true); idSelected.set(vinyl.guid)"
+              class="btn btn-sm btn-link text-danger p-1 border-0"
+              title="Excluir"
+            >
               <i class="pi pi-trash fs-6"></i>
             </button>
           </div>
@@ -37,53 +43,65 @@
             loading="lazy"
           />
         </div>
-        
-        <!-- Rodapé do card: Preço -->
-        <div class="card-body p-0 pt-3 d-flex align-items-center justify-content-end">
-          <span class="fs-5 fw-bold text-success">{{ vinyl.price | currency:'BRL':'R$ ' }}</span>
-        </div>
 
+        <!-- Rodapé do card: Preço -->
+        <div
+          class="card-body p-0 pt-3 d-flex align-items-center justify-content-end"
+        >
+          <strong class="fs-5 fw-bold text-cor-value"
+            >{{ vinyl.price | currency:'BRL' }}</strong
+          >
+        </div>
       </div>
-      </article>
+    </article>
     } @empty {
-      <div class="col-12 text-center py-5">
-        <p class="text-body-secondary fs-5"><i class="pi pi-info-circle me-2"></i>Nenhum LP encontrado.</p>
-      </div>
+    <div class="col-12 text-center py-5">
+      <p class="text-body-secondary fs-5">
+        <i class="pi pi-info-circle me-2"></i>Nenhum LP encontrado.
+      </p>
+    </div>
     }
   </div>
-  
+
   <!-- Paginação adaptável aos dois temas -->
-  <nav aria-label="Navegação de páginas" class="d-flex justify-content-center mt-4">
+  <nav
+    aria-label="Navegação de páginas"
+    class="d-flex justify-content-center mt-4"
+  >
     <ul class="pagination pagination-sm m-0 gap-1">
       @for (page of pagesArray(); track page) {
-        <li class="page-item" [class.active]="currentPage() === page">
-          <button class="page-link bg-body-tertiary text-body border-secondary-subtle rounded text-center shadow-sm"
-                  (click)="goToPage(page)">
-            {{ page }}
-          </button>
-        </li>
-      }
-      @if (currentPage() < totalPages()) {
-        <li class="page-item">
-          <button class="page-link bg-body-tertiary text-body border-secondary-subtle rounded text-center shadow-sm"
-                  (click)="goToPage(currentPage() + 1)">&gt;</button>
-        </li>
+      <li class="page-item" [class.active]="currentPage() === page">
+        <button
+          class="page-link bg-body-tertiary text-body border-secondary-subtle rounded text-center shadow-sm"
+          (click)="goToPage(page)"
+        >
+          {{ page }}
+        </button>
+      </li>
+      } @if (currentPage() < totalPages()) {
+      <li class="page-item">
+        <button
+          class="page-link bg-body-tertiary text-body border-secondary-subtle rounded text-center shadow-sm"
+          (click)="goToPage(currentPage() + 1)"
+        >
+          &gt;
+        </button>
+      </li>
       }
     </ul>
   </nav>
-
 </div>
 
 @if (showModalDelete()) {
-  <app-delete-data
-   [id]="idSelected()"
-   (onCancel)="showModalDelete.set(false)"
-   (onConfirm)="delete()" />
-}
-
-@if(showModalUpdate()) {
-  <app-vinyl-update
-    [vinyl]="vinylSelected()!"
-    (saved)="vinylService.get().subscribe()"
-    (close)="showModalUpdate.set(false)"  />
+<app-delete-data
+  [id]="idSelected()"
+  (onCancel)="showModalDelete.set(false)"
+  (onConfirm)="delete()"
+/>
+} @if(showModalUpdate()) {
+<app-vinyl-update
+  [vinyl]="vinylSelected()!"
+  (saved)="vinylService.get().subscribe()"
+  (close)="showModalUpdate.set(false)"
+/>
 }

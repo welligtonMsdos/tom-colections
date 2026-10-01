@@ -7,3 +7,7 @@
 .vinyl-cover {
   max-width: 14rem;
 }
+
+.text-cor-value {
+  color: var(--bs-value-primary);
+}

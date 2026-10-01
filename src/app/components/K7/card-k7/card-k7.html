@@ -1,24 +1,16 @@
-<section
-  class="collection-summary"
-  aria-label="Resumo da coleção de K7s"
->
+<section class="collection-summary" aria-label="Resumo da coleção de K7s">
   <div class="collection-summary__icon">
-    <i
-      class="pi pi-volume-up"
-      aria-hidden="true"
-    ></i>
+    <i class="pi pi-volume-up" aria-hidden="true"></i>
   </div>
   <div class="collection-summary__title">
     <span>Acervo atual</span>
     <strong>
-      {{ cassetteService.totalQuantity() }}
-      {{ cassetteService.totalQuantity() === 1 ? 'K7' : 'K7s' }}
+      {{ cassetteService.totalQuantity() }} {{ cassetteService.totalQuantity()
+      === 1 ? 'K7' : 'K7s' }}
     </strong>
   </div>
   <div class="collection-summary__value">
     <span>Valor estimado</span>
-    <strong>
-      {{ cassetteService.totalValue() | currency:'BRL' }}
-    </strong>
+    <strong> {{ cassetteService.totalValue() | currency:'BRL' }} </strong>
   </div>
 </section>

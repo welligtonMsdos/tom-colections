@@ -9,107 +9,94 @@
   </button>
 </div>
 
-<section
-  class="k7-grid"
-  aria-label="Lista de K7s"
->
+<section class="k7-grid" aria-label="Lista de K7s">
   @for (k7 of paginatedK7s(); track k7.guid) {
-    <article class="k7-card">
-      <div class="k7-card__topbar">
-        <span class="k7-card__year">{{ k7.year }}</span>
-        <div class="k7-card__actions">
-          <button
-            type="button"
-            class="btn btn-sm btn-link text-body-secondary p-1 border-0"
-            title="Editar"
-            [attr.aria-label]="'Editar ' + k7.album"
-            (click)="editCassette(k7.guid)"
-          >
-            <i class="pi pi-pen-to-square fs-6"></i>
-          </button>
-          <button
-            type="button"
-            class="btn btn-sm btn-link text-danger p-1 border-0"
-            title="Excluir"
-            [attr.aria-label]="'Excluir ' + k7.album"
-            (click)="confirmDelete(k7.guid)"
-          >
-            <i class="pi pi-trash fs-6"></i>
-          </button>
-        </div>
+  <article class="k7-card">
+    <div class="k7-card__topbar">
+      <span class="k7-card__year">{{ k7.year }}</span>
+      <div class="k7-card__actions">
+        <button
+          type="button"
+          class="btn btn-sm btn-link text-body-secondary p-1 border-0"
+          title="Editar"
+          [attr.aria-label]="'Editar ' + k7.album"
+          (click)="editCassette(k7.guid)"
+        >
+          <i class="pi pi-pen-to-square fs-6"></i>
+        </button>
+        <button
+          type="button"
+          class="btn btn-sm btn-link text-danger p-1 border-0"
+          title="Excluir"
+          [attr.aria-label]="'Excluir ' + k7.album"
+          (click)="confirmDelete(k7.guid)"
+        >
+          <i class="pi pi-trash fs-6"></i>
+        </button>
       </div>
+    </div>
 
-      <div class="k7-card__cover">
-        <img
-          [src]="k7.photo"
-          [alt]="'Capa de ' + k7.album"
-          loading="lazy"
-        />
-      </div>
+    <div class="k7-card__cover">
+      <img [src]="k7.photo" [alt]="'Capa de ' + k7.album" loading="lazy" />
+    </div>
 
-      <div class="k7-card__content">
-        <h3 [title]="k7.album">{{ k7.album }}</h3>
-        <p [title]="k7.artist">{{ k7.artist }}</p>
-        <strong>{{ k7.price | currency:'BRL' }}</strong>
-      </div>
-    </article>
+    <div class="k7-card__content">
+      <h3 [title]="k7.album">{{ k7.album }}</h3>
+      <p [title]="k7.artist">{{ k7.artist }}</p>
+      <strong>{{ k7.price | currency:'BRL' }}</strong>
+    </div>
+  </article>
   } @empty {
-    <p class="text-center text-body-secondary w-100">Nenhuma fita encontrada.</p>
+  <p class="text-center text-body-secondary w-100">Nenhuma fita encontrada.</p>
   }
 </section>
 
 @if (totalPages() > 1) {
-  <footer class="list-pagination">
-    <span>
-      Mostrando {{ (currentPage() - 1) * itemsPerPage() + 1 }}–{{ Math.min(currentPage() * itemsPerPage(), filteredK7s().length) }} de {{ filteredK7s().length }}
-    </span>
-    <nav aria-label="Paginação dos K7s">
-      <button
-        type="button"
-        (click)="goToPage(currentPage() - 1)"
-        [disabled]="currentPage() === 1"
-        aria-label="Página anterior"
-      >
-        <i class="pi pi-chevron-left"></i>
-      </button>
-      @for (page of pageNumbers(); track page) {
-        <button
-          type="button"
-          (click)="goToPage(page)"
-          [class.is-active]="currentPage() === page"
-        >
-          {{ page }}
-        </button>
-      }
-      <button
-        type="button"
-        (click)="goToPage(currentPage() + 1)"
-        [disabled]="currentPage() === totalPages()"
-        aria-label="Próxima página"
-      >
-        <i class="pi pi-chevron-right"></i>
-      </button>
-    </nav>
-  </footer>
-}
-
-@if (showModalCreate()) {
-  <app-cassette-create
-    (close)="showModalCreate.set(false)"
-  />
-}
-
-@if (showModalUpdate() && selectedCassette()) {
-  <app-cassette-update
-    [cassette]="selectedCassette()!"
-    (close)="showModalUpdate.set(false)"
-  />
-}
-
-@if (showModalDelete()) {
-  <app-delete-data
-    [id]="selectedGuid()"
-    (onCancel)="showModalDelete.set(false)"
-    (onConfirm)="deleteCassette()"
-  />
+<footer class="list-pagination">
+  <span>
+    Mostrando {{ (currentPage() - 1) * itemsPerPage() + 1 }}–{{
+    Math.min(currentPage() * itemsPerPage(), filteredK7s().length) }} de {{
+    filteredK7s().length }}
+  </span>
+  <nav aria-label="Paginação dos K7s">
+    <button
+      type="button"
+      (click)="goToPage(currentPage() - 1)"
+      [disabled]="currentPage() === 1"
+      aria-label="Página anterior"
+    >
+      <i class="pi pi-chevron-left"></i>
+    </button>
+    @for (page of pageNumbers(); track page) {
+    <button
+      type="button"
+      (click)="goToPage(page)"
+      [class.is-active]="currentPage() === page"
+    >
+      {{ page }}
+    </button>
+    }
+    <button
+      type="button"
+      (click)="goToPage(currentPage() + 1)"
+      [disabled]="currentPage() === totalPages()"
+      aria-label="Próxima página"
+    >
+      <i class="pi pi-chevron-right"></i>
+    </button>
+  </nav>
+</footer>
+} @if (showModalCreate()) {
+<app-cassette-create (close)="showModalCreate.set(false)" />
+} @if (showModalUpdate() && selectedCassette()) {
+<app-cassette-update
+  [cassette]="selectedCassette()!"
+  (close)="showModalUpdate.set(false)"
+/>
+} @if (showModalDelete()) {
+<app-delete-data
+  [id]="selectedGuid()"
+  (onCancel)="showModalDelete.set(false)"
+  (onConfirm)="deleteCassette()"
+/>
 }

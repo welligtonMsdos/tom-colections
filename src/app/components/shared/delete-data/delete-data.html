@@ -1,35 +1,48 @@
-<div class="modal fade show" id="modalCreate" tabindex="-1" style="display: block;">
-
+<div
+  class="modal fade show"
+  id="modalCreate"
+  tabindex="-1"
+  style="display: block"
+>
   <div class="modal-dialog modal-dialog-centered">
-
     <div class="modal-content">
-
       <div class="modal-header mb-2 p-2">
-
         <h1 class="modal-title fs-5">
           Confirma exclusão<i class="pi pi-question-circle me-2"></i>
         </h1>
 
-        <button type="button" class="btn-close" aria-label="Close" (click)="onCancel.emit()"></button>
-
+        <button
+          type="button"
+          class="btn-close"
+          aria-label="Close"
+          (click)="onCancel.emit()"
+        ></button>
       </div>
 
       <div class="modal-body">
-        <p class="mb-4">Tem certeza que deseja excluir este item? Esta ação não pode ser desfeita.</p>
+        <p class="mb-4">
+          Tem certeza que deseja excluir este item? Esta ação não pode ser
+          desfeita.
+        </p>
 
         <div class="d-flex justify-content-end gap-2">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            (click)="onCancel.emit()"
+          >
+            <i class="pi pi-times me-2"></i>Cancelar
+          </button>
 
-          <button type="button" class="btn btn-secondary" (click)="onCancel.emit()"><i class="pi pi-times me-2"></i>Cancelar</button>
-
-          <button type="button" class="btn btn-danger" (click)="onConfirm.emit()"><i class="pi pi-trash me-2"></i>Excluir</button>
-
+          <button
+            type="button"
+            class="btn btn-danger"
+            (click)="onConfirm.emit()"
+          >
+            <i class="pi pi-trash me-2"></i>Excluir
+          </button>
         </div>
-
       </div>
-
     </div>
-
   </div>
-
 </div>
-

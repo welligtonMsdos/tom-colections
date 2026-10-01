@@ -1,201 +1,180 @@
 <div class="modal show" tabindex="-1">
-
   <div class="modal-dialog modal-dialog-centered">
-
     <div class="modal-content">
-
       <div class="modal-header header-grid mb-2 p-2">
-
         <div></div>
 
         <div class="d-flex align-items-center justify-content-center">
-
           <i class="pi pi-user me-2 fs-6"></i>
 
-          <h1 class="modal-title fs-5 m-0">
-            Editing user
-          </h1>
-
+          <h1 class="modal-title fs-5 m-0">Editing user</h1>
         </div>
 
-        <button type="button"
-                class="btn-close"
-                aria-label="Close"
-                (click)="close.emit()">
-        </button>
-
+        <button
+          type="button"
+          class="btn-close"
+          aria-label="Close"
+          (click)="close.emit()"
+        ></button>
       </div>
 
       <div class="modal-body">
-
         @if (errorMessage()) {
 
-          <div class="alert text-danger alert-danger border-danger border-2 mb-2 p-2 shadow-sm" role="alert">
+        <div
+          class="alert text-danger alert-danger border-danger border-2 mb-2 p-2 shadow-sm"
+          role="alert"
+        >
+          <div class="flex items-center">
+            <i class="pi pi-exclamation-circle me-2"></i>
 
-            <div class="flex items-center">
+            <span class="text-xs font-bold uppercase"
+              ><strong>Failed to update user</strong></span
+            >
 
-              <i class="pi pi-exclamation-circle me-2"></i>
-
-              <span class="text-xs font-bold uppercase"><strong>Failed to update user</strong></span>
-
-              <button (click)="errorMessage.set(null)"
-                      class="btn btn-sm text-danger btn-ghost ml-auto">
-                <i class="pi pi-times"></i>
-              </button>
-
-            </div>
-
-            <span class="text-sm mt-1 ml-6">{{ errorMessage() }}</span>
-
+            <button
+              (click)="errorMessage.set(null)"
+              class="btn btn-sm text-danger btn-ghost ml-auto"
+            >
+              <i class="pi pi-times"></i>
+            </button>
           </div>
+
+          <span class="text-sm mt-1 ml-6">{{ errorMessage() }}</span>
+        </div>
 
         }
 
         <div class="mt-1">
-
           <form [formGroup]="userForm" (ngSubmit)="save()" class="row g-3">
-
             <div class="col-md-12">
-
               <div class="iconCustom d-flex align-items-center gap-2">
                 <i class="pi pi-user-plus"></i>
                 <label class="form-label mt-2">Name</label>
               </div>
 
-              <input type="text"
-                     class="form-control"
-                     [class.is-invalid]="userForm.get('name')?.invalid && userForm.get('name')?.touched"
-                     placeholder="Enter name"
-                     formControlName="name"
-                     (blur)="updateErrorMessage()"
-                     required>
+              <input
+                type="text"
+                class="form-control"
+                [class.is-invalid]="userForm.get('name')?.invalid && userForm.get('name')?.touched"
+                placeholder="Enter name"
+                formControlName="name"
+                (blur)="updateErrorMessage()"
+                required
+              />
 
-              @if(userForm.get('name')?.invalid && userForm.get('name')?.touched){
+              @if(userForm.get('name')?.invalid &&
+              userForm.get('name')?.touched){
 
-                <div class="invalid-feedback">
-                  Invalid name
-                </div>
+              <div class="invalid-feedback">Invalid name</div>
 
               }
-
             </div>
 
             <div class="col-md-12">
-
               <div class="iconCustom d-flex align-items-center gap-2">
                 <i class="pi pi-at"></i>
                 <label class="form-label mt-2">Email</label>
               </div>
 
-              <input type="email"
-                     class="form-control"
-                     [class.is-invalid]="userForm.get('email')?.invalid && userForm.get('email')?.touched"
-                     placeholder="Enter email"
-                     formControlName="email"
-                     (blur)="updateErrorMessage()"
-                     required>
+              <input
+                type="email"
+                class="form-control"
+                [class.is-invalid]="userForm.get('email')?.invalid && userForm.get('email')?.touched"
+                placeholder="Enter email"
+                formControlName="email"
+                (blur)="updateErrorMessage()"
+                required
+              />
 
-              @if(userForm.get('email')?.invalid && userForm.get('email')?.touched){
+              @if(userForm.get('email')?.invalid &&
+              userForm.get('email')?.touched){
 
-                <div class="invalid-feedback">
-                  Invalid email
-                </div>
+              <div class="invalid-feedback">Invalid email</div>
 
               }
-
             </div>
 
             <div class="col-md-12">
-
-              <button class="btn btn-outline-secondary" 
-                      type="button" 
-                      (click)="toggleCollapse()"
-                      [attr.aria-expanded]="!isCollapsed" 
-                      aria-controls="collapseExample">
+              <button
+                class="btn btn-outline-secondary"
+                type="button"
+                (click)="toggleCollapse()"
+                [attr.aria-expanded]="!isCollapsed"
+                aria-controls="collapseExample"
+              >
                 Change password
               </button>
-
             </div>
 
             @if (!isCollapsed) {
 
-               <div class="col-md-12">
+            <div class="col-md-12">
+              <div class="iconCustom d-flex align-items-center gap-2">
+                <i class="pi pi-key"></i>
+                <label class="form-label">Current Password</label>
+              </div>
 
-                    <div class="iconCustom d-flex align-items-center gap-2">
-                      <i class="pi pi-key"></i>
-                      <label class="form-label">Current Password</label>
-                    </div>
+              <input
+                type="password"
+                class="form-control"
+                placeholder="Enter password"
+                required
+              />
 
-                    <input  type="password"
-                            class="form-control"                   
-                            placeholder="Enter password"  
-                            required>
+              @if(userForm.get('password')?.invalid &&
+              userForm.get('password')?.touched){
 
-                    @if(userForm.get('password')?.invalid && userForm.get('password')?.touched){
+              <div class="invalid-feedback">Invalid password</div>
 
-                      <div class="invalid-feedback">
-                        Invalid password
-                      </div>
+              }
+            </div>
 
-                    }
+            <div class="col-md-12">
+              <div class="iconCustom d-flex align-items-center gap-2">
+                <i class="pi pi-key"></i>
+                <label class="form-label">New password</label>
+              </div>
 
-                  </div>
+              <input
+                type="password"
+                class="form-control"
+                placeholder="Enter password"
+                required
+              />
 
-                  <div class="col-md-12">
+              @if(userForm.get('confirmPassword')?.invalid &&
+              userForm.get('confirmPassword')?.touched){
 
-                    <div class="iconCustom d-flex align-items-center gap-2">
-                      <i class="pi pi-key"></i>
-                      <label class="form-label">New password</label>
-                    </div>
+              <div class="invalid-feedback">Invalid password</div>
 
-                    <input type="password"
-                           class="form-control"                           
-                           placeholder="Enter password"                       
-                           required>
+              }
+            </div>
 
-                    @if(userForm.get('confirmPassword')?.invalid && userForm.get('confirmPassword')?.touched){
-
-                      <div class="invalid-feedback">
-                        Invalid password
-                      </div>
-
-                    }
-
-                  </div>
-              
             }
 
             <div class="col-12 mt-4 d-flex justify-content-end gap-2">
-
-              <button (click)="close.emit()"
-                      class="btn btn-outline-secondary mx-2"
-                      type="button">
-                      <i class="pi pi-undo mr-3"></i> Cancel
+              <button
+                (click)="close.emit()"
+                class="btn btn-outline-secondary mx-2"
+                type="button"
+              >
+                <i class="pi pi-undo mr-3"></i> Cancel
               </button>
 
-              <button class="btn btn-primary"
-                      [disabled]="userForm.invalid || isLoading()"
-                      type="submit">
-
+              <button
+                class="btn btn-primary"
+                [disabled]="userForm.invalid || isLoading()"
+                type="submit"
+              >
                 @if (isLoading()) {
-                    <i class="pi pi-spin pi-spinner mr-3"></i> Saving...
-                } @else {
-                    <i class="pi pi-save mr-3"></i> Save
-                }
-
+                <i class="pi pi-spin pi-spinner mr-3"></i> Saving... } @else {
+                <i class="pi pi-save mr-3"></i> Save }
               </button>
-
             </div>
-
           </form>
-
         </div>
-
       </div>
-
     </div>
-
   </div>
-
 </div>
-

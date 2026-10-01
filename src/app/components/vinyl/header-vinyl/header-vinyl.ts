@@ -6,6 +6,7 @@ import { VinylCreate } from '../vinyl-create/vinyl-create';
   selector: 'app-header-vinyl',
   imports: [VinylCreate],
   templateUrl: './header-vinyl.html',
+  styleUrl: './header-vinyl.css',
 })
 export class HeaderVinyl {
 

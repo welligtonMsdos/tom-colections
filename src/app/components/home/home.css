@@ -15,11 +15,18 @@
 
 .home-page a.card {
   color: var(--bs-body-color);
-  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
 }
 
 .home-page a.card:hover {
-  border-color: color-mix(in srgb, var(--bs-primary) 45%, transparent) !important;
+  border-color: color-mix(
+    in srgb,
+    var(--bs-primary) 45%,
+    transparent
+  ) !important;
   box-shadow: 0 1rem 2rem color-mix(in srgb, var(--bs-primary) 16%, transparent) !important;
   color: var(--bs-body-color);
   transform: translateY(-4px);

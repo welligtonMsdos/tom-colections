@@ -1,216 +1,197 @@
 <div class="modal show" tabindex="-1">
-
   <div class="modal-dialog modal-dialog-centered">
-
     <div class="modal-content">
-
       <div class="modal-header header-grid mb-2 p-2">
-
         <div></div>
 
         <div class="d-flex align-items-center justify-content-center">
-
           <i class="pi pi-play me-2 fs-6"></i>
 
-          <h1 class="modal-title fs-5 m-0">
-            Editando LP
-          </h1>
-
+          <h1 class="modal-title fs-5 m-0">Editando LP</h1>
         </div>
 
-        <button type="button"
-                class="btn-close"
-                aria-label="Close"
-                (click)="close.emit()">
-        </button>
-
+        <button
+          type="button"
+          class="btn-close"
+          aria-label="Close"
+          (click)="close.emit()"
+        ></button>
       </div>
 
       <div class="modal-body">
-
         @if (errorMessage()) {
 
-          <div class="alert text-danger alert-danger border-danger border-2 mb-2 p-2 shadow-sm" role="alert">
+        <div
+          class="alert text-danger alert-danger border-danger border-2 mb-2 p-2 shadow-sm"
+          role="alert"
+        >
+          <div class="flex items-center">
+            <i class="pi pi-exclamation-circle me-2"></i>
 
-            <div class="flex items-center">
+            <span class="text-xs font-bold uppercase"
+              ><strong>Falha ao atualizar o LP</strong></span
+            >
 
-              <i class="pi pi-exclamation-circle me-2"></i>
-
-              <span class="text-xs font-bold uppercase"><strong>Falha ao atualizar o LP</strong></span>
-
-              <button (click)="errorMessage.set(null)"
-                      class="btn btn-sm text-danger btn-ghost ml-auto">
-                <i class="pi pi-times"></i>
-              </button>
-
-            </div>
-
-            <span class="text-sm mt-1 ml-6">{{ errorMessage() }}</span>
-
+            <button
+              (click)="errorMessage.set(null)"
+              class="btn btn-sm text-danger btn-ghost ml-auto"
+            >
+              <i class="pi pi-times"></i>
+            </button>
           </div>
+
+          <span class="text-sm mt-1 ml-6">{{ errorMessage() }}</span>
+        </div>
 
         }
 
         <div class="mt-1">
-
           <form [formGroup]="vinylForm" (ngSubmit)="save()" class="row g-3">
-
             <div class="col-md-12">
-
               <div class="iconCustom d-flex align-items-center gap-2">
                 <i class="pi pi-user-plus"></i>
                 <label class="form-label mt-2">Artista</label>
               </div>
 
-              <input type="text"
-                     class="form-control"
-                     [class.is-invalid]="vinylForm.get('artist')?.invalid && vinylForm.get('artist')?.touched"
-                     placeholder="Entre com o artista"
-                     formControlName="artist"
-                     (blur)="updateErrorMessage()"
-                     required>
+              <input
+                type="text"
+                class="form-control"
+                [class.is-invalid]="vinylForm.get('artist')?.invalid && vinylForm.get('artist')?.touched"
+                placeholder="Entre com o artista"
+                formControlName="artist"
+                (blur)="updateErrorMessage()"
+                required
+              />
 
-              @if(vinylForm.get('artist')?.invalid && vinylForm.get('artist')?.touched){
+              @if(vinylForm.get('artist')?.invalid &&
+              vinylForm.get('artist')?.touched){
 
-                <div class="invalid-feedback">
-                  Artista inválido
-                </div>
+              <div class="invalid-feedback">Artista inválido</div>
 
               }
-
             </div>
 
             <div class="col-md-6">
-
               <div class="iconCustom d-flex align-items-center gap-2">
                 <i class="pi pi-list"></i>
                 <label class="form-label mt-2">Álbum</label>
               </div>
 
-              <input type="text"
-                     class="form-control"
-                     [class.is-invalid]="vinylForm.get('album')?.invalid && vinylForm.get('album')?.touched"
-                     placeholder="Entre com o álbum"
-                     formControlName="album"
-                     (blur)="updateErrorMessage()"
-                     required>
+              <input
+                type="text"
+                class="form-control"
+                [class.is-invalid]="vinylForm.get('album')?.invalid && vinylForm.get('album')?.touched"
+                placeholder="Entre com o álbum"
+                formControlName="album"
+                (blur)="updateErrorMessage()"
+                required
+              />
 
-              @if(vinylForm.get('album')?.invalid && vinylForm.get('album')?.touched){
+              @if(vinylForm.get('album')?.invalid &&
+              vinylForm.get('album')?.touched){
 
-                <div class="invalid-feedback">
-                  Álbum inválido
-                </div>
+              <div class="invalid-feedback">Álbum inválido</div>
 
               }
-
             </div>
 
             <div class="col-md-6">
-
               <div class="iconCustom d-flex align-items-center gap-2">
                 <i class="pi pi-calendar"></i>
                 <label class="form-label mt-2">Ano</label>
               </div>
 
-              <input type="number"
-                     class="form-control"
-                     [class.is-invalid]="vinylForm.get('year')?.invalid && vinylForm.get('year')?.touched"
-                     placeholder="Entre com o ano"
-                     formControlName="year"
-                     (blur)="updateErrorMessage()"
-                     required>
+              <input
+                type="number"
+                class="form-control"
+                [class.is-invalid]="vinylForm.get('year')?.invalid && vinylForm.get('year')?.touched"
+                placeholder="Entre com o ano"
+                formControlName="year"
+                (blur)="updateErrorMessage()"
+                required
+              />
 
-              @if(vinylForm.get('year')?.invalid && vinylForm.get('year')?.touched){
+              @if(vinylForm.get('year')?.invalid &&
+              vinylForm.get('year')?.touched){
 
-                <div class="invalid-feedback">
-                  Ano inválido
-                </div>
+              <div class="invalid-feedback">Ano inválido</div>
 
               }
-
             </div>
 
             <div class="col-md-12">
-
               <div class="iconCustom d-flex align-items-center gap-2">
                 <i class="pi pi-image"></i>
                 <label class="form-label mt-2">Foto</label>
               </div>
 
-              <input type="text"
-                     class="form-control"
-                     [class.is-invalid]="vinylForm.get('photo')?.invalid && vinylForm.get('photo')?.touched"
-                     placeholder="Entre com a URL da foto"
-                     formControlName="photo"
-                     (blur)="updateErrorMessage()"
-                     required>
+              <input
+                type="text"
+                class="form-control"
+                [class.is-invalid]="vinylForm.get('photo')?.invalid && vinylForm.get('photo')?.touched"
+                placeholder="Entre com a URL da foto"
+                formControlName="photo"
+                (blur)="updateErrorMessage()"
+                required
+              />
 
-              @if(vinylForm.get('photo')?.invalid && vinylForm.get('photo')?.touched){
+              @if(vinylForm.get('photo')?.invalid &&
+              vinylForm.get('photo')?.touched){
 
-                <div class="invalid-feedback">
-                  URL da foto inválida
-                </div>
+              <div class="invalid-feedback">URL da foto inválida</div>
 
               }
-
             </div>
 
             <div class="col-md-12">
-
               <div class="iconCustom d-flex align-items-center gap-2">
                 <i class="pi pi-dollar"></i>
                 <label class="form-label mt-2">Price</label>
               </div>
 
-              <input type="number"
-                     class="form-control"
-                     [class.is-invalid]="vinylForm.get('price')?.invalid && vinylForm.get('price')?.touched"
-                     placeholder="Entre com o preço"
-                     formControlName="price"
-                     (blur)="updateErrorMessage()"
-                     required>
+              <input
+                type="number"
+                class="form-control"
+                [class.is-invalid]="vinylForm.get('price')?.invalid && vinylForm.get('price')?.touched"
+                placeholder="Entre com o preço"
+                formControlName="price"
+                (blur)="updateErrorMessage()"
+                required
+              />
 
-              @if(vinylForm.get('price')?.invalid && vinylForm.get('price')?.touched){
+              @if(vinylForm.get('price')?.invalid &&
+              vinylForm.get('price')?.touched){
 
-                <div class="invalid-feedback">
-                  Preço inválido
-                </div>
+              <div class="invalid-feedback">Preço inválido</div>
 
               }
-
             </div>
 
             <div class="col-12 mt-4 d-flex justify-content-end gap-2">
-
-              <button (click)="close.emit()"
-                      class="btn btn-outline-secondary mx-2"
-                      type="button">
-                      <i class="pi pi-undo mr-3"></i> Cancelar
+              <button
+                (click)="close.emit()"
+                class="btn btn-outline-secondary mx-2"
+                type="button"
+              >
+                <i class="pi pi-undo mr-3"></i>
+                Cancelar
               </button>
 
-              <button class="btn btn-primary"
-                      [disabled]="vinylForm.invalid || isLoading()"
-                      type="submit">
-
+              <button
+                class="btn btn-primary"
+                [disabled]="vinylForm.invalid || isLoading()"
+                type="submit"
+              >
                 @if (isLoading()) {
-                    <i class="pi pi-spin pi-spinner mr-3"></i> Salvando...
-                } @else {
-                    <i class="pi pi-save mr-3"></i> Salvar
-                }
-
+                <i class="pi pi-spin pi-spinner mr-3"></i>
+                Salvando... } @else {
+                <i class="pi pi-save mr-3"></i>
+                Salvar }
               </button>
-
             </div>
-
           </form>
-
         </div>
-
       </div>
-
     </div>
-
   </div>
-
 </div>
-

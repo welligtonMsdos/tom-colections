@@ -7,35 +7,18 @@
       <span class="d-inline-block text-primary fw-bold text-uppercase small">
         Comece sua coleção
       </span>
-      <h1
-        id="signup-title"
-        class="h2 fw-bold mt-2 mb-2"
-      >
-        Crie sua conta
-      </h1>
+      <h1 id="signup-title" class="h2 fw-bold mt-2 mb-2">Crie sua conta</h1>
       <p class="text-secondary mb-0">
         Organize suas coleções favoritas em um só lugar.
       </p>
     </div>
 
-    <form
-      [formGroup]="authForm"
-      (ngSubmit)="save()"
-      novalidate
-    >
+    <form [formGroup]="authForm" (ngSubmit)="save()" novalidate>
       <div class="mb-3">
-        <label
-          for="name"
-          class="form-label fw-semibold"
-        >
-          Nome
-        </label>
+        <label for="name" class="form-label fw-semibold"> Nome </label>
         <div class="input-group">
           <span class="input-group-text bg-body">
-            <i
-              class="pi pi-user text-primary"
-              aria-hidden="true"
-            ></i>
+            <i class="pi pi-user text-primary" aria-hidden="true"></i>
           </span>
           <input
             id="name"
@@ -48,25 +31,17 @@
           />
         </div>
         @if (authForm.get('name')?.invalid && authForm.get('name')?.touched) {
-          <div class="invalid-feedback d-block">
-            Informe um nome entre 3 e 50 caracteres.
-          </div>
+        <div class="invalid-feedback d-block">
+          Informe um nome entre 3 e 50 caracteres.
+        </div>
         }
       </div>
 
       <div class="mb-3">
-        <label
-          for="email"
-          class="form-label fw-semibold"
-        >
-          E-mail
-        </label>
+        <label for="email" class="form-label fw-semibold"> E-mail </label>
         <div class="input-group">
           <span class="input-group-text bg-body">
-            <i
-              class="pi pi-envelope text-primary"
-              aria-hidden="true"
-            ></i>
+            <i class="pi pi-envelope text-primary" aria-hidden="true"></i>
           </span>
           <input
             id="email"
@@ -79,25 +54,15 @@
           />
         </div>
         @if (authForm.get('email')?.invalid && authForm.get('email')?.touched) {
-          <div class="invalid-feedback d-block">
-            Informe um e-mail válido.
-          </div>
+        <div class="invalid-feedback d-block">Informe um e-mail válido.</div>
         }
       </div>
 
       <div class="mb-3">
-        <label
-          for="password"
-          class="form-label fw-semibold"
-        >
-          Senha
-        </label>
+        <label for="password" class="form-label fw-semibold"> Senha </label>
         <div class="input-group">
           <span class="input-group-text bg-body">
-            <i
-              class="pi pi-lock text-primary"
-              aria-hidden="true"
-            ></i>
+            <i class="pi pi-lock text-primary" aria-hidden="true"></i>
           </span>
           <input
             #passwordInput
@@ -123,22 +88,20 @@
           </button>
         </div>
 
-        <ul
-          class="list-unstyled small mt-3 mb-0"
-          aria-live="polite"
-        >
-          @for (requirement of passwordRequirements(); track requirement.label) {
-            <li
-              class="d-flex align-items-center gap-2 mb-1"
-              [class.text-success]="requirement.isMet"
-              [class.text-danger]="!requirement.isMet"
-            >
-              <i
-                [class]="requirement.isMet ? 'pi pi-check-circle' : 'pi pi-times-circle'"
-                aria-hidden="true"
-              ></i>
-              {{ requirement.label }}
-            </li>
+        <ul class="list-unstyled small mt-3 mb-0" aria-live="polite">
+          @for (requirement of passwordRequirements(); track requirement.label)
+          {
+          <li
+            class="d-flex align-items-center gap-2 mb-1"
+            [class.text-success]="requirement.isMet"
+            [class.text-danger]="!requirement.isMet"
+          >
+            <i
+              [class]="requirement.isMet ? 'pi pi-check-circle' : 'pi pi-times-circle'"
+              aria-hidden="true"
+            ></i>
+            {{ requirement.label }}
+          </li>
           }
         </ul>
       </div>
@@ -148,14 +111,13 @@
         class="btn btn-primary w-100 d-flex align-items-center justify-content-between py-2 px-3"
       >
         <span>Criar minha conta</span>
-        <i
-          class="pi pi-arrow-right"
-          aria-hidden="true"
-        ></i>
+        <i class="pi pi-arrow-right" aria-hidden="true"></i>
       </button>
     </form>
 
-    <div class="d-flex flex-column flex-sm-row justify-content-center align-items-center gap-1 mt-4 text-secondary small">
+    <div
+      class="d-flex flex-column flex-sm-row justify-content-center align-items-center gap-1 mt-4 text-secondary small"
+    >
       <span>Já possui uma conta?</span>
       <button
         type="button"

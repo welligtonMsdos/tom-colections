@@ -1,6 +1,6 @@
 mat-toolbar {
   background: linear-gradient(to right, #00539f, #cd072e);
-  box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
   font-family: "Days One", sans-serif;
   padding: 0 1rem;
   height: 40px;
@@ -9,19 +9,18 @@ mat-toolbar {
   left: 0;
   right: 0;
   z-index: 1000;
-
 }
 
-.mat-mdc-menu-item{
+.mat-mdc-menu-item {
   background-color: var(--color-primaria) !important;
   color: #fff;
 }
 
-.mat-mdc-menu-item:hover{
+.mat-mdc-menu-item:hover {
   background-color: var(--color-primaria2) !important;
 }
 
-.pi{
+.pi {
   margin-right: 5px;
 }
 
@@ -29,10 +28,7 @@ mat-toolbar {
   flex: 1 1 auto;
 }
 
-.color-logout{
-  color:#fff;
+.color-logout {
+  color: #fff;
   font-size: 1.5rem;
 }
-
-
-

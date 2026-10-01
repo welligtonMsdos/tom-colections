@@ -1,115 +1,110 @@
 <table class="table table-striped">
-
   <thead>
-
     <tr>
-
       <th scope="col">Name</th>
       <th scope="col">Email</th>
       <th scope="col"></th>
-
     </tr>
-
   </thead>
 
   <tbody>
+    @for (u of paginatedUsers(); track u._id) {
 
-     @for (u of paginatedUsers(); track u._id) {
+    <tr>
+      <td>{{ u.name }}</td>
 
-      <tr>
+      <td>{{ u.email }}</td>
 
-        <td> {{ u.name }} </td>
+      <td class="text-end">
+        <div class="d-flex justify-content-end gap-2">
+          <button (click)="editUser(u._id)" class="btn btn-sm">
+            <i class="text-primary pi pi-pen-to-square"></i>
+          </button>
 
-        <td> {{ u.email }} </td>
+          <button
+            (click)="showModalDelete.set(true); idSelected.set(u._id)"
+            class="btn btn-sm text-danger"
+          >
+            <i class="pi pi-trash"></i>
+          </button>
+        </div>
+      </td>
+    </tr>
 
-        <td class="text-end">
-
-          <div class="d-flex justify-content-end gap-2">
-
-            <button (click)="editUser(u._id)"
-                     class="btn btn-sm">
-
-              <i class="text-primary pi pi-pen-to-square"></i>
-
-            </button>
-
-            <button (click)="showModalDelete.set(true); idSelected.set(u._id)"
-                    class="btn btn-sm text-danger">
-
-              <i class="pi pi-trash"></i>
-
-            </button>
-
-          </div>
-
-        </td>
-
-      </tr>
-
-     }
-
+    }
   </tbody>
-
 </table>
 
 @if (userService.filteredUsers().length > 0) {
-  <div class="d-flex align-items-center justify-content-between border-top p-4 bgPrimary">
-
-    <div class="d-none d-sm-block">
-      <p class="mb-0 text-secondary small">
-        Showing <span class="fw-bold text-body">{{ (currentPage() - 1) * itemsPerPage() + 1 }}</span> to
-        <span class="fw-bold text-body">{{ Math.min(currentPage() * itemsPerPage(), userService.filteredUsers().length) }}</span> of
-        <span class="fw-bold text-body">{{ userService.filteredUsers().length }}</span> results
-      </p>
-    </div>
-
-    <nav aria-label="User pagination">
-      <ul class="pagination pagination-sm mb-0 shadow-sm">
-
-        <li class="page-item" [class.disabled]="currentPage() === 1">
-          <button class="page-link"
-                  (click)="goToPage(currentPage() - 1)"
-                  [disabled]="currentPage() === 1"
-                  aria-label="Previous">
-            <i class="pi pi-chevron-left" style="font-size: 0.7rem"></i>
-          </button>
-        </li>
-
-        @for (page of pageNumbers(); track page) {
-          <li class="page-item" [class.active]="currentPage() === page">
-            <button class="page-link shadow-none" (click)="goToPage(page)">
-              {{ page }}
-            </button>
-          </li>
-        }
-
-        <li class="page-item" [class.disabled]="currentPage() === totalPages()">
-          <button class="page-link"
-                  (click)="goToPage(currentPage() + 1)"
-                  [disabled]="currentPage() === totalPages()"
-                  aria-label="Next">
-            <i class="pi pi-chevron-right" style="font-size: 0.7rem"></i>
-          </button>
-        </li>
-
-      </ul>
-    </nav>
+<div
+  class="d-flex align-items-center justify-content-between border-top p-4 bgPrimary"
+>
+  <div class="d-none d-sm-block">
+    <p class="mb-0 text-secondary small">
+      Showing
+      <span class="fw-bold text-body"
+        >{{ (currentPage() - 1) * itemsPerPage() + 1 }}</span
+      >
+      to
+      <span class="fw-bold text-body"
+        >{{ Math.min(currentPage() * itemsPerPage(),
+        userService.filteredUsers().length) }}</span
+      >
+      of
+      <span class="fw-bold text-body"
+        >{{ userService.filteredUsers().length }}</span
+      >
+      results
+    </p>
   </div>
-}
 
-@if (showModalDelete()) {
-  <app-delete-data
-    [id]="idSelected()"
-    (onCancel)="showModalDelete.set(false)"
-    (onConfirm)="delete()">
-  </app-delete-data>
-}
+  <nav aria-label="User pagination">
+    <ul class="pagination pagination-sm mb-0 shadow-sm">
+      <li class="page-item" [class.disabled]="currentPage() === 1">
+        <button
+          class="page-link"
+          (click)="goToPage(currentPage() - 1)"
+          [disabled]="currentPage() === 1"
+          aria-label="Previous"
+        >
+          <i class="pi pi-chevron-left" style="font-size: 0.7rem"></i>
+        </button>
+      </li>
 
-@if (showModalUpdate()) {
-  <app-user-update
-    [user]="userSelected()!"
-    (saved)="userService.get().subscribe()"
-    (close)="showModalUpdate.set(false)">
-    >
-  </app-user-update>
+      @for (page of pageNumbers(); track page) {
+      <li class="page-item" [class.active]="currentPage() === page">
+        <button class="page-link shadow-none" (click)="goToPage(page)">
+          {{ page }}
+        </button>
+      </li>
+      }
+
+      <li class="page-item" [class.disabled]="currentPage() === totalPages()">
+        <button
+          class="page-link"
+          (click)="goToPage(currentPage() + 1)"
+          [disabled]="currentPage() === totalPages()"
+          aria-label="Next"
+        >
+          <i class="pi pi-chevron-right" style="font-size: 0.7rem"></i>
+        </button>
+      </li>
+    </ul>
+  </nav>
+</div>
+} @if (showModalDelete()) {
+<app-delete-data
+  [id]="idSelected()"
+  (onCancel)="showModalDelete.set(false)"
+  (onConfirm)="delete()"
+>
+</app-delete-data>
+} @if (showModalUpdate()) {
+<app-user-update
+  [user]="userSelected()!"
+  (saved)="userService.get().subscribe()"
+  (close)="showModalUpdate.set(false)"
+>
+  >
+</app-user-update>
 }

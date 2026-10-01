@@ -1,5 +1,4 @@
 <mat-toolbar>
-
   <button mat-button routerLink="/home">
     <i class="pi pi-home"></i>
     Home
@@ -12,7 +11,7 @@
 
   <button mat-button routerLink="/vinyl">
     <i class="pi pi-play"></i>
-      LPs
+    LPs
   </button>
 
   <button mat-button routerLink="/dashboard">
@@ -25,34 +24,32 @@
       Users
   </button> -->
 
- <button mat-button routerLink="/profile">
+  <button mat-button routerLink="/profile">
     <i class="pi pi-user"></i>
-      Perfil
+    Perfil
   </button>
 
   <span class="spacer"></span>
 
-  <button class="mr-2 flex transition-transform hover:scale-125 align-middle"
-          mat-icon-button
-          aria-label="Logout"
-          (click)="logout()">
+  <button
+    class="mr-2 flex transition-transform hover:scale-125 align-middle"
+    mat-icon-button
+    aria-label="Logout"
+    (click)="logout()"
+  >
     <span class="material-icons text-white">logout</span>
   </button>
 
-  <button class="mr-2 flex transition-transform hover:scale-125 align-middle"
-          mat-icon-button
-          aria-label="Settings"
-    (click)="themeService.toggleTheme()">
-
+  <button
+    class="mr-2 flex transition-transform hover:scale-125 align-middle"
+    mat-icon-button
+    aria-label="Settings"
+    (click)="themeService.toggleTheme()"
+  >
     @if (themeService.darkMode()) {
-      <span class="material-icons text-white">dark_mode</span>
+    <span class="material-icons text-white">dark_mode</span>
     } @else {
-      <span class="material-icons text-white">light_mode</span>
-   }
-
+    <span class="material-icons text-white">light_mode</span>
+    }
   </button>
-
 </mat-toolbar>
-
-
-
