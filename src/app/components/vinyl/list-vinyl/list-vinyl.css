@@ -1,0 +1,12 @@
+.text-cor-value {
+  color: var(--bs-value-primary);
+}
+
+.vinyl-card__year {
+  padding: 0.28rem 0.45rem;
+  border-radius: 0.42rem;
+  background: color-mix(in srgb, var(--bs-primary) 13%, transparent);
+  color: var(--bs-primary);
+  font-size: 0.7rem;
+  font-weight: 800;
+}

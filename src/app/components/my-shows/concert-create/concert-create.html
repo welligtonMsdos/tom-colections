@@ -1,192 +1,169 @@
 <div class="modal show" tabindex="-1">
-
   <div class="modal-dialog modal-dialog-centered">
-
     <div class="modal-content">
-
       <div class="modal-header header-grid mb-2 p-2">
-
         <div></div>
 
         <div class="d-flex align-items-center justify-content-center">
           <i class="pi pi-ticket me-2 fs-6"></i>
-          <h1 class="modal-title fs-5 m-0">
-            Registrar show
-          </h1>
+          <h1 class="modal-title fs-5 m-0">Registrar show</h1>
         </div>
 
-        <button type="button"
-                class="btn-close"
-                aria-label="Close"
-                (click)="close.emit()">
-        </button>
-
+        <button
+          type="button"
+          class="btn-close"
+          aria-label="Close"
+          (click)="close.emit()"
+        ></button>
       </div>
 
       <div class="modal-body">
-
         @if (errorMessage()) {
 
-          <div class="alert text-danger alert-danger border-danger border-2 mb-2 p-2 shadow-sm" role="alert">
+        <div
+          class="alert text-danger alert-danger border-danger border-2 mb-2 p-2 shadow-sm"
+          role="alert"
+        >
+          <div class="flex items-center">
+            <i class="pi pi-exclamation-circle me-2"></i>
 
-            <div class="flex items-center">
+            <span class="text-xs font-bold uppercase"
+              ><strong>Erro ao cadastrar o show</strong></span
+            >
 
-              <i class="pi pi-exclamation-circle me-2"></i>
-
-              <span class="text-xs font-bold uppercase"><strong>Erro ao cadastrar o show</strong></span>
-
-              <button (click)="errorMessage.set(null)"
-                      class="btn btn-sm text-danger btn-ghost ml-auto">
-                <i class="pi pi-times"></i>
-              </button>
-
-            </div>
-
-            <span class="text-sm mt-1 ml-6">{{ errorMessage() }}</span>
-
+            <button
+              (click)="errorMessage.set(null)"
+              class="btn btn-sm text-danger btn-ghost ml-auto"
+            >
+              <i class="pi pi-times"></i>
+            </button>
           </div>
+
+          <span class="text-sm mt-1 ml-6">{{ errorMessage() }}</span>
+        </div>
 
         }
 
         <div class="mt-1">
-
           <form [formGroup]="concertForm" (ngSubmit)="save()" class="row g-3">
-
             <div class="col-md-12">
-
               <div class="iconCustom d-flex align-items-center gap-2">
                 <i class="pi pi-microphone"></i>
                 <label class="form-label mt-2">Artista</label>
               </div>
 
-              <input type="text"
-                     class="form-control"
-                     [class.is-invalid]="concertForm.get('artist')?.invalid && concertForm.get('artist')?.touched"
-                     placeholder="Entre com o nome do artista"
-                     formControlName="artist"
-                     (blur)="updateErrorMessage()"
-                     required>
+              <input
+                type="text"
+                class="form-control"
+                [class.is-invalid]="concertForm.get('artist')?.invalid && concertForm.get('artist')?.touched"
+                placeholder="Entre com o nome do artista"
+                formControlName="artist"
+                (blur)="updateErrorMessage()"
+                required
+              />
 
-              @if(concertForm.get('artist')?.invalid && concertForm.get('artist')?.touched){
+              @if(concertForm.get('artist')?.invalid &&
+              concertForm.get('artist')?.touched){
 
-                <div class="invalid-feedback">
-                  Nome do artista inválido
-                </div>
+              <div class="invalid-feedback">Nome do artista inválido</div>
 
               }
-
             </div>
 
             <div class="col-md-12">
-
               <div class="iconCustom d-flex align-items-center gap-2">
                 <i class="pi pi-map-marker"></i>
                 <label class="form-label mt-2">Lugar do Show</label>
               </div>
 
-              <input type="text"
-                     class="form-control"
-                     placeholder="Entre com o nome do lugar do show"
-                     [class.is-invalid]="concertForm.get('venue')?.invalid && concertForm.get('venue')?.touched"
-                     formControlName="venue"
-                     (blur)="updateErrorMessage()"
-                     required>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Entre com o nome do lugar do show"
+                [class.is-invalid]="concertForm.get('venue')?.invalid && concertForm.get('venue')?.touched"
+                formControlName="venue"
+                (blur)="updateErrorMessage()"
+                required
+              />
 
-              @if(concertForm.get('venue')?.invalid && concertForm.get('venue')?.touched){
+              @if(concertForm.get('venue')?.invalid &&
+              concertForm.get('venue')?.touched){
 
-                <div class="invalid-feedback">
-                  Nome do lugar do show inválido
-                </div>
+              <div class="invalid-feedback">Nome do lugar do show inválido</div>
 
               }
-
             </div>
 
             <div class="col-md-12">
-
               <div class="iconCustom d-flex align-items-center gap-2">
                 <i class="pi pi-calendar"></i>
                 <label class="form-label mt-2">Data do Show</label>
               </div>
 
-              <input type="date"
-                     class="form-control"
-                     placeholder="Entre com a data do show"
-                     [class.is-invalid]="concertForm.get('showDate')?.invalid && concertForm.get('showDate')?.touched"
-                     formControlName="showDate"
-                     (blur)="updateErrorMessage()"
-                     required>
+              <input
+                type="date"
+                class="form-control"
+                placeholder="Entre com a data do show"
+                [class.is-invalid]="concertForm.get('showDate')?.invalid && concertForm.get('showDate')?.touched"
+                formControlName="showDate"
+                (blur)="updateErrorMessage()"
+                required
+              />
 
-              @if(concertForm.get('showDate')?.invalid && concertForm.get('showDate')?.touched){
+              @if(concertForm.get('showDate')?.invalid &&
+              concertForm.get('showDate')?.touched){
 
-                <div class="invalid-feedback">
-                  Data do show inválida
-                </div>
+              <div class="invalid-feedback">Data do show inválida</div>
 
               }
-
             </div>
 
             <div class="col-md-12">
-
               <div class="iconCustom d-flex align-items-center gap-2">
                 <i class="pi pi-image"></i>
                 <label class="form-label mt-2">Foto</label>
               </div>
 
-              <input type="text"
-                     class="form-control"
-                     placeholder="Entre com a URL da foto"
-                     [class.is-invalid]="concertForm.get('photo')?.invalid && concertForm.get('photo')?.touched"
-                     formControlName="photo"
-                     (blur)="updateErrorMessage()"
-                     required>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Entre com a URL da foto"
+                [class.is-invalid]="concertForm.get('photo')?.invalid && concertForm.get('photo')?.touched"
+                formControlName="photo"
+                (blur)="updateErrorMessage()"
+                required
+              />
 
-              @if(concertForm.get('photo')?.invalid && concertForm.get('photo')?.touched){
+              @if(concertForm.get('photo')?.invalid &&
+              concertForm.get('photo')?.touched){
 
-                <div class="invalid-feedback">
-                  URL da foto inválida
-                </div>
+              <div class="invalid-feedback">URL da foto inválida</div>
 
               }
-
             </div>
 
             <div class="col-12 mt-4 d-flex justify-content-end gap-2">
-
-              <button (click)="close.emit()"
-                      class="btn btn-outline-secondary mx-2"
-                      type="button">
-                      <i class="pi pi-undo mr-3"></i> Cancelar
+              <button
+                (click)="close.emit()"
+                class="btn btn-outline-secondary mx-2"
+                type="button"
+              >
+                <i class="pi pi-undo mr-3"></i> Cancelar
               </button>
 
-              <button class="btn btn-primary"
-                      [disabled]="concertForm.invalid || isLoading()"
-                      type="submit">
-
+              <button
+                class="btn btn-primary"
+                [disabled]="concertForm.invalid || isLoading()"
+                type="submit"
+              >
                 @if (isLoading()) {
-                    <i class="pi pi-spin pi-spinner mr-3"></i> Salvando...
-                } @else {
-                    <i class="pi pi-save mr-3"></i> Salvar
-                }
-
+                <i class="pi pi-spin pi-spinner mr-3"></i> Salvando... } @else {
+                <i class="pi pi-save mr-3"></i> Salvar }
               </button>
-
             </div>
-
           </form>
-
         </div>
-
       </div>
-
     </div>
-
   </div>
-
 </div>
-
-
-
-
-

@@ -1,1 +1,29 @@
-<section class="catalog-toolbar" aria-label="Ferramentas do catálogo de K7s"><div><span class="catalog-toolbar__kicker">Catálogo de demonstração</span><h2>Suas fitas</h2></div><label class="search-field" for="k7-search"><i class="pi pi-search" aria-hidden="true"></i><input id="k7-search" type="search" placeholder="Buscar artista ou álbum" [value]="searchTerm()" (input)="updateSearch($any($event.target).value)" />@if (searchTerm()) { <button type="button" (click)="updateSearch('')" aria-label="Limpar busca"><i class="pi pi-times"></i></button> }</label></section>
+<section class="catalog-toolbar" aria-label="Ferramentas do catálogo de K7s">
+
+  <div>
+
+    <span class="catalog-toolbar__kicker">Catálogo de demonstração</span>
+
+    <h2>Suas fitas</h2>
+
+  </div>
+
+  <label class="search-field" for="k7-search">
+    
+    <i class="pi pi-search" aria-hidden="true"></i>
+    
+    <input
+      id="k7-search"
+      type="search"
+      placeholder="Buscar artista ou álbum"
+      [value]="searchTerm()"
+      (input)="updateSearch($any($event.target).value)"/>
+      
+      @if (searchTerm()) {
+        <button type="button" (click)="updateSearch('')" aria-label="Limpar busca">
+            <i class="pi pi-times"></i>
+        </button>
+      }
+  </label>
+  
+</section>

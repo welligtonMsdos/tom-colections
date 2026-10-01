@@ -7,10 +7,7 @@
       <span class="d-inline-block text-primary fw-bold text-uppercase small">
         Sua coleção, do seu jeito
       </span>
-      <h1
-        id="login-title"
-        class="h2 fw-bold mt-2 mb-2"
-      >
+      <h1 id="login-title" class="h2 fw-bold mt-2 mb-2">
         Boas-vindas de volta
       </h1>
       <p class="text-secondary mb-0">
@@ -18,24 +15,12 @@
       </p>
     </div>
 
-    <form
-      [formGroup]="authForm"
-      (ngSubmit)="login()"
-      novalidate
-    >
+    <form [formGroup]="authForm" (ngSubmit)="login()" novalidate>
       <div class="mb-3">
-        <label
-          for="email"
-          class="form-label fw-semibold"
-        >
-          E-mail
-        </label>
+        <label for="email" class="form-label fw-semibold"> E-mail </label>
         <div class="input-group">
           <span class="input-group-text bg-body">
-            <i
-              class="pi pi-envelope text-primary"
-              aria-hidden="true"
-            ></i>
+            <i class="pi pi-envelope text-primary" aria-hidden="true"></i>
           </span>
           <input
             id="email"
@@ -49,25 +34,15 @@
           />
         </div>
         @if (authForm.get('email')?.invalid && authForm.get('email')?.touched) {
-          <div class="invalid-feedback d-block">
-            Informe um e-mail válido.
-          </div>
+        <div class="invalid-feedback d-block">Informe um e-mail válido.</div>
         }
       </div>
 
       <div class="mb-3">
-        <label
-          for="password"
-          class="form-label fw-semibold"
-        >
-          Senha
-        </label>
+        <label for="password" class="form-label fw-semibold"> Senha </label>
         <div class="input-group">
           <span class="input-group-text bg-body">
-            <i
-              class="pi pi-lock text-primary"
-              aria-hidden="true"
-            ></i>
+            <i class="pi pi-lock text-primary" aria-hidden="true"></i>
           </span>
           <input
             id="password"
@@ -91,10 +66,9 @@
             ></i>
           </button>
         </div>
-        @if (authForm.get('password')?.invalid && authForm.get('password')?.touched) {
-          <div class="invalid-feedback d-block">
-            Informe sua senha.
-          </div>
+        @if (authForm.get('password')?.invalid &&
+        authForm.get('password')?.touched) {
+        <div class="invalid-feedback d-block">Informe sua senha.</div>
         }
       </div>
 
@@ -103,14 +77,13 @@
         class="btn btn-primary w-100 d-flex align-items-center justify-content-between py-2 px-3"
       >
         <span>Entrar na minha conta</span>
-        <i
-          class="pi pi-arrow-right"
-          aria-hidden="true"
-        ></i>
+        <i class="pi pi-arrow-right" aria-hidden="true"></i>
       </button>
     </form>
 
-    <div class="d-flex flex-column flex-sm-row justify-content-center align-items-center gap-1 mt-4 text-secondary small">
+    <div
+      class="d-flex flex-column flex-sm-row justify-content-center align-items-center gap-1 mt-4 text-secondary small"
+    >
       <span>Ainda não tem uma conta?</span>
       <button
         type="button"

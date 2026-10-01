@@ -1,11 +1,12 @@
-<div
-  class="modal show"
-  tabindex="-1"
->
+<div class="modal show" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title fs-5">Registrar fita</h1>
+      <div class="modal-header header-grid mb-2 p-2">
+        <div></div>
+        <div class="d-flex align-items-center justify-content-center">
+          <i class="pi pi-headphones me-2 fs-6" aria-hidden="true"></i>
+          <h1 class="modal-title fs-5 m-0">Registrar fita</h1>
+        </div>
         <button
           type="button"
           class="btn-close"
@@ -20,58 +21,85 @@
         (ngSubmit)="save()"
       >
         @if (errorMessage()) {
-          <div class="col-12">
-            <div class="alert alert-danger mb-0">{{ errorMessage() }}</div>
+        <div class="col-12">
+          <div class="alert alert-danger mb-0 d-flex align-items-center gap-2">
+            <i class="pi pi-exclamation-circle" aria-hidden="true"></i>
+            <span>{{ errorMessage() }}</span>
           </div>
+        </div>
         }
 
         <div class="col-12">
-          <label class="form-label" for="cassette-artist">Artista</label>
+          <div class="iconCustom d-flex align-items-center gap-2">
+            <i class="pi pi-user" aria-hidden="true"></i>
+            <label class="form-label mt-2" for="cassette-artist">
+              Artista
+            </label>
+          </div>
           <input
             id="cassette-artist"
             type="text"
             class="form-control"
             formControlName="artist"
+            (blur)="updateErrorMessage()"
           />
         </div>
 
         <div class="col-12">
-          <label class="form-label" for="cassette-album">Álbum</label>
+          <div class="iconCustom d-flex align-items-center gap-2">
+            <i class="pi pi-list" aria-hidden="true"></i>
+            <label class="form-label mt-2" for="cassette-album"> Álbum </label>
+          </div>
           <input
             id="cassette-album"
             type="text"
             class="form-control"
             formControlName="album"
+            (blur)="updateErrorMessage()"
           />
         </div>
 
         <div class="col-md-6">
-          <label class="form-label" for="cassette-year">Ano</label>
+          <div class="iconCustom d-flex align-items-center gap-2">
+            <i class="pi pi-calendar" aria-hidden="true"></i>
+            <label class="form-label mt-2" for="cassette-year"> Ano </label>
+          </div>
           <input
             id="cassette-year"
             type="number"
             class="form-control"
             formControlName="year"
+            (blur)="updateErrorMessage()"
           />
         </div>
 
         <div class="col-md-6">
-          <label class="form-label" for="cassette-price">Preço</label>
+          <div class="iconCustom d-flex align-items-center gap-2">
+            <i class="pi pi-dollar" aria-hidden="true"></i>
+            <label class="form-label mt-2" for="cassette-price"> Preço </label>
+          </div>
           <input
             id="cassette-price"
             type="number"
             class="form-control"
             formControlName="price"
+            (blur)="updateErrorMessage()"
           />
         </div>
 
         <div class="col-12">
-          <label class="form-label" for="cassette-photo">URL da foto</label>
+          <div class="iconCustom d-flex align-items-center gap-2">
+            <i class="pi pi-image" aria-hidden="true"></i>
+            <label class="form-label mt-2" for="cassette-photo">
+              URL da foto
+            </label>
+          </div>
           <input
             id="cassette-photo"
             type="url"
             class="form-control"
             formControlName="photo"
+            (blur)="updateErrorMessage()"
           />
         </div>
 
@@ -81,6 +109,7 @@
             class="btn btn-outline-secondary"
             (click)="close.emit()"
           >
+            <i class="pi pi-undo me-1" aria-hidden="true"></i>
             Cancelar
           </button>
           <button
@@ -88,7 +117,11 @@
             class="btn btn-primary"
             [disabled]="cassetteForm.invalid || isLoading()"
           >
-            Salvar
+            @if (isLoading()) {
+            <i class="pi pi-spin pi-spinner me-1" aria-hidden="true"></i>
+            } @else {
+            <i class="pi pi-save me-1" aria-hidden="true"></i>
+            } Salvar
           </button>
         </div>
       </form>

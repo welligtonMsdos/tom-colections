@@ -1,51 +1,33 @@
 <main class="profile-page container py-3">
-  <section
-    class="row justify-content-center"
-    aria-labelledby="profile-title"
-  >
+  <section class="row justify-content-center" aria-labelledby="profile-title">
     <div class="col-12 col-lg-10 col-xl-8">
       <div class="card shadow-sm rounded-4">
         <div class="card-body p-4 p-md-5">
-          <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-md-between gap-3 mb-4">
+          <div
+            class="d-flex flex-column flex-md-row align-items-md-center justify-content-md-between gap-3 mb-4"
+          >
             <div>
               <span class="text-primary fw-bold text-uppercase small">
                 Minha conta
               </span>
-              <h1
-                id="profile-title"
-                class="h2 fw-bold mt-2 mb-1"
-              >
-                Perfil
-              </h1>
+              <h1 id="profile-title" class="h2 fw-bold mt-2 mb-1">Perfil</h1>
               <p class="text-secondary mb-0">
                 Consulte seus dados e gerencie a segurança da sua conta.
               </p>
             </div>
-            <span class="d-inline-flex align-items-center justify-content-center bg-primary-subtle text-primary rounded-3 p-3 align-self-start">
-              <i
-                class="pi pi-user"
-                aria-hidden="true"
-              ></i>
+            <span
+              class="d-inline-flex align-items-center justify-content-center bg-primary-subtle text-primary rounded-3 p-3 align-self-start"
+            >
+              <i class="pi pi-user" aria-hidden="true"></i>
             </span>
           </div>
 
-          <form
-            [formGroup]="userForm"
-            class="row g-3"
-          >
+          <form [formGroup]="userForm" class="row g-3">
             <div class="col-12 col-md-6">
-              <label
-                for="name"
-                class="form-label fw-semibold"
-              >
-                Nome
-              </label>
+              <label for="name" class="form-label fw-semibold"> Nome </label>
               <div class="input-group">
                 <span class="input-group-text bg-body">
-                  <i
-                    class="pi pi-user"
-                    aria-hidden="true"
-                  ></i>
+                  <i class="pi pi-user" aria-hidden="true"></i>
                 </span>
                 <input
                   id="name"
@@ -58,18 +40,10 @@
             </div>
 
             <div class="col-12 col-md-6">
-              <label
-                for="email"
-                class="form-label fw-semibold"
-              >
-                E-mail
-              </label>
+              <label for="email" class="form-label fw-semibold"> E-mail </label>
               <div class="input-group">
                 <span class="input-group-text bg-body">
-                  <i
-                    class="pi pi-envelope"
-                    aria-hidden="true"
-                  ></i>
+                  <i class="pi pi-envelope" aria-hidden="true"></i>
                 </span>
                 <input
                   id="email"
@@ -84,7 +58,9 @@
 
           <hr class="my-4" />
 
-          <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-md-between gap-3">
+          <div
+            class="d-flex flex-column flex-md-row align-items-md-center justify-content-md-between gap-3"
+          >
             <div>
               <h2 class="h5 fw-bold mb-1">Senha</h2>
               <p class="text-secondary mb-0">
@@ -97,107 +73,92 @@
               [attr.aria-expanded]="isPasswordFormVisible()"
               (click)="togglePasswordForm()"
             >
-              <i
-                class="pi pi-key me-2"
-                aria-hidden="true"
-              ></i>
-              {{ isPasswordFormVisible() ? 'Cancelar alteração' : 'Alterar senha' }}
+              <i class="pi pi-key me-2" aria-hidden="true"></i>
+              {{ isPasswordFormVisible() ? 'Cancelar alteração' : 'Alterar
+              senha' }}
             </button>
           </div>
 
           @if (isPasswordFormVisible()) {
-            <form
-              [formGroup]="passwordForm"
-              (ngSubmit)="submitPasswordChange()"
-              class="row g-3 mt-1"
-              novalidate
-            >
-              <div class="col-12">
-                <label
-                  for="current-password"
-                  class="form-label fw-semibold"
-                >
-                  Senha atual
-                </label>
-                <input
-                  id="current-password"
-                  type="password"
-                  class="form-control"
-                  formControlName="currentPassword"
-                  autocomplete="current-password"
-                />
-              </div>
+          <form
+            [formGroup]="passwordForm"
+            (ngSubmit)="submitPasswordChange()"
+            class="row g-3 mt-1"
+            novalidate
+          >
+            <div class="col-12">
+              <label for="current-password" class="form-label fw-semibold">
+                Senha atual
+              </label>
+              <input
+                id="current-password"
+                type="password"
+                class="form-control"
+                formControlName="currentPassword"
+                autocomplete="current-password"
+              />
+            </div>
 
-              <div class="col-12 col-md-6">
-                <label
-                  for="new-password"
-                  class="form-label fw-semibold"
-                >
-                  Nova senha
-                </label>
-                <input
-                  #newPasswordInput
-                  id="new-password"
-                  type="password"
-                  class="form-control"
-                  formControlName="newPassword"
-                  autocomplete="new-password"
-                  (input)="updatePasswordRequirements(newPasswordInput.value)"
-                />
-              </div>
+            <div class="col-12 col-md-6">
+              <label for="new-password" class="form-label fw-semibold">
+                Nova senha
+              </label>
+              <input
+                #newPasswordInput
+                id="new-password"
+                type="password"
+                class="form-control"
+                formControlName="newPassword"
+                autocomplete="new-password"
+                (input)="updatePasswordRequirements(newPasswordInput.value)"
+              />
+            </div>
 
-              <div class="col-12 col-md-6">
-                <label
-                  for="confirm-password"
-                  class="form-label fw-semibold"
+            <div class="col-12 col-md-6">
+              <label for="confirm-password" class="form-label fw-semibold">
+                Confirmar nova senha
+              </label>
+              <input
+                id="confirm-password"
+                type="password"
+                class="form-control"
+                formControlName="confirmPassword"
+                autocomplete="new-password"
+                [class.is-invalid]="passwordForm.controls.confirmPassword.touched && !passwordsMatch()"
+              />
+              @if (passwordForm.controls.confirmPassword.touched &&
+              !passwordsMatch()) {
+              <div class="invalid-feedback d-block">
+                As senhas não coincidem.
+              </div>
+              }
+            </div>
+
+            <div class="col-12">
+              <ul class="list-unstyled small mb-0" aria-live="polite">
+                @for (requirement of passwordRequirements(); track
+                requirement.label) {
+                <li
+                  class="d-flex align-items-center gap-2 mb-1"
+                  [class.text-success]="requirement.isMet"
+                  [class.text-danger]="!requirement.isMet"
                 >
-                  Confirmar nova senha
-                </label>
-                <input
-                  id="confirm-password"
-                  type="password"
-                  class="form-control"
-                  formControlName="confirmPassword"
-                  autocomplete="new-password"
-                  [class.is-invalid]="passwordForm.controls.confirmPassword.touched && !passwordsMatch()"
-                />
-                @if (passwordForm.controls.confirmPassword.touched && !passwordsMatch()) {
-                  <div class="invalid-feedback d-block">
-                    As senhas não coincidem.
-                  </div>
+                  <i
+                    [class]="requirement.isMet ? 'pi pi-check-circle' : 'pi pi-times-circle'"
+                    aria-hidden="true"
+                  ></i>
+                  {{ requirement.label }}
+                </li>
                 }
-              </div>
+              </ul>
+            </div>
 
-              <div class="col-12">
-                <ul
-                  class="list-unstyled small mb-0"
-                  aria-live="polite"
-                >
-                  @for (requirement of passwordRequirements(); track requirement.label) {
-                    <li
-                      class="d-flex align-items-center gap-2 mb-1"
-                      [class.text-success]="requirement.isMet"
-                      [class.text-danger]="!requirement.isMet"
-                    >
-                      <i
-                        [class]="requirement.isMet ? 'pi pi-check-circle' : 'pi pi-times-circle'"
-                        aria-hidden="true"
-                      ></i>
-                      {{ requirement.label }}
-                    </li>
-                  }
-                </ul>
-              </div>
-
-              <div class="col-12 d-flex justify-content-end">
-                <button
-                  type="submit"
-                  class="btn btn-primary"
-                >
-                  Salvar nova senha
-                </button>
-              </div>
-            </form>
+            <div class="col-12 d-flex justify-content-end">
+              <button type="submit" class="btn btn-primary">
+                Salvar nova senha
+              </button>
+            </div>
+          </form>
           }
         </div>
       </div>

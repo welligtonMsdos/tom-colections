@@ -5,3 +5,7 @@
 :host-context([data-bs-theme="dark"]) .collection-summary__icon mat-icon {
   color: #a98cff;
 }
+
+.text-cor-value {
+  color: var(--bs-value-primary);
+}

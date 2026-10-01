@@ -1,172 +1,169 @@
 <main class="home-page container d-flex align-items-start pt-3 pb-3">
   @if (loginService.currentUser(); as user) {
-    <section
-      class="w-100"
-      aria-labelledby="home-title"
-    >
-      <header class="mb-5">
-        <span class="d-inline-flex align-items-center gap-2 text-primary fw-bold text-uppercase small">
-          <i
-            class="pi pi-wave-pulse"
-            aria-hidden="true"
-          ></i>
-          Sua biblioteca musical
-        </span>
-        <h1
-          id="home-title"
-          class="display-5 fw-bold mt-2 mb-3"
-        >
-          Olá, {{ user.name || 'colecionador' }}.
-        </h1>
-        <p class="lead text-secondary mb-0">
-          Escolha uma área para continuar cuidando da sua coleção.
-        </p>
-      </header>
-
-      <section aria-labelledby="collections-title">
-        <div class="d-flex flex-column flex-md-row justify-content-md-between align-items-md-end gap-2 mb-4">
-          <div>
-            <span class="text-primary fw-bold text-uppercase small">
-              Acessos rápidos
-            </span>
-            <h2
-              id="collections-title"
-              class="h3 fw-bold mb-0"
-            >
-              Sua coleção
-            </h2>
-          </div>
-          <span class="text-secondary small">
-            Tudo que importa, ao alcance.
-          </span>
-        </div>
-
-        <div class="row g-4">
-          <article class="col-12 col-md-6 col-xl-4">
-            <a
-              routerLink="/vinyl"
-              class="card h-100 border-0 shadow-sm rounded-4 text-decoration-none bg-body"
-            >
-              <div class="card-body d-flex flex-column gap-4 p-4">
-                <span class="d-inline-flex align-items-center justify-content-center bg-primary-subtle text-primary rounded-3 p-3 align-self-start">
-                  <mat-icon>album</mat-icon>
-                </span>
-                <div class="mt-auto">
-                  <h3 class="h5 fw-bold text-body mb-2">LPs</h3>
-                  <p class="text-secondary mb-0">
-                    Explore seus discos e favoritos.
-                  </p>
-                </div>
-                <mat-icon class="text-primary align-self-end">north_east</mat-icon>
-              </div>
-            </a>
-          </article>
-
-          <article class="col-12 col-md-6 col-xl-4">
-            <a
-              routerLink="/k7"
-              class="card h-100 border-0 shadow-sm rounded-4 text-decoration-none bg-body"
-            >
-              <div class="card-body d-flex flex-column gap-4 p-4">
-                <span class="d-inline-flex align-items-center justify-content-center bg-primary-subtle text-primary rounded-3 p-3 align-self-start">
-                  <mat-icon>graphic_eq</mat-icon>
-                </span>
-                <div class="mt-auto">
-                  <h3 class="h5 fw-bold text-body mb-2">K7s</h3>
-                  <p class="text-secondary mb-0">
-                    Reviva suas fitas e gravações.
-                  </p>
-                </div>
-                <mat-icon class="text-primary align-self-end">north_east</mat-icon>
-              </div>
-            </a>
-          </article>
-
-          <article class="col-12 col-md-6 col-xl-4">
-            <a
-              routerLink="/concerts"
-              class="card h-100 border-0 shadow-sm rounded-4 text-decoration-none bg-body"
-            >
-              <div class="card-body d-flex flex-column gap-4 p-4">
-                <span class="d-inline-flex align-items-center justify-content-center bg-primary-subtle text-primary rounded-3 p-3 align-self-start">
-                  <mat-icon>confirmation_number</mat-icon>
-                </span>
-                <div class="mt-auto">
-                  <h3 class="h5 fw-bold text-body mb-2">Shows</h3>
-                  <p class="text-secondary mb-0">
-                    Guarde cada experiência ao vivo.
-                  </p>
-                </div>
-                <mat-icon class="text-primary align-self-end">north_east</mat-icon>
-              </div>
-            </a>
-          </article>
-        </div>
-      </section>
-
-      <section
-        class="card border-0 shadow-sm rounded-4 mt-4"
-        aria-label="Atalho de perfil"
+  <section class="w-100" aria-labelledby="home-title">
+    <header class="mb-5">
+      <span
+        class="d-inline-flex align-items-center gap-2 text-primary fw-bold text-uppercase small"
       >
-        <div class="card-body d-flex flex-column flex-md-row align-items-md-center gap-3 p-4">
-          <span class="d-inline-flex align-items-center justify-content-center bg-primary-subtle text-primary rounded-3 p-3">
-            <mat-icon>person</mat-icon>
+        <i class="pi pi-wave-pulse" aria-hidden="true"></i>
+        Sua biblioteca musical
+      </span>
+      <h1 id="home-title" class="display-5 fw-bold mt-2 mb-3">
+        Olá, {{ user.name || 'colecionador' }}.
+      </h1>
+      <p class="lead text-secondary mb-0">
+        Escolha uma área para continuar cuidando da sua coleção.
+      </p>
+    </header>
+
+    <section aria-labelledby="collections-title">
+      <div
+        class="d-flex flex-column flex-md-row justify-content-md-between align-items-md-end gap-2 mb-4"
+      >
+        <div>
+          <span class="text-primary fw-bold text-uppercase small">
+            Acessos rápidos
           </span>
-          <div class="flex-grow-1">
-            <h2 class="h6 fw-bold text-body mb-1">Seu perfil</h2>
-            <p class="text-secondary mb-0">
-              Atualize seus dados e personalize sua experiência.
-            </p>
-          </div>
+          <h2 id="collections-title" class="h3 fw-bold mb-0">Sua coleção</h2>
+        </div>
+        <span class="text-secondary small">
+          Tudo que importa, ao alcance.
+        </span>
+      </div>
+
+      <div class="row g-4">
+        <article class="col-12 col-md-6 col-xl-4">
           <a
-            routerLink="/profile"
-            class="btn btn-outline-primary align-self-md-center"
+            routerLink="/vinyl"
+            class="card h-100 border-0 shadow-sm rounded-4 text-decoration-none bg-body"
           >
-            Ver perfil
-            <i
-              class="pi pi-arrow-right ms-2"
-              aria-hidden="true"
-            ></i>
+            <div class="card-body d-flex flex-column gap-4 p-4">
+              <span
+                class="d-inline-flex align-items-center justify-content-center bg-primary-subtle text-primary rounded-3 p-3 align-self-start"
+              >
+                <mat-icon>album</mat-icon>
+              </span>
+              <div class="mt-auto">
+                <h3 class="h5 fw-bold text-body mb-2">LPs</h3>
+                <p class="text-secondary mb-0">
+                  Explore seus discos e favoritos.
+                </p>
+              </div>
+              <mat-icon class="text-primary align-self-end"
+                >north_east</mat-icon
+              >
+            </div>
           </a>
-        </div>
-      </section>
-    </section>
-  } @else {
-    <section class="row justify-content-center w-100">
-      <div class="col-12 col-md-10 col-lg-8">
-        <div
-          class="card border-0 shadow rounded-4 text-center"
-          aria-labelledby="guest-title"
-        >
-          <div class="card-body p-4 p-md-5">
-            <span class="d-inline-flex align-items-center justify-content-center bg-primary text-white rounded-3 p-3 mb-4">
-              <mat-icon>headphones</mat-icon>
-            </span>
-            <span class="d-block text-primary fw-bold text-uppercase small">
-              Tom Collections
-            </span>
-            <h1
-              id="guest-title"
-              class="display-6 fw-bold mt-2 mb-3"
-            >
-              Sua coleção merece um lugar especial.
-            </h1>
-            <p class="lead text-secondary mx-auto mb-4">
-              Entre para organizar seus discos, fitas e as memórias dos seus shows.
-            </p>
-            <a
-              routerLink="/auth"
-              class="btn btn-primary btn-lg"
-            >
-              Entrar na minha conta
-              <i
-                class="pi pi-arrow-right ms-2"
-                aria-hidden="true"
-              ></i>
-            </a>
-          </div>
-        </div>
+        </article>
+
+        <article class="col-12 col-md-6 col-xl-4">
+          <a
+            routerLink="/k7"
+            class="card h-100 border-0 shadow-sm rounded-4 text-decoration-none bg-body"
+          >
+            <div class="card-body d-flex flex-column gap-4 p-4">
+              <span
+                class="d-inline-flex align-items-center justify-content-center bg-primary-subtle text-primary rounded-3 p-3 align-self-start"
+              >
+                <mat-icon>graphic_eq</mat-icon>
+              </span>
+              <div class="mt-auto">
+                <h3 class="h5 fw-bold text-body mb-2">K7s</h3>
+                <p class="text-secondary mb-0">
+                  Reviva suas fitas e gravações.
+                </p>
+              </div>
+              <mat-icon class="text-primary align-self-end"
+                >north_east</mat-icon
+              >
+            </div>
+          </a>
+        </article>
+
+        <article class="col-12 col-md-6 col-xl-4">
+          <a
+            routerLink="/concerts"
+            class="card h-100 border-0 shadow-sm rounded-4 text-decoration-none bg-body"
+          >
+            <div class="card-body d-flex flex-column gap-4 p-4">
+              <span
+                class="d-inline-flex align-items-center justify-content-center bg-primary-subtle text-primary rounded-3 p-3 align-self-start"
+              >
+                <mat-icon>confirmation_number</mat-icon>
+              </span>
+              <div class="mt-auto">
+                <h3 class="h5 fw-bold text-body mb-2">Shows</h3>
+                <p class="text-secondary mb-0">
+                  Guarde cada experiência ao vivo.
+                </p>
+              </div>
+              <mat-icon class="text-primary align-self-end"
+                >north_east</mat-icon
+              >
+            </div>
+          </a>
+        </article>
       </div>
     </section>
+
+    <section
+      class="card border-0 shadow-sm rounded-4 mt-4"
+      aria-label="Atalho de perfil"
+    >
+      <div
+        class="card-body d-flex flex-column flex-md-row align-items-md-center gap-3 p-4"
+      >
+        <span
+          class="d-inline-flex align-items-center justify-content-center bg-primary-subtle text-primary rounded-3 p-3"
+        >
+          <mat-icon>person</mat-icon>
+        </span>
+        <div class="flex-grow-1">
+          <h2 class="h6 fw-bold text-body mb-1">Seu perfil</h2>
+          <p class="text-secondary mb-0">
+            Atualize seus dados e personalize sua experiência.
+          </p>
+        </div>
+        <a
+          routerLink="/profile"
+          class="btn btn-outline-primary align-self-md-center"
+        >
+          Ver perfil
+          <i class="pi pi-arrow-right ms-2" aria-hidden="true"></i>
+        </a>
+      </div>
+    </section>
+  </section>
+  } @else {
+  <section class="row justify-content-center w-100">
+    <div class="col-12 col-md-10 col-lg-8">
+      <div
+        class="card border-0 shadow rounded-4 text-center"
+        aria-labelledby="guest-title"
+      >
+        <div class="card-body p-4 p-md-5">
+          <span
+            class="d-inline-flex align-items-center justify-content-center bg-primary text-white rounded-3 p-3 mb-4"
+          >
+            <mat-icon>headphones</mat-icon>
+          </span>
+          <span class="d-block text-primary fw-bold text-uppercase small">
+            Tom Collections
+          </span>
+          <h1 id="guest-title" class="display-6 fw-bold mt-2 mb-3">
+            Sua coleção merece um lugar especial.
+          </h1>
+          <p class="lead text-secondary mx-auto mb-4">
+            Entre para organizar seus discos, fitas e as memórias dos seus
+            shows.
+          </p>
+          <a routerLink="/auth" class="btn btn-primary btn-lg">
+            Entrar na minha conta
+            <i class="pi pi-arrow-right ms-2" aria-hidden="true"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
   }
 </main>

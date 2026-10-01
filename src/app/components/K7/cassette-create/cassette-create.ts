@@ -18,6 +18,7 @@ export class CassetteCreate {
   readonly saved = output<CassetteDto>();
   readonly errorMessage = signal<string | null>(null);
   readonly isLoading = signal(false);
+  readonly updateErrorMessage = (): void => {};
 
   readonly cassetteForm = this.fb.group({
     artist: ['', [Validators.required, Validators.minLength(3)]],

@@ -1,38 +1,34 @@
 <div class="row g-3 mb-3">
-
   <div class="col-md-12">
-
     <h3><i class="pi pi-users mr-3 mx-2"></i>Users</h3>
 
     <div class="d-flex align-items-center justify-content-between gap-2">
-
       <div class="d-flex align-items-center gap-2">
-        <input type="text"
-               class="form-control"
-               style="max-width: 400px;"
-               placeholder="search by name or email..."
-               autocomplete="off"
-               (input)="onSearch($event)">
+        <input
+          type="text"
+          class="form-control"
+          style="max-width: 400px"
+          placeholder="search by name or email..."
+          autocomplete="off"
+          (input)="onSearch($event)"
+        />
         <div class="badge p-2 bg-secondary">
           {{ userService.filteredUsers().length }} Found users
         </div>
       </div>
 
       <div class="ms-auto">
-        <button class="btn btn-primary"
-                (click)="showModalCreate.set(true)">
+        <button class="btn btn-primary" (click)="showModalCreate.set(true)">
           <i class="pi pi-plus me-2"></i>
           New User
         </button>
       </div>
-
     </div>
   </div>
 </div>
 
 @if(showModalCreate()){
 
-  <app-user-create (close)="showModalCreate.set(false)"></app-user-create>
+<app-user-create (close)="showModalCreate.set(false)"></app-user-create>
 
 }
-
