@@ -11,7 +11,8 @@ import { VinylDto } from '../domain/vinyl.model';
 export class VinylService {
 
   //private apiUrl = 'https://collectionsproject.onrender.com/api/Vinyls';
-  private apiUrl = 'http://localhost:5002/api/Vinyls';
+  //private apiUrl = 'http://localhost:5002/api/Vinyls';
+  private apiUrl = 'https://theband-qv3s.onrender.com/api/Vinyls';
 
   private vinylsSignal = signal<VinylDto[]>([]);
 

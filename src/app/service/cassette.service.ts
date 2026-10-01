@@ -12,7 +12,7 @@ import {
 })
 export class CassetteService {
   //private readonly apiUrl = 'https://collectionsproject.onrender.com/api/Cassettes';
-private readonly apiUrl = 'http://localhost:5002/api/cassettes';
+private readonly apiUrl = 'https://theband-qv3s.onrender.com/api/cassettes';
 
   private readonly cassettesSignal = signal<CassetteDto[]>([]);
 

@@ -11,7 +11,7 @@ import { AuthService } from "./auth.service";
 export class ConcertService {
 
   //private apiUrl = 'https://collectionsproject.onrender.com/api/Concerts';
-  private apiUrl = 'http://localhost:5002/api/Concerts';
+  private apiUrl = 'https://theband-qv3s.onrender.com/api/Concerts';
 
   private filterSignal = signal<'upcoming' | 'past'>('upcoming');
 
