@@ -2,6 +2,10 @@
   color: var(--bs-value-primary);
 }
 
+.vinyl-card__image-ratio {
+  width: 97%;
+}
+
 .vinyl-card__year {
   padding: 0.28rem 0.45rem;
   border-radius: 0.42rem;
