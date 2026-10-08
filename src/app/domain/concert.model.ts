@@ -4,6 +4,7 @@ export interface ConcertDto{
   venue: string;
   showDate: string;
   photo: string;
+  price: number;
 }
 
 export interface Concert {
@@ -12,6 +13,7 @@ export interface Concert {
   venue: string;
   showDate: string;
   photo: string;
+  price: number;
 }
 
 export type ConcertCreateDto = Omit<Concert, 'guid'>;

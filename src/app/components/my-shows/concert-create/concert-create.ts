@@ -32,7 +32,8 @@ export class ConcertCreate {
     artist: ['', [Validators.required, Validators.minLength(3)]],
     venue: ['', [Validators.required, Validators.minLength(3)]],
     showDate: ['', [Validators.required]],
-    photo: ['', Validators.required]
+    photo: ['', Validators.required],
+    price: [0, [Validators.required, Validators.min(0)]]
   });
 
   save() {

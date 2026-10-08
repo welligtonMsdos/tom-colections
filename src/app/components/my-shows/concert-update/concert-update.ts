@@ -24,7 +24,8 @@ export class ConcertUpdate {
           artist: concertData.artist,
           venue: concertData.venue,
           showDate: concertData.showDate,
-          photo: concertData.photo
+          photo: concertData.photo,
+          price: concertData.price
         });
       }
     });
@@ -43,7 +44,8 @@ export class ConcertUpdate {
     artist: ['', [Validators.required, Validators.minLength(3)]],
     venue: ['', [Validators.required, Validators.minLength(3)]],
     showDate: ['', [Validators.required]],
-    photo: ['', Validators.required]
+    photo: ['', Validators.required],
+    price: [0, [Validators.required, Validators.min(0)]]
   });
 
   save() {
