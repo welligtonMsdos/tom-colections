@@ -21,6 +21,14 @@ export const routes: Routes = [
     data: { role: ['Admin', 'User'] }  
   },
   {
+    path: 'vinyl-carousel',
+    loadComponent: () =>
+      import('./components/vinyl/vinyl-carousel-page/vinyl-carousel-page')
+        .then(module => module.VinylCarouselPage),
+    canActivate: [RoleGuard],
+    data: { role: ['Admin', 'User'] }
+  },
+  {
     path: 'dashboard',
     loadComponent: () => import('./components/dashboard/dashboard').then(m => m.Dashboard),
     canActivate: [RoleGuard],

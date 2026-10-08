@@ -1,8 +1,12 @@
 import { VinylCreateDto, VinylUpdateDto } from './../domain/vinyl.model';
 import { computed, Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
+import { map, Observable, tap } from 'rxjs';
 import { VinylDto } from '../domain/vinyl.model';
+import {
+  VinylCarouselAlbum,
+  VinylCarouselPageResponse,
+} from '../domain/vinyl-carousel.model';
 
 
 @Injectable({
@@ -33,6 +37,20 @@ export class VinylService {
       tap((vinyls) => {
         this.vinylsSignal.set(vinyls);
       })
+    );
+  }
+
+  getCarouselPage(
+    page: number,
+    pageSize: number = 10
+  ): Observable<VinylCarouselPageResponse> {
+    return this.http.get<unknown>(`${this.apiUrl}/photos`, {
+      params: {
+        page,
+        pageSize,
+      },
+    }).pipe(
+      map(response => this.parseCarouselPage(response))
     );
   }
 
@@ -81,4 +99,58 @@ export class VinylService {
     );
   }
 
+
+  private parseCarouselPage(response: unknown): VinylCarouselPageResponse {
+    if (
+      typeof response !== 'object'
+      || response === null
+      || !('items' in response)
+      || !Array.isArray(response.items)
+      || !('page' in response)
+      || typeof response.page !== 'number'
+      || !Number.isInteger(response.page)
+      || response.page < 1
+      || !('pageSize' in response)
+      || typeof response.pageSize !== 'number'
+      || !Number.isInteger(response.pageSize)
+      || response.pageSize < 1
+      || !('totalItems' in response)
+      || typeof response.totalItems !== 'number'
+      || !Number.isInteger(response.totalItems)
+      || response.totalItems < 0
+      || !('totalPages' in response)
+      || typeof response.totalPages !== 'number'
+      || !Number.isInteger(response.totalPages)
+      || response.totalPages < 0
+      || !('hasNextPage' in response)
+      || typeof response.hasNextPage !== 'boolean'
+    ) {
+      throw new Error('A API não retornou uma página válida de álbuns.');
+    }
+
+    const items: readonly unknown[] = response.items;
+    if (!items.every(album => this.isCarouselAlbum(album))) {
+      throw new Error('A API retornou um álbum inválido.');
+    }
+
+    return {
+      items,
+      page: response.page,
+      pageSize: response.pageSize,
+      totalItems: response.totalItems,
+      totalPages: response.totalPages,
+      hasNextPage: response.hasNextPage,
+    };
+  }
+
+  private isCarouselAlbum(album: unknown): album is VinylCarouselAlbum {
+    return typeof album === 'object'
+      && album !== null
+      && 'guid' in album
+      && typeof album.guid === 'string'
+      && (
+        ('photo' in album && typeof album.photo === 'string')
+        || ('foto' in album && typeof album.foto === 'string')
+      );
+  }
 }
