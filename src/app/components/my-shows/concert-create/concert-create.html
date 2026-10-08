@@ -142,6 +142,30 @@
               }
             </div>
 
+            <div class="col-md-12">
+              <div class="iconCustom d-flex align-items-center gap-2">
+                <i class="pi pi-dollar"></i>
+                <label class="form-label mt-2">Preço</label>
+              </div>
+
+              <input
+                type="number"
+                class="form-control"
+                placeholder="Entre com o preço do show"
+                [class.is-invalid]="concertForm.get('price')?.invalid && concertForm.get('price')?.touched"
+                formControlName="price"
+                (blur)="updateErrorMessage()"
+                required
+              />
+
+              @if(concertForm.get('price')?.invalid &&
+              concertForm.get('price')?.touched){
+
+              <div class="invalid-feedback">Preço do show inválido</div>
+
+              }
+            </div>
+
             <div class="col-12 mt-4 d-flex justify-content-end gap-2">
               <button
                 (click)="close.emit()"

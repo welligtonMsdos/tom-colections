@@ -1,88 +1,278 @@
-<main class="dashboard-page container py-4">
-  <header class="mb-4">
-    <span class="text-primary fw-bold text-uppercase small">
+﻿<main
+  class="dashboard-page container py-4"
+>
+  <header
+    class="mb-4"
+  >
+    <span
+      class="text-primary fw-bold text-uppercase small"
+    >
       Visão da coleção
     </span>
-    <h1 class="display-6 fw-bold mt-2 mb-2">Dashboard de LPs</h1>
-    <p class="lead text-secondary mb-0">
+    <h1
+      class="display-6 fw-bold mt-2 mb-2"
+    >
+      Dashboard de LPs
+    </h1>
+    <p
+      class="lead text-secondary mb-0"
+    >
       Conheça os discos com maior e menor valor do seu acervo.
     </p>
   </header>
 
-  @if (isLoading()) {
-  <div class="text-center py-5">
-    <div class="spinner-border text-primary" role="status"></div>
-    <p class="text-secondary mt-3 mb-0">Carregando indicadores...</p>
-  </div>
-  } @else if (loadError()) {
-  <div class="alert alert-danger" role="alert">
-    Não foi possível carregar os indicadores de LPs.
-  </div>
-  } @else {
-  <div class="row g-4">
-    <section class="col-12 col-xl-6">
-      <div class="dashboard-panel card h-100 border-0 shadow-sm rounded-4">
-        <div class="card-header border-0 bg-transparent pt-4 px-4">
-          <span class="text-success fw-bold text-uppercase small"> Top 3 </span>
-          <h2 class="h4 fw-bold mb-0">LPs mais caros</h2>
+  <section
+    class="dashboard-panel card border-0 shadow-sm rounded-4 mb-4"
+    aria-labelledby="concert-spending-title"
+  >
+    <div
+      class="card-header border-0 bg-transparent pt-4 px-4"
+    >
+      <span
+        class="text-primary fw-bold text-uppercase small"
+      >
+        Shows
+      </span>
+      <h2
+        id="concert-spending-title"
+        class="h4 fw-bold mb-0"
+      >
+        Gastos com shows
+      </h2>
+    </div>
+    <div
+      class="card-body p-4"
+    >
+      @if (isConcertLoading()) {
+        <div
+          class="text-center py-3"
+          role="status"
+        >
+          <div
+            class="spinner-border text-primary"
+            aria-hidden="true"
+          ></div>
+          <p
+            class="text-secondary mt-3 mb-0"
+          >
+            Carregando gastos com shows...
+          </p>
         </div>
-        <div class="card-body p-4 pt-3">
-          @for (vinyl of mostExpensive(); track vinyl.guid) {
-          <article class="dashboard-vinyl d-flex gap-3 py-3">
-            <img
-              class="dashboard-vinyl__cover rounded-3"
-              [src]="vinyl.photo"
-              [alt]="'Capa de ' + vinyl.album"
-            />
-            <div class="min-w-0 flex-grow-1">
-              <h3 class="h6 fw-bold text-truncate mb-1">{{ vinyl.album }}</h3>
-              <p class="text-secondary mb-2">
-                {{ vinyl.artist }} · {{ vinyl.year }}
-              </p>
-              <strong class="text-success"
-                >{{ vinyl.price | currency:'BRL' }}</strong
+      } @else if (concertLoadError()) {
+        <div
+          class="alert alert-danger mb-0"
+          role="alert"
+        >
+          Não foi possível carregar os gastos com shows.
+        </div>
+      } @else {
+        <div
+          class="row g-3 mb-4"
+        >
+          @for (item of concertPricesByYear(); track item.year) {
+            <div
+              class="col-12 col-sm-6 col-lg-4"
+            >
+              <dl
+                class="border rounded-3 p-3 mb-0 h-100"
               >
+                <dt
+                  class="text-secondary small mb-2 d-flex align-items-center gap-2"
+                >
+                  <i
+                    class="pi pi-calendar text-primary"
+                    aria-hidden="true"
+                  ></i>
+                  {{ item.year }}
+                </dt>
+                <dd
+                  class="h4 fw-bold mb-0"
+                >
+                  {{ item.totalPrice | currency:'BRL' }}
+                </dd>
+              </dl>
             </div>
-          </article>
           } @empty {
-          <p class="text-secondary mb-0">Nenhum LP encontrado.</p>
+            <div
+              class="col-12"
+            >
+              <p
+                class="text-secondary mb-0"
+              >
+                Nenhum gasto com shows encontrado.
+              </p>
+            </div>
           }
         </div>
-      </div>
-    </section>
+        <div
+          class="bg-body-tertiary rounded-3 p-3 d-flex flex-wrap align-items-center justify-content-between gap-2"
+        >
+          <h3
+            class="h6 text-secondary mb-0"
+          >
+            Total gasto
+          </h3>
+          <strong
+            class="h3 text-primary fw-bold mb-0"
+          >
+            {{ totalSpent() | currency:'BRL' }}
+          </strong>
+        </div>
+      }
+    </div>
+  </section>
 
-    <section class="col-12 col-xl-6">
-      <div class="dashboard-panel card h-100 border-0 shadow-sm rounded-4">
-        <div class="card-header border-0 bg-transparent pt-4 px-4">
-          <span class="text-primary fw-bold text-uppercase small">
-            Achados
-          </span>
-          <h2 class="h4 fw-bold mb-0">LPs mais baratos</h2>
-        </div>
-        <div class="card-body p-4 pt-3">
-          @for (vinyl of cheapest(); track vinyl.guid) {
-          <article class="dashboard-vinyl d-flex gap-3 py-3">
-            <img
-              class="dashboard-vinyl__cover rounded-3"
-              [src]="vinyl.photo"
-              [alt]="'Capa de ' + vinyl.album"
-            />
-            <div class="min-w-0 flex-grow-1">
-              <h3 class="h6 fw-bold text-truncate mb-1">{{ vinyl.album }}</h3>
-              <p class="text-secondary mb-2">
-                {{ vinyl.artist }} · {{ vinyl.year }}
-              </p>
-              <strong class="text-primary"
-                >{{ vinyl.price | currency:'BRL' }}</strong
+  @if (isLoading()) {
+    <div
+      class="text-center py-5"
+      role="status"
+    >
+      <div
+        class="spinner-border text-primary"
+        aria-hidden="true"
+      ></div>
+      <p
+        class="text-secondary mt-3 mb-0"
+      >
+        Carregando indicadores...
+      </p>
+    </div>
+  } @else if (loadError()) {
+    <div
+      class="alert alert-danger"
+      role="alert"
+    >
+      Não foi possível carregar os indicadores de LPs.
+    </div>
+  } @else {
+    <div
+      class="row g-4"
+    >
+      <section
+        class="col-12 col-xl-6"
+      >
+        <div
+          class="dashboard-panel card h-100 border-0 shadow-sm rounded-4"
+        >
+          <div
+            class="card-header border-0 bg-transparent pt-4 px-4"
+          >
+            <span
+              class="text-success fw-bold text-uppercase small"
+            >
+              Top 3
+            </span>
+            <h2
+              class="h4 fw-bold mb-0"
+            >
+              LPs mais caros
+            </h2>
+          </div>
+          <div
+            class="card-body p-4 pt-3"
+          >
+            @for (vinyl of mostExpensive(); track vinyl.guid) {
+              <article
+                class="dashboard-vinyl d-flex gap-3 py-3"
               >
-            </div>
-          </article>
-          } @empty {
-          <p class="text-secondary mb-0">Nenhum LP encontrado.</p>
-          }
+                <img
+                  class="dashboard-vinyl__cover rounded-3"
+                  [src]="vinyl.photo"
+                  [alt]="'Capa de ' + vinyl.album"
+                />
+                <div
+                  class="min-w-0 flex-grow-1"
+                >
+                  <h3
+                    class="h6 fw-bold text-truncate mb-1"
+                  >
+                    {{ vinyl.album }}
+                  </h3>
+                  <p
+                    class="text-secondary mb-2"
+                  >
+                    {{ vinyl.artist }} · {{ vinyl.year }}
+                  </p>
+                  <strong
+                    class="text-success"
+                  >
+                    {{ vinyl.price | currency:'BRL' }}
+                  </strong>
+                </div>
+              </article>
+            } @empty {
+              <p
+                class="text-secondary mb-0"
+              >
+                Nenhum LP encontrado.
+              </p>
+            }
+          </div>
         </div>
-      </div>
-    </section>
-  </div>
+      </section>
+
+      <section
+        class="col-12 col-xl-6"
+      >
+        <div
+          class="dashboard-panel card h-100 border-0 shadow-sm rounded-4"
+        >
+          <div
+            class="card-header border-0 bg-transparent pt-4 px-4"
+          >
+            <span
+              class="text-primary fw-bold text-uppercase small"
+            >
+              Achados
+            </span>
+            <h2
+              class="h4 fw-bold mb-0"
+            >
+              LPs mais baratos
+            </h2>
+          </div>
+          <div
+            class="card-body p-4 pt-3"
+          >
+            @for (vinyl of cheapest(); track vinyl.guid) {
+              <article
+                class="dashboard-vinyl d-flex gap-3 py-3"
+              >
+                <img
+                  class="dashboard-vinyl__cover rounded-3"
+                  [src]="vinyl.photo"
+                  [alt]="'Capa de ' + vinyl.album"
+                />
+                <div
+                  class="min-w-0 flex-grow-1"
+                >
+                  <h3
+                    class="h6 fw-bold text-truncate mb-1"
+                  >
+                    {{ vinyl.album }}
+                  </h3>
+                  <p
+                    class="text-secondary mb-2"
+                  >
+                    {{ vinyl.artist }} · {{ vinyl.year }}
+                  </p>
+                  <strong
+                    class="text-primary"
+                  >
+                    {{ vinyl.price | currency:'BRL' }}
+                  </strong>
+                </div>
+              </article>
+            } @empty {
+              <p
+                class="text-secondary mb-0"
+              >
+                Nenhum LP encontrado.
+              </p>
+            }
+          </div>
+        </div>
+      </section>
+    </div>
   }
 </main>
