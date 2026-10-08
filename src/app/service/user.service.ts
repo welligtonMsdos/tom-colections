@@ -6,6 +6,7 @@ import { UserDto } from '../domain/user.model';
 import { UserCreateDto } from '../domain/userCreate.model';
 import { UserUpdateDto } from '../domain/userUpdate.mode';
 import { ApiResponse } from '../domain/api-response';
+import { UserPasswordUpdateDto } from '../domain/user-password-update.model';
 
 @Injectable({
   providedIn: 'root'
@@ -94,6 +95,15 @@ export class UserService {
   
       }
     }  
+
+  updatePassword(
+    password: UserPasswordUpdateDto
+  ): Observable<Result<void>> {
+    return this.http.put<Result<void>>(
+      this.apiUrl + '/password',
+      password
+    );
+  }
 
   put(user: Partial<UserUpdateDto>, id: string): Observable<Result<UserDto>> {
     return this.http.put<Result<UserDto>>(this.apiUrl + `/${id}`, user).pipe(
