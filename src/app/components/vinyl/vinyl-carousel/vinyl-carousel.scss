@@ -1,0 +1,127 @@
+:host {
+  display: block;
+  min-width: 0;
+}
+
+.vinyl-carousel__stage {
+  position: relative;
+  height: clamp(240px, 58vw, 420px);
+  overflow: hidden;
+  touch-action: pan-y pinch-zoom;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.vinyl-carousel__album {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: min(40%, 20rem);
+  aspect-ratio: 1;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--bs-body-color);
+  cursor: pointer;
+  opacity: 0.65;
+  transition: transform 400ms ease, opacity 400ms ease;
+}
+
+.vinyl-carousel__stage--dragging .vinyl-carousel__album {
+  transition: none;
+}
+
+.vinyl-carousel__album:focus-visible {
+  outline: 3px solid var(--bs-primary);
+  outline-offset: 6px;
+}
+
+.vinyl-carousel__album--active {
+  opacity: 1;
+}
+
+.vinyl-carousel__album--distant {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.vinyl-carousel__cover {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+  background: var(--bs-tertiary-bg);
+  border-radius: var(--bs-border-radius);
+}
+
+.vinyl-carousel__cover img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.vinyl-carousel__disc {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background:
+    conic-gradient(
+      from 25deg,
+      transparent 0deg,
+      rgb(255 255 255 / 16%) 45deg,
+      transparent 85deg,
+      transparent 180deg,
+      rgb(255 255 255 / 12%) 225deg,
+      transparent 265deg
+    ),
+    repeating-radial-gradient(
+      circle,
+      #111 0,
+      #111 2px,
+      #252525 3px,
+      #111 4px
+    );
+  box-shadow: 0 5px 15px rgb(0 0 0 / 25%);
+  transform: translateX(0);
+  transition: transform 400ms ease;
+}
+
+.vinyl-carousel__album--active .vinyl-carousel__disc {
+  transform: translateX(50%);
+}
+
+.vinyl-carousel__label {
+  position: relative;
+  width: 29%;
+  height: 29%;
+  overflow: hidden;
+  border-radius: 50%;
+  background: var(--bs-primary);
+}
+
+.vinyl-carousel__label img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.vinyl-carousel__label::after {
+  content: '';
+  position: absolute;
+  inset: 44%;
+  border-radius: 50%;
+  background: #111;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vinyl-carousel__album {
+    transition: none;
+  }
+
+  .vinyl-carousel__disc {
+    transition: none;
+  }
+}

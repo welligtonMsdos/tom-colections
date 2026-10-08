@@ -1,0 +1,106 @@
+<main
+  class="container py-4"
+>
+  <header
+    class="mb-4"
+  >
+    <h1
+      class="display-6 fw-bold"
+    >
+      Meus Discos de Vinil
+    </h1>
+    <p
+      class="text-secondary"
+    >
+      Deslize ou use as setas para explorar sua coleção.
+    </p>
+  </header>
+  <section
+    class="card shadow-sm rounded-4"
+    aria-label="Minha coleção de vinil"
+    [attr.aria-busy]="isLoading()"
+  >
+    @if (isLoading() && albums().length === 0) {
+      <div
+        class="text-center py-5"
+        role="status"
+      >
+        <span
+          class="spinner-border text-primary"
+          aria-hidden="true"
+        >
+        </span>
+        <p
+          class="text-secondary mt-3 mb-0"
+        >
+          Carregando álbuns...
+        </p>
+      </div>
+    } @else {
+      <app-vinyl-carousel
+        [albums]="albums()"
+        (selectionChange)="selectedGuid.set($event); openedGuid.set(undefined)"
+        (albumClick)="openedGuid.set($event)"
+      >
+      </app-vinyl-carousel>
+      @if (openedGuid(); as guid) {
+        <p
+          class="text-secondary small text-center px-3 pb-3 mb-0 text-break"
+          role="status"
+        >
+          Identificador do álbum: {{ guid }}
+        </p>
+      }
+    }
+    @if (loadError()) {
+      <div
+        class="alert alert-danger m-3"
+        role="alert"
+      >
+        <p>
+          Não foi possível carregar os álbuns. Tente novamente.
+        </p>
+        <button
+          type="button"
+          class="btn btn-outline-primary"
+          [disabled]="isLoading()"
+          (click)="retry()"
+        >
+          Tentar novamente
+        </button>
+      </div>
+    }
+    @if (totalPages() > 0) {
+      <footer
+        class="d-flex flex-column align-items-center gap-2 px-3 pb-4"
+      >
+        <span
+          class="text-secondary small"
+          role="status"
+        >
+          Página {{ page() }} de {{ totalPages() }}
+        </span>
+        <button
+          type="button"
+          class="btn btn-primary"
+          [disabled]="isLoading()"
+          (click)="loadMore()"
+        >
+          @if (isLoading()) {
+            <span
+              class="spinner-border spinner-border-sm me-2"
+              aria-hidden="true"
+            >
+            </span>
+            <span
+              class="visually-hidden"
+            >
+              Carregando álbuns.
+            </span>
+          }
+          {{ hasNextPage() ? 'Mais' : 'Inicio' }}
+        </button>
+      </footer>
+    }
+  </section>
+</main>
