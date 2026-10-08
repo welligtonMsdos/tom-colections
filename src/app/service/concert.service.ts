@@ -1,5 +1,10 @@
 import { computed, inject, Injectable, signal } from "@angular/core";
-import { ConcertCreateDto, ConcertDto, ConcertUpdateDto } from "../domain/concert.model";
+import {
+  ConcertCreateDto,
+  ConcertDto,
+  ConcertPriceByYearDto,
+  ConcertUpdateDto,
+} from "../domain/concert.model";
 import { HttpClient } from "@angular/common/http";
 import { catchError, finalize, Observable, of, tap } from "rxjs";
 import { AlertService } from "./alert.service";
@@ -81,6 +86,12 @@ export class ConcertService {
       }),
       finalize(() => this.loading.set(false))
     ).subscribe();
+  }
+
+  getPriceByYear(): Observable<ConcertPriceByYearDto[]> {
+    return this.http.get<ConcertPriceByYearDto[]>(
+      `${this.apiUrl}/price-by-year`
+    );
   }
 
    getByGuid(guid: string): Observable<ConcertDto> {

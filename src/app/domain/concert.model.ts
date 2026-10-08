@@ -1,3 +1,8 @@
+export interface ConcertPriceByYearDto {
+  year: number;
+  totalPrice: number;
+}
+
 export interface ConcertDto{
   guid: string;
   artist: string;
