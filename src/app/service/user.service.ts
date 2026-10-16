@@ -1,9 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { computed, Injectable, signal } from '@angular/core';
 import { firstValueFrom, Observable, tap } from 'rxjs';
 import { Result } from '../domain/result.model';
 import { UserDto } from '../domain/user.model';
-import { UserCreateDto } from '../domain/userCreate.model';
+import { UserCreateDto, UserSignUpDto } from '../domain/userCreate.model';
 import { UserUpdateDto } from '../domain/userUpdate.mode';
 import { ApiResponse } from '../domain/api-response';
 import { UserPasswordUpdateDto } from '../domain/user-password-update.model';
@@ -77,24 +77,31 @@ export class UserService {
     );
   }
 
-  async signUp(userCreateDto: UserCreateDto): Promise<Result<ApiResponse>> {
+  async signUp(userCreateDto: UserSignUpDto): Promise<Result<ApiResponse>> {
     try {
-          const response = await firstValueFrom(
-            this.http.post<Result<any>>(this.apiUrl + "/SignUp", userCreateDto)
-        ); 
+      return await firstValueFrom(
+        this.http.post<Result<ApiResponse>>(
+          this.apiUrl + '/SignUp',
+          userCreateDto
+        )
+      );
+    } catch (error: unknown) {
+      const apiError: unknown = error instanceof HttpErrorResponse
+        ? error.error
+        : error;
 
-        return response;
-  
-      } catch (error: any) {         
-  
-        const apiError = error.error;      
-  
-        const messageToDisplay = apiError?.errors || apiError?.Errors; 
-      
-        throw messageToDisplay;
-  
+      if (apiError !== null && typeof apiError === 'object') {
+        const response = apiError as Record<string, unknown>;
+
+        throw response['errors'] ?? response['Errors'] ?? response['message'] ??
+          response['Message'] ?? 'Não foi possível realizar o cadastro.';
       }
-    }  
+
+      throw typeof apiError === 'string' && apiError.trim()
+        ? apiError
+        : 'Não foi possível realizar o cadastro.';
+    }
+  }
 
   updatePassword(
     password: UserPasswordUpdateDto

@@ -51,9 +51,7 @@ export class AuthLogin {
 
         this.loginService.login({ email, password })
         .then(data =>{
-          if (data.success) {
-
-            console.log('Login bem-sucedido:', data);
+          if (data.success) {          
 
             this.alert.showSuccess('Olá ' + this.loginService.currentUser()?.name);
 
