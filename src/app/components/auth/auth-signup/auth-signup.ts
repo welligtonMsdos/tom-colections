@@ -1,6 +1,6 @@
 import { Component, computed, inject, output, signal } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { UserCreateDto } from '../../../domain/userCreate.model';
+import { UserSignUpDto } from '../../../domain/userCreate.model';
 import { UserService } from '../../../service/user.service';
 import { AlertService } from '../../../service/alert.service';
 
@@ -36,6 +36,8 @@ export class AuthSignup {
   updateErrorMessage = () => {};
 
   hide = signal(true);
+
+  isLoading = signal(false);
 
   passwordRequirements = signal<PasswordRequirement[]>(
     this.getPasswordRequirements('')
@@ -78,6 +80,10 @@ export class AuthSignup {
   }
 
   save(): void {
+    if (this.isLoading()) {
+      return;
+    }
+
     if (!this.isPasswordSecure()) {
       this.authForm.controls.password.markAsTouched();
       this.alert.showError(
@@ -95,16 +101,24 @@ export class AuthSignup {
     }
 
     const { name, email, password } = this.authForm.getRawValue();
-    const userData: UserCreateDto = {
+    const userData: UserSignUpDto = {
       name: name || '',
       email: email || '',
       password: password || '',
+      role: 1,
     };
+
+    this.isLoading.set(true);
 
     this.userService
       .signUp(userData)
       .then((data) => {
         if (!data.success) {
+          this.alert.showError(
+            this.getErrorMessage(data.errors) ??
+              data.message ?? 'Não foi possível realizar o cadastro.'
+          );
+
           return;
         }
 
@@ -112,20 +126,36 @@ export class AuthSignup {
         this.toggle.emit();
       })
       .catch((error: unknown) => {
-        const isObjectError =
-          error !== null &&
-          typeof error === 'object' &&
-          !Array.isArray(error);
-
-        if (!isObjectError) {
-          this.alert.showError(String(error));
-
-          return;
-        }
-
-        const messages = Object.values(error).flat() as string[];
-
-        this.alert.showError(messages[0] ?? 'Não foi possível realizar o cadastro.');
+        this.alert.showError(
+          this.getErrorMessage(error) ?? 'Não foi possível realizar o cadastro.'
+        );
+      })
+      .finally(() => {
+        this.isLoading.set(false);
       });
+  }
+
+  private getErrorMessage(error: unknown): string | undefined {
+    if (typeof error === 'string') {
+      return error.trim() || undefined;
+    }
+
+    if (error === null || typeof error !== 'object') {
+      return undefined;
+    }
+
+    const values: unknown[] = Array.isArray(error)
+      ? error
+      : Object.values(error);
+
+    for (const value of values) {
+      const message = this.getErrorMessage(value);
+
+      if (message) {
+        return message;
+      }
+    }
+
+    return undefined;
   }
 }

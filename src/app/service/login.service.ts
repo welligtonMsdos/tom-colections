@@ -66,10 +66,6 @@ export class LoginService {
 
         const jwt = response.data.token;    
         
-        console.log('response received:', response);
-        
-        console.log('JWT recebido:', jwt);
-
         if (jwt) {
           this.authService.setToken(jwt);     
           this.getUserFromToken();     
