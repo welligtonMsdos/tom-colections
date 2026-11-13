@@ -1,0 +1,228 @@
+<section
+  class="p-3 p-md-4"
+  aria-label="Coleção de CDs"
+>
+  @if (isLoading()) {
+    <div
+      class="py-5 text-center"
+    >
+      <div
+        class="spinner-border text-primary"
+        role="status"
+      >
+        <span
+          class="visually-hidden"
+        >
+          Carregando CDs...
+        </span>
+      </div>
+    </div>
+  } @else if (loadError()) {
+    <div
+      class="alert alert-danger text-center"
+      role="alert"
+    >
+      <p>
+        Não foi possível carregar os CDs.
+      </p>
+      <button
+        type="button"
+        class="btn btn-outline-danger"
+        (click)="loadCds()"
+      >
+        Tentar novamente
+      </button>
+    </div>
+  } @else if (paginatedCds().length > 0) {
+    <div
+      class="row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-4 g-3"
+    >
+      @for (cd of paginatedCds(); track cd.guid) {
+        <article
+          class="col"
+        >
+          <div
+            class="card h-100 border shadow-sm rounded-4 overflow-hidden"
+          >
+            <div
+              class="card-header d-flex align-items-center justify-content-between bg-body border-0 pt-3 px-3"
+            >
+              <span
+                class="cd-card__year"
+              >
+                {{ cd.year }}
+              </span>
+              <div
+                class="btn-group"
+              >
+                <button
+                  type="button"
+                  class="btn btn-sm btn-outline-primary"
+                  [attr.aria-label]="'Editar ' + cd.album"
+                  (click)="editCd(cd.guid)"
+                >
+                  <i
+                    class="pi pi-pen-to-square"
+                    aria-hidden="true"
+                  >
+                  </i>
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-sm btn-outline-danger"
+                  [attr.aria-label]="'Excluir ' + cd.album"
+                  (click)="showModalDelete.set(true); idSelected.set(cd.guid)"
+                >
+                  <i
+                    class="pi pi-trash"
+                    aria-hidden="true"
+                  >
+                  </i>
+                </button>
+              </div>
+            </div>
+            <div
+              class="cd-card__photo-stage mx-auto mt-2"
+            >
+              <div
+                class="cd-card__case"
+              >
+                <img
+                  [src]="cd.photo"
+                  [alt]="'Capa de ' + cd.album"
+                  class="cd-card__photo"
+                  loading="lazy"
+                />
+              </div>
+            </div>
+            <div
+              class="card-body d-flex flex-column"
+            >
+              <h3
+                class="h6 fw-bold text-truncate"
+                [title]="cd.album"
+              >
+                {{ cd.album }}
+              </h3>
+              <p
+                class="text-secondary text-truncate mb-3"
+                [title]="cd.artist"
+              >
+                {{ cd.artist }}
+              </p>
+              <strong
+                class="text-cor-value mt-auto"
+              >
+                {{ cd.price | currency:'BRL' }}
+              </strong>
+            </div>
+          </div>
+        </article>
+      }
+    </div>
+  } @else {
+    <div
+      class="py-5 text-center"
+    >
+      <span
+        class="d-inline-flex align-items-center justify-content-center bg-primary-subtle text-primary rounded-3 p-3 mb-3"
+      >
+        <i
+          class="pi pi-disc"
+          aria-hidden="true"
+        >
+        </i>
+      </span>
+      <h3
+        class="h5 fw-bold"
+      >
+        Nenhum CD encontrado
+      </h3>
+      <p
+        class="text-secondary mb-0"
+      >
+        Ajuste a busca ou adicione um disco à sua coleção.
+      </p>
+    </div>
+  } @if (filteredCds().length > 0 && totalPages() > 1) {
+    <footer
+      class="d-flex flex-column flex-md-row align-items-md-center justify-content-md-between gap-3 pt-4"
+    >
+      <span
+        class="text-secondary small"
+      >
+        Mostrando {{ (currentPage() - 1) * itemsPerPage() + 1 }}–{{
+        Math.min(currentPage() * itemsPerPage(), filteredCds().length) }} de {{
+        filteredCds().length }}
+      </span>
+      <nav
+        aria-label="Paginação dos CDs"
+      >
+        <ul
+          class="pagination pagination-sm mb-0 flex-wrap"
+        >
+          <li
+            class="page-item"
+          >
+            <button
+              type="button"
+              class="page-link"
+              [disabled]="currentPage() === 1"
+              aria-label="Página anterior"
+              (click)="goToPage(currentPage() - 1)"
+            >
+              <i
+                class="pi pi-chevron-left"
+                aria-hidden="true"
+              >
+              </i>
+            </button>
+          </li>
+          @for (page of pageNumbers(); track page) {
+            <li
+              class="page-item"
+              [class.active]="currentPage() === page"
+            >
+              <button
+                type="button"
+                class="page-link"
+                (click)="goToPage(page)"
+              >
+                {{ page }}
+              </button>
+            </li>
+          }
+          <li
+            class="page-item"
+          >
+            <button
+              type="button"
+              class="page-link"
+              [disabled]="currentPage() === totalPages()"
+              aria-label="Próxima página"
+              (click)="goToPage(currentPage() + 1)"
+            >
+              <i
+                class="pi pi-chevron-right"
+                aria-hidden="true"
+              >
+              </i>
+            </button>
+          </li>
+        </ul>
+      </nav>
+    </footer>
+  }
+</section>
+@if (showModalDelete()) {
+  <app-delete-data
+    [id]="idSelected()"
+    (onCancel)="showModalDelete.set(false)"
+    (onConfirm)="delete()"
+  />
+} @if (showModalUpdate()) {
+  <app-cd-update
+    [cd]="cdSelected()!"
+    (close)="showModalUpdate.set(false)"
+  />
+}
