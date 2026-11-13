@@ -1,0 +1,11 @@
+:host-context([data-bs-theme="dark"]) .collection-summary__icon {
+  background-color: color-mix(in srgb, var(--bs-primary) 20%, transparent) !important;
+}
+
+:host-context([data-bs-theme="dark"]) .collection-summary__icon mat-icon {
+  color: var(--bs-primary);
+}
+
+.text-cor-value {
+  color: var(--bs-value-primary);
+}

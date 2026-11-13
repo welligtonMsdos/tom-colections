@@ -1,0 +1,15 @@
+:host {
+  display: block;
+  min-height: 100%;
+  background: var(--bs-body-bg);
+}
+
+.cd-page {
+  min-height: calc(100dvh - 40px);
+  margin-top: 40px !important;
+}
+
+.cd-catalog {
+  border: 1px solid color-mix(in srgb, var(--bs-primary) 14%, transparent);
+  background: var(--cardCollection-bg, #fff);
+}

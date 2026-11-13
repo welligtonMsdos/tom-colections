@@ -1,0 +1,45 @@
+<main
+  class="cd-page container py-3"
+>
+  <div
+    class="row align-items-end g-4 mb-4"
+  >
+    <header
+      class="col-12 col-lg-7"
+    >
+      <span
+        class="d-inline-flex align-items-center gap-2 text-primary fw-bold text-uppercase small"
+      >
+        <i
+          class="pi pi-disc"
+          aria-hidden="true"
+        >
+        </i>
+        Minha discoteca
+      </span>
+      <h1
+        class="display-5 fw-bold mt-2 mb-3"
+      >
+        CDs
+      </h1>
+      <p
+        class="lead text-secondary mb-0"
+      >
+        Organize seus discos, descubra detalhes e mantenha sua coleção sempre
+        por perto.
+      </p>
+    </header>
+    <div
+      class="col-12 col-lg-5"
+    >
+      <app-card-cd />
+    </div>
+  </div>
+  <section
+    class="cd-catalog card shadow-sm rounded-4 overflow-hidden"
+    aria-label="Catálogo de CDs"
+  >
+    <app-header-cd />
+    <app-list-cd />
+  </section>
+</main>

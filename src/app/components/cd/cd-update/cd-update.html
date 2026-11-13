@@ -1,0 +1,287 @@
+<div
+  class="modal show"
+  tabindex="-1"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="cd-update-title"
+>
+  <div
+    class="modal-dialog modal-dialog-centered"
+  >
+    <div
+      class="modal-content"
+    >
+      <div
+        class="modal-header header-grid mb-2 p-2"
+      >
+        <div>
+        </div>
+        <div
+          class="d-flex align-items-center justify-content-center"
+        >
+          <i
+            class="pi pi-play me-2 fs-6"
+            aria-hidden="true"
+          >
+          </i>
+          <h1
+            id="cd-update-title"
+            class="modal-title fs-5 m-0"
+          >
+            Editar CD
+          </h1>
+        </div>
+        <button
+          type="button"
+          class="btn-close"
+          aria-label="Fechar"
+          [disabled]="isLoading()"
+          (click)="close.emit()"
+        >
+        </button>
+      </div>
+      <div
+        class="modal-body"
+      >
+        @if (errorMessage()) {
+          <div
+            class="alert alert-danger"
+            role="alert"
+          >
+            {{ errorMessage() }}
+          </div>
+        }
+        <form
+          [formGroup]="cdForm"
+          (ngSubmit)="save()"
+          class="row g-3"
+        >
+          <div
+            class="col-md-12"
+          >
+            <div
+              class="iconCustom d-flex align-items-center gap-2"
+            >
+              <i
+                class="pi pi-user-plus"
+                aria-hidden="true"
+              >
+              </i>
+              <label
+                class="form-label mt-2"
+                for="cd-update-artist"
+              >
+                Artista
+              </label>
+            </div>
+            <input
+              id="cd-update-artist"
+              type="text"
+              class="form-control"
+              [class.is-invalid]="cdForm.controls.artist.invalid && cdForm.controls.artist.touched"
+              placeholder="Entre com o artista"
+              formControlName="artist"
+              aria-describedby="cd-update-artist-error"
+              required
+            />
+            @if (cdForm.controls.artist.invalid && cdForm.controls.artist.touched) {
+              <div
+                id="cd-update-artist-error"
+                class="invalid-feedback"
+              >
+                Verifique o campo artista.
+              </div>
+            }
+          </div>
+
+          <div
+            class="col-md-6"
+          >
+            <div
+              class="iconCustom d-flex align-items-center gap-2"
+            >
+              <i
+                class="pi pi-list"
+                aria-hidden="true"
+              >
+              </i>
+              <label
+                class="form-label mt-2"
+                for="cd-update-album"
+              >
+                Álbum
+              </label>
+            </div>
+            <input
+              id="cd-update-album"
+              type="text"
+              class="form-control"
+              [class.is-invalid]="cdForm.controls.album.invalid && cdForm.controls.album.touched"
+              placeholder="Entre com o álbum"
+              formControlName="album"
+              aria-describedby="cd-update-album-error"
+              required
+            />
+            @if (cdForm.controls.album.invalid && cdForm.controls.album.touched) {
+              <div
+                id="cd-update-album-error"
+                class="invalid-feedback"
+              >
+                Verifique o campo álbum.
+              </div>
+            }
+          </div>
+
+          <div
+            class="col-md-6"
+          >
+            <div
+              class="iconCustom d-flex align-items-center gap-2"
+            >
+              <i
+                class="pi pi-calendar"
+                aria-hidden="true"
+              >
+              </i>
+              <label
+                class="form-label mt-2"
+                for="cd-update-year"
+              >
+                Ano
+              </label>
+            </div>
+            <input
+              id="cd-update-year"
+              type="number"
+              class="form-control"
+              [class.is-invalid]="cdForm.controls.year.invalid && cdForm.controls.year.touched"
+              placeholder="Entre com o ano"
+              formControlName="year"
+              aria-describedby="cd-update-year-error"
+              required
+            />
+            @if (cdForm.controls.year.invalid && cdForm.controls.year.touched) {
+              <div
+                id="cd-update-year-error"
+                class="invalid-feedback"
+              >
+                Verifique o campo ano.
+              </div>
+            }
+          </div>
+
+          <div
+            class="col-md-12"
+          >
+            <div
+              class="iconCustom d-flex align-items-center gap-2"
+            >
+              <i
+                class="pi pi-image"
+                aria-hidden="true"
+              >
+              </i>
+              <label
+                class="form-label mt-2"
+                for="cd-update-photo"
+              >
+                Foto
+              </label>
+            </div>
+            <input
+              id="cd-update-photo"
+              type="text"
+              class="form-control"
+              [class.is-invalid]="cdForm.controls.photo.invalid && cdForm.controls.photo.touched"
+              placeholder="Entre com a URL da foto"
+              formControlName="photo"
+              aria-describedby="cd-update-photo-error"
+              required
+            />
+            @if (cdForm.controls.photo.invalid && cdForm.controls.photo.touched) {
+              <div
+                id="cd-update-photo-error"
+                class="invalid-feedback"
+              >
+                Verifique o campo foto.
+              </div>
+            }
+          </div>
+
+          <div
+            class="col-md-12"
+          >
+            <div
+              class="iconCustom d-flex align-items-center gap-2"
+            >
+              <i
+                class="pi pi-dollar"
+                aria-hidden="true"
+              >
+              </i>
+              <label
+                class="form-label mt-2"
+                for="cd-update-price"
+              >
+                Preço
+              </label>
+            </div>
+            <input
+              id="cd-update-price"
+              type="number"
+              class="form-control"
+              [class.is-invalid]="cdForm.controls.price.invalid && cdForm.controls.price.touched"
+              placeholder="Entre com o preço"
+              formControlName="price"
+              aria-describedby="cd-update-price-error"
+              min="0"
+              step="0.01"
+              required
+            />
+            @if (cdForm.controls.price.invalid && cdForm.controls.price.touched) {
+              <div
+                id="cd-update-price-error"
+                class="invalid-feedback"
+              >
+                Verifique o campo preço.
+              </div>
+            }
+          </div>
+          <div
+            class="col-12 mt-4 d-flex justify-content-end gap-2"
+          >
+            <button
+              type="button"
+              class="btn btn-outline-secondary"
+              [disabled]="isLoading()"
+              (click)="close.emit()"
+            >
+              Cancelar
+            </button>
+            <button
+              type="submit"
+              class="btn btn-primary"
+              [disabled]="cdForm.invalid || isLoading()"
+            >
+              @if (isLoading()) {
+                <i
+                  class="pi pi-spin pi-spinner me-2"
+                  aria-hidden="true"
+                >
+                </i>
+                Salvando...
+              } @else {
+                <i
+                  class="pi pi-save me-2"
+                  aria-hidden="true"
+                >
+                </i>
+                Salvar
+              }
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

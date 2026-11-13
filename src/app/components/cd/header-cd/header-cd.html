@@ -1,0 +1,72 @@
+<section
+  class="d-flex flex-column flex-md-row align-items-md-center justify-content-md-between gap-3 p-3 p-md-4 border-bottom"
+  aria-label="Ferramentas do catálogo"
+>
+  <div>
+    <span
+      class="text-primary fw-bold text-uppercase small"
+    >
+      Catálogo
+    </span>
+    <h2>
+      Seus discos
+    </h2>
+  </div>
+  <div
+    class="d-flex flex-column flex-sm-row gap-2"
+  >
+    <div
+      class="input-group"
+    >
+      <label
+        class="search-field"
+        for="cd-search"
+      >
+        <i
+          class="pi pi-search"
+          aria-hidden="true"
+        >
+        </i>
+        <input
+          #cdSearch
+          id="cd-search"
+          type="search"
+          aria-label="Buscar CDs por artista ou álbum"
+          placeholder="Buscar artista ou álbum"
+          [value]="searchTerm()"
+          (input)="updateSearch(cdSearch.value)"
+        />
+        @if (searchTerm()) {
+          <button
+            type="button"
+            (click)="updateSearch('')"
+            aria-label="Limpar busca"
+          >
+            <i
+              class="pi pi-times"
+              aria-hidden="true"
+            >
+            </i>
+          </button>
+        }
+      </label>
+    </div>
+    <button
+      type="button"
+      class="btn btn-primary text-nowrap"
+      (click)="showModalCreate.set(true)"
+    >
+      <i
+        class="pi pi-plus me-2"
+        aria-hidden="true"
+      >
+      </i>
+      Novo CD
+    </button>
+  </div>
+</section>
+@if (showModalCreate()) {
+  <app-cd-create
+    (close)="showModalCreate.set(false)"
+  />
+}
