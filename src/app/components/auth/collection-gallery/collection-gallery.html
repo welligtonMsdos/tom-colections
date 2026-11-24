@@ -1,0 +1,85 @@
+<section
+  class="gallery h-100"
+  aria-label="Capas da coleção"
+>
+  <div
+    class="p-0"
+  >
+    @if (isLoading()) {
+      <div
+        class="gallery-viewport d-flex align-items-center justify-content-center"
+        role="status"
+        aria-label="Carregando imagens da coleção"
+      >
+        <span
+          class="spinner-border text-primary"
+          aria-hidden="true"
+        >
+        </span>
+      </div>
+    } @else if (hasError()) {
+      <div
+        class="gallery-viewport d-flex align-items-center justify-content-center"
+        role="alert"
+        aria-label="Não foi possível carregar as imagens"
+      >
+        <button
+          type="button"
+          class="btn btn-outline-primary"
+          aria-label="Tentar carregar as imagens novamente"
+          (click)="loadPaths()"
+        >
+          <i
+            class="pi pi-refresh"
+            aria-hidden="true"
+          >
+          </i>
+        </button>
+      </div>
+    } @else if (paths().length === 0) {
+      <div
+        class="gallery-viewport d-flex align-items-center justify-content-center text-secondary"
+        role="status"
+        aria-label="Nenhuma imagem disponível"
+      >
+        <i
+          class="pi pi-images"
+          aria-hidden="true"
+        >
+        </i>
+      </div>
+    } @else {
+      <div
+        class="gallery-viewport"
+        aria-label="Imagens de CDs, vinis e cassetes"
+      >
+        <div
+          class="gallery-track"
+          [style.--gallery-duration]="animationDuration()"
+        >
+          @for (copy of [0, 1]; track copy) {
+            <div
+              class="gallery-grid"
+              [attr.aria-hidden]="copy === 1 ? 'true' : null"
+            >
+              @for (item of paths(); track item.path + $index) {
+                <figure
+                  class="gallery-item m-0"
+                  [class.gallery-item--cassette]="item.tag === 'cassette'"
+                  [class.gallery-item--vinyl]="item.tag === 'vinyl'"
+                  [class.gallery-item--cd]="item.tag === 'cd'"
+                >
+                  <img
+                    [src]="item.path"
+                    [alt]="copy === 1 ? '' : 'Capa de ' + (item.tag === 'vinyl' ? 'vinil' : item.tag === 'cd' ? 'CD' : 'cassete')"
+                    loading="lazy"
+                  />
+                </figure>
+              }
+            </div>
+          }
+        </div>
+      </div>
+    }
+  </div>
+</section>

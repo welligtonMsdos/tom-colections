@@ -1,14 +1,17 @@
-import { ChangeDetectionStrategy, Component, inject, output, signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AlertService } from '../../../service/alert.service';
 import { LoginService } from '../../../service/login.service';
 import { Router } from '@angular/router';
+import { AuthSignup } from '../auth-signup/auth-signup';
+import { CollectionGallery } from '../collection-gallery/collection-gallery';
 
 @Component({
   selector: 'app-auth-login',
-  imports: [FormsModule, ReactiveFormsModule],
+  imports: [FormsModule, ReactiveFormsModule, AuthSignup, CollectionGallery],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './auth-login.html',
+  styleUrl: './auth-login.css',
 })
 export class AuthLogin {
 
@@ -19,7 +22,7 @@ export class AuthLogin {
 
   errorMessage = signal('');
 
-  toggle = output<void>();
+  readonly isLoginMode = signal(true);
 
   private alert = inject(AlertService);
 
@@ -31,7 +34,7 @@ export class AuthLogin {
   updateErrorMessage = () => {};
 
   onToggle(): void {
-    this.toggle.emit();
+    this.isLoginMode.update((isLoginMode) => !isLoginMode);
   }
 
   hide = signal(true);

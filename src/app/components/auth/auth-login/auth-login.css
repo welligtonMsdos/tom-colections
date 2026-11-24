@@ -1,0 +1,16 @@
+:host {
+  display: block;
+}
+
+.auth-page {
+  min-height: calc(100dvh - 40px);
+  background: var(--bs-body-bg);
+}
+
+.auth-page .row {
+  min-height: calc(100dvh - 6rem);
+}
+
+section {
+  width: 100%;
+}
